@@ -64,7 +64,12 @@ const HONOR_ROLL = [
   { rank: 4, name: 'مريم سليماني', points: 32, class: '1 متوسط 1', badge: '🎯 التزام الواجبات' },
 ]
 
-export default function BadgesSection() {
+interface BadgesSectionProps {
+  studentName?: string
+  userRole?: string
+}
+
+export default function BadgesSection({ studentName, userRole }: BadgesSectionProps = {}) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%' }}>
       {/* ── Section Header ── */}

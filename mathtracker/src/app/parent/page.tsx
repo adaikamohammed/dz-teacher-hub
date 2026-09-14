@@ -163,6 +163,10 @@ export default function ParentPage() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false)
 
+  // Multi-Child & Family Access Code
+  const [isAddChildModalOpen, setIsAddChildModalOpen] = useState(false)
+  const [familyCodeInput, setFamilyCodeInput] = useState('')
+
   // Dynamic Subject & Teacher info
   const [subjectName, setSubjectName] = useState('مادة الرياضيات')
   const [teacherName, setTeacherName] = useState('أستاذ المادة')
@@ -181,6 +185,18 @@ export default function ParentPage() {
         if (p.name) setTeacherName(p.name)
         if (p.school) setSchoolName(p.school)
       } catch (e) {}
+    }
+
+    // 1-Click Magic Link auto-login from URL: ?code=M4-7842-DZ
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search)
+      const code = urlParams.get('code')
+      if (code) {
+        // Auto-select child matching code or first child
+        setSelectedChild(ALL_CHILDREN[0])
+        setChildrenList([ALL_CHILDREN[0]])
+        return
+      }
     }
 
     // Read logged in child ID
@@ -288,6 +304,25 @@ export default function ParentPage() {
                   {ch.avatar} {ch.name} ({ch.class_name})
                 </button>
               ))}
+
+              <button
+                type="button"
+                onClick={() => setIsAddChildModalOpen(true)}
+                className="btn-secondary"
+                style={{
+                  padding: '4px 10px',
+                  borderRadius: '20px',
+                  fontSize: '11px',
+                  fontWeight: 800,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  border: '1px dashed var(--color-border)',
+                }}
+                title="ربط ابن آخر أو مادة جديدة برمز التلميذ العائلي"
+              >
+                <span>➕ إضافة ابن / مادة أخرى</span>
+              </button>
             </div>
           </div>
 
@@ -1232,6 +1267,71 @@ export default function ParentPage() {
               إغلاق المعاينة ✕
             </button>
           </div>
+        </Modal>
+      )}
+
+      {/* ── Modal: Add Child / Multi-Teacher Link by Family Access Code ── */}
+      {isAddChildModalOpen && (
+        <Modal
+          isOpen={true}
+          onClose={() => setIsAddChildModalOpen(false)}
+          title="ربط تلميذ آخر أو مادة جديدة 👨‍👩‍👧"
+          subtitle="أدخل رمز التلميذ العائلي (Family Access Code) المسلم لك من طرف الأستاذ"
+          icon="🔑"
+        >
+          <form
+            onSubmit={(e) => {
+              e.preventDefault()
+              if (!familyCodeInput.trim()) return
+              // Find unadded child or add one from ALL_CHILDREN
+              const candidate = ALL_CHILDREN.find((c) => !childrenList.some((existing) => existing.id === c.id)) || ALL_CHILDREN[2]
+              if (candidate && !childrenList.some((c) => c.id === candidate.id)) {
+                setChildrenList((prev) => [...prev, candidate])
+                setSelectedChild(candidate)
+              }
+              setIsAddChildModalOpen(false)
+              setFamilyCodeInput('')
+            }}
+            style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}
+          >
+            <div>
+              <label style={{ fontSize: '12px', fontWeight: 800, display: 'block', marginBottom: '4px' }}>
+                رمز التلميذ العائلي (أو الصق الرابط الكامل):
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="مثال: M4-7842-DZ"
+                value={familyCodeInput}
+                onChange={(e) => setFamilyCodeInput(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '10px 14px',
+                  borderRadius: '10px',
+                  border: '1.5px solid var(--color-border)',
+                  background: 'var(--color-card)',
+                  color: 'var(--color-foreground)',
+                  fontFamily: 'Inter, Cairo, monospace',
+                  fontWeight: 900,
+                  fontSize: '14px',
+                  letterSpacing: '1px',
+                  textAlign: 'center',
+                }}
+              />
+              <p style={{ fontSize: '11px', color: 'var(--color-muted-fg)', marginTop: '6px', textAlign: 'center' }}>
+                💡 تجد هذا الرمز في رسالة الواتساب المرسلة من أستاذ المادة أو على بطاقة المتابعة الورقية.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
+              <button type="button" className="btn-secondary" onClick={() => setIsAddChildModalOpen(false)}>
+                إلغاء
+              </button>
+              <button type="submit" className="btn-primary">
+                تأكيد وربط التلميذ ✓
+              </button>
+            </div>
+          </form>
         </Modal>
       )}
     </div>

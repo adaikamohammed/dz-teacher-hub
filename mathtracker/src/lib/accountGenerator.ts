@@ -84,6 +84,55 @@ export function generateParentCredentials(
 }
 
 /**
+ * Generates a unique, concise Family Access Code (FAC) for parents
+ * e.g. "M4-7842-DZ" or "S1-9315-DZ"
+ */
+export function generateFamilyAccessCode(
+  studentName: string,
+  classShortName: string = '1M',
+  subjectCode: string = 'DZ'
+): string {
+  const letters = transliterateArabicToLatin(studentName).replace(/[^a-z]/g, '')
+  const hashSeed = letters.slice(0, 2).toUpperCase() || 'ST'
+  const randomDigits = Math.floor(1000 + Math.random() * 9000)
+  const cleanClass = classShortName.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 3) || 'C1'
+  return `${cleanClass}-${randomDigits}-${hashSeed}`
+}
+
+/**
+ * Formats a 1-click Magic Link WhatsApp message for the parent
+ */
+export function formatParentMagicLinkWhatsApp(
+  studentName: string,
+  className: string,
+  familyAccessCode: string,
+  baseUrl: string = 'http://localhost:3000',
+  subjectName: string = 'المادة المقررة',
+  teacherName: string = 'الأستاذ'
+): string {
+  const magicLink = `${baseUrl}/parent?code=${encodeURIComponent(familyAccessCode)}`
+
+  return `السلام عليكم ورحمة الله وبركاته،
+ولي أمر التلميذ(ة) *${studentName}* المحترم،
+
+يسر أستاذ(ة) مادة *${subjectName}* دعوتكم لمتابعة المسار الدراسي لابنكم في قسم *${className}*:
+• 📖 صور ملخصات دروس السبورة يومياً لعدم استعارة الكراريس.
+• 📝 الواجبات المنزلية المقررة ومتابعة الإنجاز والحلول.
+• 📊 كشف نقاط التقويم المستمر والفروض والمعدلات الفصلية.
+• 🟢 التنبيهات الفورية للغياب، التأخر، ونقاط التميز والانضباط.
+
+🔗 *رابط الدخول المباشر بنقرة واحدة (بدون كلمة سر معقدة):*
+${magicLink}
+
+🔑 *رمز التلميذ العائلي:* \`${familyAccessCode}\`
+
+⚠️ *ملاحظة:* هذا الرابط خاص بولي التلميذ(ة) *${studentName}* ومربوط بمادة *${subjectName}* فقط، يرجى حفظه في المفضلة.
+
+بالتوفيق والنجاح الدائم لأبنائنا.
+👨‍🏫 *${teacherName} — أستاذ(ة) ${subjectName}*`
+}
+
+/**
  * Formats a ready-to-send WhatsApp invitation for the parent
  */
 export function formatParentInvitationWhatsApp(
@@ -116,3 +165,4 @@ ${loginUrl}
 بالتوفيق والنجاح لأبنائنا الكرام.
 👨‍🏫 *${teacherName} — أستاذ(ة) ${subjectName}*`
 }
+

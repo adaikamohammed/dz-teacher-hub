@@ -18,6 +18,10 @@ import MobileBottomNav from '@/components/dashboard/MobileBottomNav'
 import DailyWelcomeHero from '@/components/dashboard/DailyWelcomeHero'
 import CasioCalculatorModal from '@/components/dashboard/CasioCalculatorModal'
 import PedagogicalLibrarySection from '@/components/dashboard/PedagogicalLibrarySection'
+import RandomStudentPickerModal from '@/components/dashboard/RandomStudentPickerModal'
+import ClassroomGroupMakerModal from '@/components/dashboard/ClassroomGroupMakerModal'
+import TeacherOnboardingWizardModal, { OnboardingData } from '@/components/dashboard/TeacherOnboardingWizardModal'
+import { formatParentMagicLinkWhatsApp, generateFamilyAccessCode } from '@/lib/accountGenerator'
 import Modal from '@/components/ui/Modal'
 import { generateParentSummonsPDF, generateClassReportPDF } from '@/lib/pdfGenerator'
 import { parseStudentsExcel, exportToExcel } from '@/lib/excelUtils'
@@ -162,6 +166,9 @@ export default function TeacherPage() {
   const [isBoardModalOpen, setIsBoardModalOpen] = useState(false)
   const [isHwModalOpen, setIsHwModalOpen] = useState(false)
   const [isCasioModalOpen, setIsCasioModalOpen] = useState(false)
+  const [isRandomPickerOpen, setIsRandomPickerOpen] = useState(false)
+  const [isGroupMakerOpen, setIsGroupMakerOpen] = useState(false)
+  const [isOnboardingOpen, setIsOnboardingOpen] = useState(false)
   const [summonsStudent, setSummonsStudent] = useState<StudentItem | null>(null)
 
   // Form states
@@ -319,11 +326,18 @@ export default function TeacherPage() {
     showToast('📖 تم تحديث تقويم الكراس')
   }
 
+  // Set explicit status
+  const setStudentStatus = (id: string, status: 'present' | 'absent' | 'late') => {
+    updateCurrentStudents((prev) =>
+      prev.map((st) => (st.id === id ? { ...st, status } : st))
+    )
+  }
+
   // Copy WhatsApp Broadcast Report for the class
   const handleCopyWhatsAppBroadcast = () => {
     const todayStr = new Date().toLocaleDateString('ar-DZ', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-    const absentNames = students.filter((s) => s.status === 'absent').map((s) => s.name).join('، ') || 'لا يوجد غيابات'
-    const lateNames = students.filter((s) => s.status === 'late').map((s) => s.name).join('، ') || 'لا يوجد تأخرات'
+    const absentNames = rawStudents.filter((s) => s.status === 'absent').map((s) => s.name).join('، ') || 'لا يوجد غيابات'
+    const lateNames = rawStudents.filter((s) => s.status === 'late').map((s) => s.name).join('، ') || 'لا يوجد تأخرات'
 
     const message = `📚 *${teacherProfile.school} — ${teacherProfile.subject}*
 📐 *قسم:* ${currentClass.name}
@@ -534,8 +548,9 @@ export default function TeacherPage() {
 
   const sidebarClasses: ClassItem[] = classes.map((c) => ({
     id: c.id,
-    name: c.shortName,
-    grade: c.grade,
+    name: c.name,
+    shortName: c.shortName,
+    grade: c.grade as any,
   }))
 
   return (
@@ -654,6 +669,24 @@ export default function TeacherPage() {
                 onClick={() => setActiveTab('journal')}
               >
                 <Calendar size={13} /> دخول الحصة الحية ⚡
+              </button>
+
+              <button
+                className="btn-secondary"
+                style={{ padding: '6px 12px', fontSize: '11.5px', borderRadius: '8px', color: '#b45309', borderColor: '#fde68a', background: '#fffbeb' }}
+                onClick={() => setIsRandomPickerOpen(true)}
+                title="القرعة العشوائية لاختيار تلميذ للإجابة بعدالة"
+              >
+                <span>🎲 قرعة تلميذ</span>
+              </button>
+
+              <button
+                className="btn-secondary"
+                style={{ padding: '6px 12px', fontSize: '11.5px', borderRadius: '8px', color: '#1d4ed8', borderColor: '#bfdbfe', background: '#eff6ff' }}
+                onClick={() => setIsGroupMakerOpen(true)}
+                title="تقسيم القسم إلى أفواج عمل تعاونية متوازنة"
+              >
+                <span>👥 أفواج العمل</span>
               </button>
 
               <button
@@ -1192,7 +1225,7 @@ export default function TeacherPage() {
             <ClassroomSeatingChartSection
               currentClassId={selectedClassId}
               currentClassName={currentClass.name}
-              students={currentClass.students}
+              students={currentClass.students.map((st, idx) => ({ ...st, rollNumber: idx + 1 }))}
               onUpdateStudentStatus={(stId, status) => setStudentStatus(stId, status)}
               onAddStudentPoint={(stId) => addPoint(stId)}
             />
@@ -1743,10 +1776,14 @@ export default function TeacherPage() {
                     generateParentSummonsPDF({
                       studentName: activeProfileStudent.name,
                       className: currentClass.name,
-                      teacherName: 'أستاذ مادة الرياضيات',
-                      reason: 'متابعة بيداغوجية وسلوكية خاصة بمادة الرياضيات',
+                      parentName: `ولي أمر التلميذ(ة) ${activeProfileStudent.name}`,
+                      teacherName: teacherProfile.name,
+                      subjectName: teacherProfile.subject,
+                      absencesCount: activeProfileStudent.status === 'absent' ? 1 : 0,
+                      latesCount: activeProfileStudent.status === 'late' ? 1 : 0,
+                      missingHomeworksCount: (activeProfileStudent as any).homeworkDone ? 0 : 1,
+                      reasons: ['متابعة بيداغوجية وسلوكية خاصة بالمادة'],
                       date: new Date().toLocaleDateString('ar-DZ'),
-                      time: '10:00 صباحاً',
                     })
                     showToast(`📄 تم تنزيل استدعاء ولي أمر التلميذ: ${activeProfileStudent.name}`)
                   }}
@@ -1762,22 +1799,24 @@ export default function TeacherPage() {
                     generateStudentIndividualReportPDF({
                       studentName: activeProfileStudent.name,
                       className: currentClass.name,
-                      teacherName: 'أستاذ مادة الرياضيات',
-                      term: 'الفصل الأول',
+                      gradeLevel: currentClass.grade,
+                      teacherName: teacherProfile.name,
+                      termName: 'الفصل الأول',
                       academicYear: '2025/2026',
-                      evaluation: {
-                        notebookScore: 4.5,
-                        homeworkScore: 5.0,
-                        disciplineScore: 4.9,
-                        participationScore: 4.8,
-                        continuousEvaluationAvg: 19.20,
-                        test1Score: 17.50,
-                        test2Score: 18.00,
-                        examScore: 16.00,
-                        termAverage: 16.90,
-                        classRank: 1,
-                        teacherAppreciation: 'تلميذ ممتاز، منضبط ومجتهد جداً في الرياضيات.',
-                      },
+                      disciplineScore: 4.5,
+                      homeworkScore: 4.8,
+                      notebookScore: 4.7,
+                      participationScore: 4.9,
+                      continuousScore: 18.9,
+                      test1Score: 17.5,
+                      testsCount: 1,
+                      controlAverage: 18.2,
+                      examScore: 16.5,
+                      termAverage: 17.1,
+                      rankInClass: 1,
+                      totalStudents: currentClass.students.length,
+                      appreciation: 'ممتاز ومواظب',
+                      teacherObservations: 'مستوى طيب ومواظبة مشكورة.',
                     })
                     showToast(`📊 تم تنزيل البطاقة البيداغوجية الفردية للتلميذ: ${activeProfileStudent.name}`)
                   }}
@@ -2043,6 +2082,86 @@ export default function TeacherPage() {
         <CasioCalculatorModal
           isOpen={isCasioModalOpen}
           onClose={() => setIsCasioModalOpen(false)}
+        />
+
+        {/* ── MODAL: Random Student Picker (القرعة العشوائية) ── */}
+        <RandomStudentPickerModal
+          isOpen={isRandomPickerOpen}
+          onClose={() => setIsRandomPickerOpen(false)}
+          students={currentClass.students}
+          className={currentClass.name}
+          onAwardPoint={(studentId) => addPoint(studentId)}
+        />
+
+        {/* ── MODAL: Classroom Group Maker (أفواج العمل) ── */}
+        <ClassroomGroupMakerModal
+          isOpen={isGroupMakerOpen}
+          onClose={() => setIsGroupMakerOpen(false)}
+          students={currentClass.students}
+          className={currentClass.name}
+        />
+
+        {/* ── MODAL: Teacher Onboarding Wizard (معالج إعداد حساب الأستاذ) ── */}
+        <TeacherOnboardingWizardModal
+          isOpen={isOnboardingOpen}
+          onClose={() => setIsOnboardingOpen(false)}
+          onComplete={(onboardingData) => {
+            const mappedStage =
+              onboardingData.stage === 'primary'
+                ? 'التعليم الابتدائي'
+                : onboardingData.stage === 'secondary'
+                ? 'التعليم الثانوي'
+                : 'التعليم المتوسط'
+
+            const updatedProfile: TeacherProfile = {
+              name: onboardingData.name,
+              wilaya: onboardingData.wilaya,
+              school: onboardingData.school,
+              stage: mappedStage,
+              subject: onboardingData.subject,
+              academicYear: '2025/2026',
+              autoRemarksEnabled: true,
+            }
+            setTeacherProfile(updatedProfile)
+            localStorage.setItem('mt_teacher_profile', JSON.stringify(updatedProfile))
+
+            const studentNames = onboardingData.sampleStudentsList
+              .split('\n')
+              .map((n) => n.trim())
+              .filter(Boolean)
+
+            const generatedClasses: TeacherClass[] = onboardingData.classNames.map((cName, idx) => {
+              const classId = `cls_onboard_${idx + 1}`
+              const students: StudentItem[] = studentNames.map((sName, sIdx) => ({
+                id: `st_${idx + 1}_${sIdx + 1}`,
+                name: sName,
+                status: 'present',
+                points: Math.floor(Math.random() * 3),
+                notebookRating: 'good',
+                notebookStatus: 'complete',
+                notebookScore: '4.5',
+                homeworkDone: true,
+                parentUsername: `p.${sName.replace(/\s+/g, '.')}`,
+                parentPassword: `p#${Math.floor(1000 + Math.random() * 9000)}`,
+                parentPhone: '0555000000',
+                familyAccessCode: generateFamilyAccessCode(sName, cName, onboardingData.subject),
+              }))
+
+              return {
+                id: classId,
+                name: cName,
+                shortName: cName.slice(0, 4),
+                grade: (onboardingData.stage === 'primary' ? '1 متوسط' : onboardingData.stage === 'middle' ? '4 متوسط' : '4 متوسط') as any,
+                students,
+              }
+            })
+
+            setClasses(generatedClasses)
+            if (generatedClasses.length > 0) setSelectedClassId(generatedClasses[0].id)
+            localStorage.setItem('mt_math_teacher_classes', JSON.stringify(generatedClasses))
+            setIsOnboardingOpen(false)
+            showToast('🎉 تم إعداد المنصة وتوليد الأقسام والرموز العائلية بنجاح!')
+          }}
         />
 
         {/* ── MODAL: Teacher Profile Settings & Backup / Restore ── */}

@@ -1152,7 +1152,7 @@ export default function GradesEvaluationHub({ classes, activeClassId }: GradesEv
                         الفرض 1: <strong style={{ color: '#ef4444' }}>{st.testScore}/20</strong> • الاختبار: <strong style={{ color: '#ef4444' }}>{st.examScore}/20</strong> • المعدل الفصلي: <strong style={{ color: '#ef4444' }}>{st.termAverage.toFixed(2)}/20</strong>
                       </div>
                       <div style={{ fontSize: '11px', color: '#b45309', marginTop: '4px', fontWeight: 700 }}>
-                        📌 التوجيه: {st.teacherObservations || 'التركيز على مهارات الحساب الحرفي والإنشاء الهندسي.'}
+                        📌 التوجيه: {(st as any).teacherObservations || st.appreciation || 'التركيز على مهارات الحساب الحرفي والإنشاء الهندسي.'}
                       </div>
                     </div>
 
