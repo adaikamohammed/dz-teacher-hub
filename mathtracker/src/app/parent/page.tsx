@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import DesktopSidebar from '@/components/layout/DesktopSidebar'
 import BadgesSection from '@/components/dashboard/BadgesSection'
 import Modal from '@/components/ui/Modal'
+import { fetchParentDataFromCloud } from '@/lib/cloudSync'
 import {
   Calendar,
   BookOpen,
@@ -155,8 +156,12 @@ const ALL_CHILDREN: Child[] = [
 export default function ParentPage() {
   const router = useRouter()
   const [theme, setTheme] = useState<'light' | 'dark'>('light')
-  const [childrenList, setChildrenList] = useState<Child[]>([ALL_CHILDREN[0]])
-  const [selectedChild, setSelectedChild] = useState<Child>(ALL_CHILDREN[0])
+  const [childrenList, setChildrenList] = useState<Child[]>([])
+  const [selectedChild, setSelectedChild] = useState<Child | null>(null)
+  const [parentCodeInput, setParentCodeInput] = useState('')
+  const [isSearchingCode, setIsSearchingCode] = useState(false)
+  const [loginError, setLoginError] = useState<string | null>(null)
+
   const [activeTab, setActiveTab] = useState<'feed' | 'grades' | 'journal' | 'badges'>('feed')
   const [selectedSessionId, setSelectedSessionId] = useState<string>(DEMO_SESSIONS[0].id)
   const [zoomedImage, setZoomedImage] = useState<string | null>(null)
@@ -170,7 +175,97 @@ export default function ParentPage() {
   // Dynamic Subject & Teacher info
   const [subjectName, setSubjectName] = useState('مادة الرياضيات')
   const [teacherName, setTeacherName] = useState('أستاذ المادة')
-  const [schoolName, setSchoolName] = useState('متوسطة الإمام الشافعي')
+  const [schoolName, setSchoolName] = useState('المؤسسة التربوية')
+
+  const handleLookupAndLogin = async (rawCode: string) => {
+    if (!rawCode.trim()) return
+    setIsSearchingCode(true)
+    setLoginError(null)
+
+    const cleanCode = rawCode.trim().toUpperCase()
+
+    // 1. Search in local teacher classes first
+    const savedClassesStr = localStorage.getItem('mt_math_teacher_classes')
+    if (savedClassesStr) {
+      try {
+        const parsedClasses = JSON.parse(savedClassesStr)
+        if (Array.isArray(parsedClasses)) {
+          for (const cls of parsedClasses) {
+            const match = cls.students?.find(
+              (s: any) =>
+                s.familyAccessCode?.toUpperCase() === cleanCode ||
+                s.name?.trim().toLowerCase() === rawCode.trim().toLowerCase()
+            )
+            if (match) {
+              const newChild: Child = {
+                id: match.id,
+                name: match.name,
+                class_name: cls.name,
+                avatar: '👦',
+                termAverage: 17.5,
+                notebookScore: match.notebookScore || '18/20',
+                homeworkRate: match.homeworkDone ? '100%' : '90%',
+                attendanceRate: match.status === 'absent' ? '85%' : '98%',
+                status: match.status || 'present',
+                points: match.points || 0,
+              }
+              setChildrenList((prev) => (prev.some((c) => c.id === newChild.id) ? prev : [...prev, newChild]))
+              setSelectedChild(newChild)
+              localStorage.setItem('mt_logged_child_id', newChild.id)
+              localStorage.setItem('mt_logged_family_code', cleanCode)
+              setIsSearchingCode(false)
+              return
+            }
+          }
+        }
+      } catch (e) {
+        console.error(e)
+      }
+    }
+
+    // 2. Query Vercel Cloud Database API
+    const cloudResult = await fetchParentDataFromCloud(cleanCode)
+    if (cloudResult && cloudResult.student) {
+      const st = cloudResult.student
+      const cls = cloudResult.classInfo
+      const tch = cloudResult.teacherInfo
+
+      if (tch?.subject) setSubjectName(tch.subject)
+      if (tch?.name) setTeacherName(tch.name)
+      if (tch?.school) setSchoolName(tch.school)
+
+      const newChild: Child = {
+        id: st.id,
+        name: st.name,
+        class_name: cls?.name || 'القسم',
+        avatar: '👦',
+        termAverage: 17.0,
+        notebookScore: st.notebookScore || '18/20',
+        homeworkRate: '100%',
+        attendanceRate: '100%',
+        status: st.status || 'present',
+        points: st.points || 0,
+      }
+      setChildrenList((prev) => (prev.some((c) => c.id === newChild.id) ? prev : [...prev, newChild]))
+      setSelectedChild(newChild)
+      localStorage.setItem('mt_logged_child_id', newChild.id)
+      localStorage.setItem('mt_logged_family_code', cleanCode)
+      setIsSearchingCode(false)
+      return
+    }
+
+    // Fallback if demo data
+    const demoFound = ALL_CHILDREN.find((c) => c.name.includes(rawCode.trim()) || c.id === rawCode.trim())
+    if (demoFound) {
+      setChildrenList([demoFound])
+      setSelectedChild(demoFound)
+      setIsSearchingCode(false)
+      return
+    }
+
+    setIsSearchingCode(false)
+    setLoginError('لم يتم العثور على تلميذ بهذا الرمز. يرجى التأكد من الرمز المسلم لك من طرف أستاذ المادة.')
+  }
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
@@ -192,27 +287,15 @@ export default function ParentPage() {
       const urlParams = new URLSearchParams(window.location.search)
       const code = urlParams.get('code')
       if (code) {
-        // Auto-select child matching code or first child
-        setSelectedChild(ALL_CHILDREN[0])
-        setChildrenList([ALL_CHILDREN[0]])
+        handleLookupAndLogin(code)
         return
       }
-    }
 
-    // Read logged in child ID
-    const loggedChildId = localStorage.getItem('mt_logged_child_id')
-    const loggedChildName = localStorage.getItem('mt_logged_child_name')
-
-    if (loggedChildId) {
-      const found = ALL_CHILDREN.find((c) => c.id === loggedChildId || c.name === loggedChildName)
-      if (found) {
-        setChildrenList([found])
-        setSelectedChild(found)
-        return
+      const savedCode = localStorage.getItem('mt_logged_family_code')
+      if (savedCode) {
+        handleLookupAndLogin(savedCode)
       }
     }
-    setChildrenList(ALL_CHILDREN.slice(0, 2))
-    setSelectedChild(ALL_CHILDREN[0])
   }, [theme])
 
   const toggleSidebarCollapse = () => {
@@ -239,7 +322,7 @@ export default function ParentPage() {
         activeTab={activeTab}
         setActiveTab={(tab) => setActiveTab(tab as any)}
         userRole="parent"
-        userName={`ولي ${selectedChild.name}`}
+        userName={selectedChild ? `ولي ${selectedChild.name}` : 'فضاء ولي الأمر'}
         theme={theme}
         toggleTheme={() => setTheme((p) => (p === 'light' ? 'dark' : 'light'))}
         onLogout={handleLogout}
@@ -277,74 +360,148 @@ export default function ParentPage() {
           </button>
         </header>
 
-        {/* ── Top Child Bar & Quick Switcher ── */}
-        <div
-          style={{
-            background: 'var(--color-card)',
-            borderBottom: '1px solid var(--color-border)',
-            padding: '12px 16px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: '10px',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span style={{ fontSize: '12px', fontWeight: 900, color: 'var(--color-muted-fg)' }}>
-              التلميذ المتابع:
-            </span>
-            <div className="child-switcher-list">
-              {childrenList.map((ch) => (
-                <button
-                  key={ch.id}
-                  className={`child-switcher-btn ${selectedChild.id === ch.id ? 'active' : ''}`}
-                  onClick={() => setSelectedChild(ch)}
-                >
-                  {ch.avatar} {ch.name} ({ch.class_name})
-                </button>
-              ))}
+        {/* ── Official Parent Code Gateway Screen (إذا لم يتم إدخال كود تلميذ بعد) ── */}
+        {!selectedChild ? (
+          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
+            <div
+              style={{
+                maxWidth: '480px',
+                width: '100%',
+                background: 'var(--color-card)',
+                borderRadius: '24px',
+                border: '1.5px solid var(--color-border)',
+                padding: '36px 24px',
+                textAlign: 'center',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.06)',
+              }}
+            >
+              <div style={{ fontSize: '48px', marginBottom: '12px' }}>👨‍👩‍👧</div>
+              <h2 style={{ fontSize: '20px', fontWeight: 950, color: 'var(--color-foreground)', marginBottom: '8px' }}>
+                فضاء ولي الأمر الرقمي 🇩🇿
+              </h2>
+              <p style={{ fontSize: '13px', color: 'var(--color-muted-fg)', lineHeight: 1.6, marginBottom: '24px' }}>
+                مرحباً بكم. لمتابعة كراس ودروس وواجبات ونقاط ابنكم، يرجى إدخال <strong>رمز التلميذ العائلي</strong> المسلم لكم من طرف الأستاذ:
+              </p>
 
-              <button
-                type="button"
-                onClick={() => setIsAddChildModalOpen(true)}
-                className="btn-secondary"
-                style={{
-                  padding: '4px 10px',
-                  borderRadius: '20px',
-                  fontSize: '11px',
-                  fontWeight: 800,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px',
-                  border: '1px dashed var(--color-border)',
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  handleLookupAndLogin(parentCodeInput)
                 }}
-                title="ربط ابن آخر أو مادة جديدة برمز التلميذ العائلي"
+                style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}
               >
-                <span>➕ إضافة ابن / مادة أخرى</span>
-              </button>
+                <input
+                  type="text"
+                  required
+                  placeholder="مثال: M4-7842-DZ"
+                  value={parentCodeInput}
+                  onChange={(e) => setParentCodeInput(e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '14px 16px',
+                    borderRadius: '12px',
+                    border: '2px solid var(--color-primary)',
+                    background: 'var(--color-muted)',
+                    color: 'var(--color-foreground)',
+                    fontFamily: 'Inter, Cairo, monospace',
+                    fontWeight: 900,
+                    fontSize: '16px',
+                    letterSpacing: '2px',
+                    textAlign: 'center',
+                  }}
+                />
+
+                {loginError && (
+                  <div style={{ color: '#dc2626', fontSize: '12px', fontWeight: 700, background: '#fef2f2', padding: '10px 14px', borderRadius: '10px', border: '1px solid #fecaca' }}>
+                    ⚠️ {loginError}
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={isSearchingCode}
+                  className="btn-primary"
+                  style={{ width: '100%', padding: '12px', fontSize: '14px', borderRadius: '12px', fontWeight: 900, justifyContent: 'center' }}
+                >
+                  {isSearchingCode ? 'جاري التحقق والبحث في السحابة...' : '🔑 دخول فضاء التلميذ'}
+                </button>
+              </form>
+
+              <div style={{ marginTop: '20px', paddingTop: '16px', borderTop: '1px solid var(--color-border)', fontSize: '11px', color: 'var(--color-muted-fg)', lineHeight: 1.6 }}>
+                💡 <strong>نصيحة:</strong> إذا وصلكم رابط من الأستاذ عبر WhatsApp، يكفي النقر عليه ليفتح فضاء ابنكم تلقائياً دون كتابة الرمز.
+              </div>
             </div>
           </div>
+        ) : (
+          <>
+            {/* ── Top Child Bar & Quick Switcher ── */}
+            <div
+              style={{
+                background: 'var(--color-card)',
+                borderBottom: '1px solid var(--color-border)',
+                padding: '12px 16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: '10px',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <span style={{ fontSize: '12px', fontWeight: 900, color: 'var(--color-muted-fg)' }}>
+                  التلميذ المتابع:
+                </span>
+                <div className="child-switcher-list">
+                  {childrenList.map((ch) => (
+                    <button
+                      key={ch.id}
+                      className={`child-switcher-btn ${selectedChild.id === ch.id ? 'active' : ''}`}
+                      onClick={() => setSelectedChild(ch)}
+                    >
+                      {ch.avatar} {ch.name} ({ch.class_name})
+                    </button>
+                  ))}
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span className="badge badge-primary">📐 مادة الرياضيات</span>
-            <span className="badge badge-success">
-              {selectedChild.status === 'present' ? '🟢 حاضر اليوم' : selectedChild.status === 'late' ? '🟡 متأخر' : '🔴 غائب'}
-            </span>
-          </div>
-        </div>
+                  <button
+                    type="button"
+                    onClick={() => setIsAddChildModalOpen(true)}
+                    className="btn-secondary"
+                    style={{
+                      padding: '4px 10px',
+                      borderRadius: '20px',
+                      fontSize: '11px',
+                      fontWeight: 800,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      border: '1px dashed var(--color-border)',
+                    }}
+                    title="ربط ابن آخر أو مادة جديدة برمز التلميذ العائلي"
+                  >
+                    <span>➕ إضافة ابن / مادة أخرى</span>
+                  </button>
+                </div>
+              </div>
 
-        {/* ── Simple Parent Navigation Pills Bar ── */}
-        <div
-          style={{
-            background: 'var(--color-muted)',
-            padding: '8px 16px',
-            borderBottom: '1px solid var(--color-border)',
-            display: 'flex',
-            gap: '8px',
-            overflowX: 'auto',
-          }}
-        >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span className="badge badge-primary">📐 {subjectName}</span>
+                <span className="badge badge-success">
+                  {selectedChild.status === 'present' ? '🟢 حاضر اليوم' : selectedChild.status === 'late' ? '🟡 متأخر' : '🔴 غائب'}
+                </span>
+              </div>
+            </div>
+
+            {/* ── Simple Parent Navigation Pills Bar ── */}
+            <div
+              style={{
+                background: 'var(--color-muted)',
+                padding: '8px 16px',
+                borderBottom: '1px solid var(--color-border)',
+                display: 'flex',
+                gap: '8px',
+                overflowX: 'auto',
+              }}
+            >
           <button
             onClick={() => setActiveTab('feed')}
             style={{
@@ -1246,6 +1403,8 @@ export default function ParentPage() {
             <span style={{ fontSize: '10px', fontWeight: activeTab === 'badges' ? 900 : 700 }}>الشرف</span>
           </button>
         </nav>
+          </>
+        )}
       </div>
 
       {/* ── Image Zoom Modal (تكبير صور السبورة والواجب والحل) ── */}

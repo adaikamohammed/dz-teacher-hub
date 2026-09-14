@@ -22,6 +22,8 @@ import RandomStudentPickerModal from '@/components/dashboard/RandomStudentPicker
 import ClassroomGroupMakerModal from '@/components/dashboard/ClassroomGroupMakerModal'
 import TeacherOnboardingWizardModal, { OnboardingData } from '@/components/dashboard/TeacherOnboardingWizardModal'
 import { formatParentMagicLinkWhatsApp, generateFamilyAccessCode } from '@/lib/accountGenerator'
+import CloudSyncBadge from '@/components/ui/CloudSyncBadge'
+import { syncTeacherDataToCloud } from '@/lib/cloudSync'
 import Modal from '@/components/ui/Modal'
 import { generateParentSummonsPDF, generateClassReportPDF } from '@/lib/pdfGenerator'
 import { parseStudentsExcel, exportToExcel } from '@/lib/excelUtils'
@@ -155,8 +157,8 @@ export default function TeacherPage() {
   const router = useRouter()
   const [theme, setTheme] = useState<'light' | 'dark'>('light')
   const [activeTab, setActiveTab] = useState('attendance')
-  const [classes, setClasses] = useState<TeacherClass[]>(DEFAULT_CLASSES)
-  const [selectedClassId, setSelectedClassId] = useState<string>('cls_1')
+  const [classes, setClasses] = useState<TeacherClass[]>([])
+  const [selectedClassId, setSelectedClassId] = useState<string>('')
   const [sortMode, setSortMode] = useState<'alphabetical' | 'points'>('alphabetical')
 
   // Modals state
@@ -180,16 +182,9 @@ export default function TeacherPage() {
   const [lessonTitle, setLessonTitle] = useState('')
   const [toast, setToast] = useState<string | null>(null)
 
-  // Board lessons & Homework list per class
-  const [boardLessons, setBoardLessons] = useState<{ id: string; title: string; date: string; classId: string }[]>([
-    { id: 'bl_1', title: 'ملخص الحساب الحرفي وتبسيط العبارات', date: '2026-08-16', classId: 'cls_1' },
-    { id: 'bl_2', title: 'إنشاء الأشكال الهندسية وخواص متوازي الأضلاع', date: '2026-08-16', classId: 'cls_3' },
-  ])
-
-  const [homeworksList, setHomeworksList] = useState<{ id: string; title: string; dueDate: string; classId: string }[]>([
-    { id: 'hw_1', title: 'حل التمارين 12، 14 و15 ص 38', dueDate: '2026-08-17', classId: 'cls_1' },
-    { id: 'hw_2', title: 'رسم الأشكال الهندسية تمرين 4 ص 50', dueDate: '2026-08-18', classId: 'cls_3' },
-  ])
+  // Board lessons & Homework list per class (official empty by default)
+  const [boardLessons, setBoardLessons] = useState<{ id: string; title: string; date: string; classId: string }[]>([])
+  const [homeworksList, setHomeworksList] = useState<{ id: string; title: string; dueDate: string; classId: string }[]>([])
 
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false)
@@ -198,12 +193,12 @@ export default function TeacherPage() {
 
   // Teacher Profile & Identity
   const [teacherProfile, setTeacherProfile] = useState<TeacherProfile>({
-    name: 'أستاذ مادة الرياضيات',
-    wilaya: 'الجزائر العاصمة',
-    school: 'متوسطة الإمام الشافعي',
+    name: 'الأستاذ(ة)',
+    wilaya: 'الجزائر',
+    school: 'المؤسسة التربوية',
     stage: 'التعليم المتوسط',
-    subject: 'مادة الرياضيات',
-    academicYear: '2026 - 2027',
+    subject: 'الرياضيات',
+    academicYear: '2025/2026',
     autoRemarksEnabled: true,
   })
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
@@ -217,10 +212,16 @@ export default function TeacherPage() {
         if (Array.isArray(parsed) && parsed.length > 0) {
           setClasses(parsed)
           setSelectedClassId(parsed[0].id)
+        } else {
+          setIsOnboardingOpen(true)
         }
       } catch (e) {
         console.error('Failed to load classes from storage', e)
+        setIsOnboardingOpen(true)
       }
+    } else {
+      // First official visit: auto open setup wizard
+      setIsOnboardingOpen(true)
     }
 
     const savedProfile = localStorage.getItem('mt_teacher_profile')
@@ -247,10 +248,13 @@ export default function TeacherPage() {
     })
   }
 
-  // Save classes to localStorage whenever updated
+  // Dual-Tier Save: localStorage + Vercel Cloud Database
   useEffect(() => {
-    localStorage.setItem('mt_math_teacher_classes', JSON.stringify(classes))
-  }, [classes])
+    if (classes.length > 0) {
+      localStorage.setItem('mt_math_teacher_classes', JSON.stringify(classes))
+      syncTeacherDataToCloud(teacherProfile, classes, boardLessons)
+    }
+  }, [classes, teacherProfile, boardLessons])
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
@@ -263,8 +267,14 @@ export default function TeacherPage() {
     setTimeout(() => setToast(null), 3500)
   }
 
-  const currentClass = classes.find((c) => c.id === selectedClassId) || classes[0]
-  const rawStudents = currentClass?.students || []
+  const currentClass: TeacherClass = (classes.find((c) => c.id === selectedClassId) || classes[0]) || {
+    id: 'none',
+    name: 'لم يتم إضافة أقسام بعد',
+    shortName: '---',
+    grade: '1 متوسط',
+    students: [],
+  }
+  const rawStudents = currentClass.students || []
 
   // Alphabetically sorted or Points-sorted students
   const sortedStudents = useMemo(() => {
