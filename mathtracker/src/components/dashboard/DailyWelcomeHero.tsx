@@ -95,13 +95,14 @@ export default function DailyWelcomeHero({
     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%' }}>
       {/* Main Golden/Navy Daily Hub Card */}
       <div
+        className="card-glass-premium"
         style={{
-          background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
+          background: 'linear-gradient(135deg, #0b1329 0%, #172554 50%, #0b1329 100%)',
           color: '#ffffff',
-          borderRadius: '20px',
-          padding: '20px 24px',
-          border: '1.5px solid #334155',
-          boxShadow: '0 8px 30px rgba(0,0,0,0.25)',
+          borderRadius: '22px',
+          padding: '22px 26px',
+          border: '1px solid rgba(59, 130, 246, 0.25)',
+          boxShadow: '0 10px 32px rgba(0,0,0,0.35)',
           position: 'relative',
           overflow: 'hidden',
         }}
@@ -110,11 +111,22 @@ export default function DailyWelcomeHero({
         <div
           style={{
             position: 'absolute',
-            top: '-50px',
-            left: '-50px',
-            width: '200px',
-            height: '200px',
-            background: 'radial-gradient(circle, rgba(16,122,87,0.25) 0%, transparent 70%)',
+            top: '-60px',
+            right: '-60px',
+            width: '240px',
+            height: '240px',
+            background: 'radial-gradient(circle, rgba(16,185,129,0.3) 0%, transparent 70%)',
+            pointerEvents: 'none',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '-60px',
+            left: '-60px',
+            width: '240px',
+            height: '240px',
+            background: 'radial-gradient(circle, rgba(59,130,246,0.25) 0%, transparent 70%)',
             pointerEvents: 'none',
           }}
         />
@@ -122,79 +134,137 @@ export default function DailyWelcomeHero({
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px', position: 'relative', zIndex: 2 }}>
           {/* Right Section: Digital Clock & Date */}
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-              <span className="badge badge-primary" style={{ background: '#0284c7', color: '#ffffff' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', flexWrap: 'wrap' }}>
+              <span
+                style={{
+                  background: 'rgba(56, 189, 248, 0.15)',
+                  color: '#38bdf8',
+                  border: '1px solid rgba(56, 189, 248, 0.3)',
+                  padding: '3px 10px',
+                  borderRadius: '12px',
+                  fontSize: '11px',
+                  fontWeight: 800,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                }}
+              >
                 🏫 {schoolName}
               </span>
-              <span className="badge badge-success" style={{ background: '#107a57', color: '#ffffff' }}>
+              <span
+                style={{
+                  background: 'rgba(16, 185, 129, 0.15)',
+                  color: '#34d399',
+                  border: '1px solid rgba(16, 185, 129, 0.3)',
+                  padding: '3px 10px',
+                  borderRadius: '12px',
+                  fontSize: '11px',
+                  fontWeight: 800,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                }}
+              >
                 🎓 {subjectName}
+              </span>
+              <span
+                style={{
+                  background: 'rgba(245, 158, 11, 0.15)',
+                  color: '#fbbf24',
+                  border: '1px solid rgba(245, 158, 11, 0.3)',
+                  padding: '3px 10px',
+                  borderRadius: '12px',
+                  fontSize: '11px',
+                  fontWeight: 800,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                }}
+              >
+                👨‍🏫 {teacherName}
               </span>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px' }}>
-              <div style={{ fontSize: '28px', fontWeight: 950, fontFamily: 'Inter, Cairo, monospace', letterSpacing: '1px', color: '#fbbf24' }}>
-                {timeStr || '09:28:00 م'}
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '14px', flexWrap: 'wrap' }}>
+              <div
+                style={{
+                  fontSize: '32px',
+                  fontWeight: 950,
+                  fontFamily: 'Inter, Cairo, monospace',
+                  letterSpacing: '1.5px',
+                  color: '#fbbf24',
+                  textShadow: '0 0 15px rgba(251, 191, 36, 0.3)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                }}
+              >
+                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 10px #10b981' }} />
+                {timeStr || '08:00:00 ص'}
               </div>
-              <div style={{ fontSize: '13px', color: '#cbd5e1', fontWeight: 800 }}>
-                🗓️ {dateStr} • {hijriStr}
+              <div style={{ fontSize: '13.5px', color: '#cbd5e1', fontWeight: 800 }}>
+                🗓️ {dateStr} <span style={{ opacity: 0.6 }}>|</span> {hijriStr}
               </div>
             </div>
           </div>
 
           {/* Left Section: Quick Tools Toolbar */}
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
             <button
               onClick={onOpenCalculator}
-              className="btn-gold"
+              className="btn-glow-gold"
               style={{
-                padding: '8px 14px',
-                fontSize: '12px',
-                borderRadius: '12px',
+                padding: '9px 16px',
+                fontSize: '12.5px',
+                borderRadius: '14px',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '6px',
-                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-                color: '#ffffff',
-                border: 'none',
+                gap: '8px',
               }}
             >
-              <Calculator size={16} /> حاسبة كازيو FX-99 🧮
+              <Calculator size={17} /> حاسبة كاسيو FX-991 🧮
             </button>
 
             <button
               onClick={() => setIsTimerOpen(!isTimerOpen)}
-              className="btn-secondary"
               style={{
-                padding: '8px 14px',
-                fontSize: '12px',
-                borderRadius: '12px',
+                padding: '9px 16px',
+                fontSize: '12.5px',
+                borderRadius: '14px',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '6px',
-                background: '#334155',
+                gap: '8px',
+                background: isTimerOpen ? 'rgba(56, 189, 248, 0.25)' : 'rgba(255, 255, 255, 0.08)',
                 color: '#ffffff',
-                border: '1px solid #475569',
+                border: isTimerOpen ? '1px solid #38bdf8' : '1px solid rgba(255, 255, 255, 0.15)',
+                backdropFilter: 'blur(10px)',
+                fontWeight: 800,
+                cursor: 'pointer',
+                transition: 'all 0.2s',
               }}
             >
-              <Timer size={16} /> مؤقت الحصة ⏱️
+              <Timer size={17} /> مؤقت الحصة ⏱️
             </button>
 
             <button
               onClick={() => onNavigateTab('seating')}
-              className="btn-secondary"
               style={{
-                padding: '8px 14px',
-                fontSize: '12px',
-                borderRadius: '12px',
+                padding: '9px 16px',
+                fontSize: '12.5px',
+                borderRadius: '14px',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '6px',
-                background: '#334155',
+                gap: '8px',
+                background: 'rgba(255, 255, 255, 0.08)',
                 color: '#ffffff',
-                border: '1px solid #475569',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
+                backdropFilter: 'blur(10px)',
+                fontWeight: 800,
+                cursor: 'pointer',
+                transition: 'all 0.2s',
               }}
             >
-              <Grid size={16} /> مخطط الجلوس 🪑
+              <Grid size={17} /> مخطط الجلوس 🪑
             </button>
           </div>
         </div>
@@ -203,69 +273,83 @@ export default function DailyWelcomeHero({
         {isTimerOpen && (
           <div
             style={{
-              marginTop: '14px',
-              padding: '12px 16px',
-              borderRadius: '14px',
-              background: 'rgba(15, 23, 42, 0.8)',
-              border: '1px dashed #475569',
+              marginTop: '16px',
+              padding: '14px 18px',
+              borderRadius: '16px',
+              background: 'rgba(11, 19, 41, 0.85)',
+              border: '1px solid rgba(56, 189, 248, 0.3)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
               flexWrap: 'wrap',
-              gap: '12px',
+              gap: '14px',
+              boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.3)',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 900, color: '#38bdf8' }}>⏱️ مؤقت الحصة والأنشطة:</span>
-              <span style={{ fontSize: '20px', fontWeight: 900, fontFamily: 'Inter, monospace', color: '#fbbf24' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <span style={{ fontSize: '13.5px', fontWeight: 900, color: '#38bdf8' }}>⏱️ مؤقت الحصة والأنشطة:</span>
+              <span
+                style={{
+                  fontSize: '24px',
+                  fontWeight: 950,
+                  fontFamily: 'Inter, monospace',
+                  color: '#fbbf24',
+                  background: 'rgba(0,0,0,0.4)',
+                  padding: '2px 12px',
+                  borderRadius: '10px',
+                  border: '1px solid rgba(251, 191, 36, 0.3)',
+                  letterSpacing: '2px',
+                }}
+              >
                 {formatTimer(timerSeconds)}
               </span>
             </div>
 
-            <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
               <button
                 onClick={() => startTimerWithMinutes(5)}
-                style={{ padding: '4px 8px', borderRadius: '8px', border: '1px solid #475569', background: '#1e293b', color: '#ffffff', fontSize: '11px', cursor: 'pointer' }}
+                style={{ padding: '6px 12px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.06)', color: '#ffffff', fontSize: '12px', fontWeight: 800, cursor: 'pointer' }}
               >
-                5 دقائق (انطلاق)
+                5 د (انطلاق)
               </button>
               <button
                 onClick={() => startTimerWithMinutes(15)}
-                style={{ padding: '4px 8px', borderRadius: '8px', border: '1px solid #475569', background: '#1e293b', color: '#ffffff', fontSize: '11px', cursor: 'pointer' }}
+                style={{ padding: '6px 12px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.06)', color: '#ffffff', fontSize: '12px', fontWeight: 800, cursor: 'pointer' }}
               >
-                15 دقيقة (نشاط)
+                15 د (نشاط)
               </button>
               <button
                 onClick={() => startTimerWithMinutes(30)}
-                style={{ padding: '4px 8px', borderRadius: '8px', border: '1px solid #475569', background: '#1e293b', color: '#ffffff', fontSize: '11px', cursor: 'pointer' }}
+                style={{ padding: '6px 12px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.06)', color: '#ffffff', fontSize: '12px', fontWeight: 800, cursor: 'pointer' }}
               >
-                30 دقيقة
+                30 د
               </button>
               <button
                 onClick={() => startTimerWithMinutes(45)}
-                style={{ padding: '4px 8px', borderRadius: '8px', border: '1px solid #475569', background: '#1e293b', color: '#ffffff', fontSize: '11px', cursor: 'pointer' }}
+                style={{ padding: '6px 12px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.06)', color: '#ffffff', fontSize: '12px', fontWeight: 800, cursor: 'pointer' }}
               >
-                45 دقيقة (حصة كاملة)
+                45 د (حصة)
               </button>
 
               <button
                 onClick={() => setIsTimerRunning(!isTimerRunning)}
                 style={{
-                  padding: '4px 10px',
-                  borderRadius: '8px',
+                  padding: '6px 14px',
+                  borderRadius: '10px',
                   border: 'none',
                   background: isTimerRunning ? '#ef4444' : '#10b981',
                   color: '#ffffff',
-                  fontSize: '11px',
+                  fontSize: '12px',
                   fontWeight: 900,
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '4px',
+                  gap: '6px',
+                  boxShadow: isTimerRunning ? '0 0 12px rgba(239, 68, 68, 0.4)' : '0 0 12px rgba(16, 185, 129, 0.4)',
                 }}
               >
-                {isTimerRunning ? <Pause size={12} /> : <Play size={12} />}
-                {isTimerRunning ? 'إيقاف مؤقت' : 'تشغيل'}
+                {isTimerRunning ? <Pause size={14} /> : <Play size={14} />}
+                {isTimerRunning ? 'إيقاف' : 'تشغيل'}
               </button>
 
               <button
@@ -273,9 +357,10 @@ export default function DailyWelcomeHero({
                   setTimerSeconds(0)
                   setIsTimerRunning(false)
                 }}
-                style={{ padding: '4px 8px', borderRadius: '8px', border: '1px solid #475569', background: '#1e293b', color: '#94a3b8', fontSize: '11px', cursor: 'pointer' }}
+                style={{ padding: '6px 10px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.06)', color: '#94a3b8', fontSize: '12px', cursor: 'pointer' }}
+                title="إعادة ضبط"
               >
-                <RotateCcw size={12} />
+                <RotateCcw size={14} />
               </button>
             </div>
           </div>
@@ -284,9 +369,9 @@ export default function DailyWelcomeHero({
         {/* Daily Quote Footer */}
         <div
           style={{
-            marginTop: '14px',
-            paddingTop: '12px',
-            borderTop: '1px solid #334155',
+            marginTop: '16px',
+            paddingTop: '14px',
+            borderTop: '1px solid rgba(255, 255, 255, 0.1)',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -294,10 +379,10 @@ export default function DailyWelcomeHero({
             gap: '8px',
           }}
         >
-          <div style={{ fontSize: '12px', color: '#e2e8f0', display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <Sparkles size={14} className="text-amber-400" />
+          <div style={{ fontSize: '12.5px', color: '#e2e8f0', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 700 }}>
+            <Sparkles size={16} className="text-amber-400" />
             <span>&ldquo;{currentQuote.quote}&rdquo;</span>
-            <span style={{ fontSize: '10.5px', color: '#94a3b8' }}>— {currentQuote.author}</span>
+            <span style={{ fontSize: '11px', color: '#94a3b8' }}>— {currentQuote.author}</span>
           </div>
 
           <button
@@ -305,8 +390,9 @@ export default function DailyWelcomeHero({
             style={{
               background: 'transparent',
               border: 'none',
-              color: '#94a3b8',
-              fontSize: '10.5px',
+              color: '#38bdf8',
+              fontSize: '11px',
+              fontWeight: 800,
               cursor: 'pointer',
               textDecoration: 'underline',
             }}

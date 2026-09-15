@@ -584,20 +584,22 @@ export default function TeacherPage() {
       <div className="main-viewport">
         {/* ── Mobile Top Header ── */}
         <header className="app-header mobile-only-header">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <button
               className="theme-toggle-btn"
               onClick={() => setIsMobileSidebarOpen(true)}
               title="القائمة الجانبية"
-              style={{ fontSize: '16px' }}
+              style={{ fontSize: '18px' }}
             >
               ☰
             </button>
             <div className="app-brand">
-              <div className="app-logo">📐</div>
+              <div className="app-logo" style={{ background: 'linear-gradient(135deg, #107a57, #0d6447)', color: '#ffffff' }}>
+                🎓
+              </div>
               <div>
-                <h1 className="app-title">MathTracker</h1>
-                <p className="app-subtitle">{teacherProfile.name} • {teacherProfile.school}</p>
+                <h1 className="app-title" style={{ fontSize: '15px', fontWeight: 900 }}>منصة الأستاذ الرقمية</h1>
+                <p className="app-subtitle" style={{ fontSize: '11px', fontWeight: 700 }}>{teacherProfile.name} • {teacherProfile.school}</p>
               </div>
             </div>
           </div>
@@ -623,67 +625,79 @@ export default function TeacherPage() {
         </header>
 
         {/* ── Top Bar: Classes Selector + Quick Actions ── */}
-        {/* ── Top Bar: Rendered ONLY in Attendance Tab (Ultra-Slim 1-Row Bar) ── */}
         {activeTab === 'attendance' && (
           <div
+            className="card-glass-premium"
             style={{
-              background: 'var(--color-card)',
-              borderBottom: '1px solid var(--color-border)',
-              padding: '10px 16px',
+              borderRadius: '18px',
+              margin: '0 0 12px',
+              padding: '12px 18px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              gap: '10px',
+              gap: '12px',
               flexWrap: 'wrap',
             }}
           >
             {/* Class Switcher Pills */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflowX: 'auto' }}>
-              <span style={{ fontSize: '12px', fontWeight: 800, color: 'var(--color-primary)', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', overflowX: 'auto', paddingBottom: '2px' }}>
+              <span style={{ fontSize: '12.5px', fontWeight: 900, color: 'var(--color-primary)', display: 'flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
                 📐 الأقسام:
               </span>
-              <div className="filter-chip-row">
+              <div className="filter-chip-row" style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
                 {classes.map((cls) => {
                   const isSelected = cls.id === selectedClassId
                   return (
                     <button
                       key={cls.id}
                       onClick={() => setSelectedClassId(cls.id)}
+                      className={`pill-tab-modern ${isSelected ? 'active' : ''}`}
                       style={{
-                        padding: '5px 12px',
-                        borderRadius: '20px',
-                        fontSize: '11.5px',
-                        fontWeight: 800,
-                        fontFamily: 'Cairo, sans-serif',
-                        cursor: 'pointer',
-                        whiteSpace: 'nowrap',
-                        border: isSelected ? 'none' : '1px solid var(--color-border)',
-                        background: isSelected ? 'linear-gradient(135deg, #107a57, #0d6447)' : 'var(--color-muted)',
-                        color: isSelected ? '#ffffff' : 'var(--color-muted-fg)',
-                        boxShadow: isSelected ? '0 3px 10px rgba(16,122,87,0.25)' : 'none',
-                        transition: 'all 0.15s ease',
+                        padding: '6px 14px',
+                        fontSize: '12px',
+                        fontWeight: 900,
                       }}
                     >
-                      {cls.name} ({cls.students.length})
+                      <span>{cls.name}</span>
+                      <span
+                        style={{
+                          fontSize: '10.5px',
+                          padding: '1px 6px',
+                          borderRadius: '9999px',
+                          background: isSelected ? 'rgba(255,255,255,0.25)' : 'var(--color-muted)',
+                          color: isSelected ? '#ffffff' : 'var(--color-muted-fg)',
+                          fontWeight: 800,
+                        }}
+                      >
+                        {cls.students.length}
+                      </span>
                     </button>
                   )
                 })}
               </div>
             </div>
 
-            {/* Quick Actions (Frequent In-Class Only) */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+            {/* Quick Actions Toolbar */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
               <button
-                className="btn-primary"
-                style={{ padding: '6px 12px', fontSize: '11.5px', borderRadius: '8px' }}
+                className="btn-glow-primary"
+                style={{ padding: '7px 14px', fontSize: '12px', borderRadius: '10px' }}
                 onClick={() => setActiveTab('journal')}
               >
-                <Calendar size={13} /> دخول الحصة الحية ⚡
+                <Calendar size={14} /> دخول الحصة الحية ⚡
               </button>
 
               <button
                 className="btn-secondary"
-                style={{ padding: '6px 12px', fontSize: '11.5px', borderRadius: '8px', color: '#b45309', borderColor: '#fde68a', background: '#fffbeb' }}
+                style={{
+                  padding: '7px 14px',
+                  fontSize: '12px',
+                  borderRadius: '10px',
+                  color: '#b45309',
+                  borderColor: '#fde68a',
+                  background: 'rgba(245, 158, 11, 0.08)',
+                  fontWeight: 800,
+                }}
                 onClick={() => setIsRandomPickerOpen(true)}
                 title="القرعة العشوائية لاختيار تلميذ للإجابة بعدالة"
               >
@@ -692,7 +706,15 @@ export default function TeacherPage() {
 
               <button
                 className="btn-secondary"
-                style={{ padding: '6px 12px', fontSize: '11.5px', borderRadius: '8px', color: '#1d4ed8', borderColor: '#bfdbfe', background: '#eff6ff' }}
+                style={{
+                  padding: '7px 14px',
+                  fontSize: '12px',
+                  borderRadius: '10px',
+                  color: '#1d4ed8',
+                  borderColor: '#bfdbfe',
+                  background: 'rgba(37, 99, 235, 0.08)',
+                  fontWeight: 800,
+                }}
                 onClick={() => setIsGroupMakerOpen(true)}
                 title="تقسيم القسم إلى أفواج عمل تعاونية متوازنة"
               >
@@ -701,30 +723,24 @@ export default function TeacherPage() {
 
               <button
                 className="btn-secondary"
-                style={{ padding: '6px 12px', fontSize: '11.5px', borderRadius: '8px' }}
+                style={{ padding: '7px 14px', fontSize: '12px', borderRadius: '10px', fontWeight: 800 }}
                 onClick={() => setIsAddStudentModalOpen(true)}
               >
-                <UserPlus size={13} /> إضافة تلميذ
+                <UserPlus size={14} /> إضافة تلميذ
               </button>
 
               <button
                 onClick={() => setIsClassManagerOpen(true)}
+                className="btn-secondary"
                 style={{
-                  padding: '6px 10px',
-                  borderRadius: '8px',
-                  border: '1px solid var(--color-border)',
-                  background: 'var(--color-muted)',
-                  color: 'var(--color-foreground)',
-                  fontSize: '11.5px',
+                  padding: '7px 12px',
+                  borderRadius: '10px',
+                  fontSize: '12px',
                   fontWeight: 800,
-                  cursor: 'pointer',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '4px',
                 }}
                 title="إدارة وتعديل الأقسام"
               >
-                <Settings size={13} /> الأقسام
+                <Settings size={14} /> الأقسام
               </button>
             </div>
           </div>
@@ -748,34 +764,58 @@ export default function TeacherPage() {
               <div
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
-                  gap: '10px',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+                  gap: '12px',
                   width: '100%',
                 }}
               >
-                {[
-                  { label: 'الحاضرون', value: presentCount, color: '#107a57', bg: '#e6f4ee' },
-                  { label: 'الغائبون', value: absentCount, color: '#ef4444', bg: '#fef2f2' },
-                  { label: 'المتأخرون', value: lateCount, color: '#f59e0b', bg: '#fef3c7' },
-                  { label: 'نقاط التميز', value: totalPoints, color: '#7c3aed', bg: '#f5f3ff' },
-                ].map((stat) => (
-                  <div
-                    key={stat.label}
-                    style={{
-                      background: 'var(--color-card)',
-                      border: '1px solid var(--color-border)',
-                      borderRadius: '14px',
-                      padding: '12px 10px',
-                      textAlign: 'center',
-                      boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
-                    }}
-                  >
-                    <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--color-muted-fg)', marginBottom: '2px' }}>
-                      {stat.label}
+                <div className="stat-chip stat-chip-emerald" style={{ padding: '14px 16px', borderRadius: '16px', justifyContent: 'space-between' }}>
+                  <div>
+                    <div style={{ fontSize: '11.5px', fontWeight: 800, opacity: 0.85, marginBottom: '2px' }}>
+                      الحاضرون اليوم
                     </div>
-                    <div style={{ fontSize: '22px', fontWeight: 900, color: stat.color }}>{stat.value}</div>
+                    <div style={{ fontSize: '26px', fontWeight: 950, fontFamily: 'Inter, Cairo, sans-serif' }}>
+                      {presentCount}
+                    </div>
                   </div>
-                ))}
+                  <div style={{ fontSize: '24px' }}>🟢</div>
+                </div>
+
+                <div className="stat-chip stat-chip-rose" style={{ padding: '14px 16px', borderRadius: '16px', justifyContent: 'space-between' }}>
+                  <div>
+                    <div style={{ fontSize: '11.5px', fontWeight: 800, opacity: 0.85, marginBottom: '2px' }}>
+                      الغائبون
+                    </div>
+                    <div style={{ fontSize: '26px', fontWeight: 950, fontFamily: 'Inter, Cairo, sans-serif' }}>
+                      {absentCount}
+                    </div>
+                  </div>
+                  <div style={{ fontSize: '24px' }}>🔴</div>
+                </div>
+
+                <div className="stat-chip stat-chip-amber" style={{ padding: '14px 16px', borderRadius: '16px', justifyContent: 'space-between' }}>
+                  <div>
+                    <div style={{ fontSize: '11.5px', fontWeight: 800, opacity: 0.85, marginBottom: '2px' }}>
+                      المتأخرون
+                    </div>
+                    <div style={{ fontSize: '26px', fontWeight: 950, fontFamily: 'Inter, Cairo, sans-serif' }}>
+                      {lateCount}
+                    </div>
+                  </div>
+                  <div style={{ fontSize: '24px' }}>🟡</div>
+                </div>
+
+                <div className="stat-chip stat-chip-blue" style={{ padding: '14px 16px', borderRadius: '16px', justifyContent: 'space-between' }}>
+                  <div>
+                    <div style={{ fontSize: '11.5px', fontWeight: 800, opacity: 0.85, marginBottom: '2px' }}>
+                      نقاط التميز الصفي
+                    </div>
+                    <div style={{ fontSize: '26px', fontWeight: 950, fontFamily: 'Inter, Cairo, sans-serif', color: '#b45309' }}>
+                      ⭐ {totalPoints}
+                    </div>
+                  </div>
+                  <div style={{ fontSize: '24px' }}>🏆</div>
+                </div>
               </div>
 
               {/* ── WhatsApp Class Hub Banner ── */}
@@ -997,23 +1037,42 @@ export default function TeacherPage() {
                         )}
 
                         <div
-                          className={`student-row-item ${st.status === 'absent' ? 'absent' : ''}`}
+                          className={`student-row-item card-glass-premium ${st.status === 'absent' ? 'absent' : ''}`}
                           style={{
-                            padding: '10px 14px',
-                            borderRadius: '12px',
-                            background: 'var(--color-card)',
-                            border: st.status === 'absent' ? '1.5px solid #fca5a5' : '1px solid var(--color-border)',
+                            padding: '12px 16px',
+                            borderRadius: '16px',
+                            background: st.status === 'absent' 
+                              ? 'rgba(239, 68, 68, 0.04)' 
+                              : st.status === 'late'
+                              ? 'rgba(245, 158, 11, 0.04)'
+                              : 'var(--color-card)',
+                            border: st.status === 'absent' 
+                              ? '1.5px solid rgba(239, 68, 68, 0.35)' 
+                              : st.status === 'late'
+                              ? '1.5px solid rgba(245, 158, 11, 0.35)'
+                              : '1px solid var(--color-border)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            flexWrap: 'wrap',
+                            gap: '12px',
+                            transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
                           }}
                         >
                           {/* Right: Roll, Avatar, Name & Parent Contact Info */}
-                          <div className="student-row-info" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                          <div className="student-row-info" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                             <div
                               style={{
                                 fontSize: '11px',
-                                fontWeight: 800,
+                                fontWeight: 900,
                                 color: 'var(--color-muted-fg)',
-                                width: '20px',
-                                textAlign: 'center',
+                                width: '22px',
+                                height: '22px',
+                                borderRadius: '50%',
+                                background: 'var(--color-muted)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
                               }}
                             >
                               {index + 1}
@@ -1025,49 +1084,84 @@ export default function TeacherPage() {
                                 setActiveProfileStudent(st)
                                 setShowProfilePassword(false)
                               }}
-                              style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
+                              style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}
                               title="انقر لفتح ملف التلميذ الشامل وبيانات فضاء الولي 🔐"
                             >
-                              <div className="student-row-avatar" style={{ transition: 'transform 0.15s' }}>
+                              <div
+                                style={{
+                                  width: '38px',
+                                  height: '38px',
+                                  borderRadius: '12px',
+                                  background: st.status === 'absent'
+                                    ? 'linear-gradient(135deg, #ef4444, #dc2626)'
+                                    : st.status === 'late'
+                                    ? 'linear-gradient(135deg, #f59e0b, #d97706)'
+                                    : 'linear-gradient(135deg, #107a57, #0d6447)',
+                                  color: '#ffffff',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  fontWeight: 900,
+                                  fontSize: '15px',
+                                  boxShadow: '0 3px 10px rgba(0,0,0,0.12)',
+                                  flexShrink: 0,
+                                }}
+                              >
                                 {st.name.charAt(0)}
                               </div>
                               <div style={{ minWidth: 0 }}>
                                 <div
                                   className="student-row-name"
                                   style={{
-                                    fontSize: '13.5px',
+                                    fontSize: '14px',
                                     fontWeight: 900,
-                                    color: 'var(--color-primary)',
+                                    color: 'var(--color-foreground)',
                                     display: 'flex',
                                     alignItems: 'center',
                                     gap: '6px',
+                                    flexWrap: 'wrap',
                                   }}
                                 >
                                   <span>{st.name}</span>
                                   <span
                                     style={{
                                       fontSize: '10px',
-                                      padding: '1px 6px',
-                                      borderRadius: '4px',
-                                      background: 'var(--color-muted)',
-                                      color: 'var(--color-muted-fg)',
+                                      padding: '2px 8px',
+                                      borderRadius: '6px',
+                                      background: 'rgba(37, 99, 235, 0.08)',
+                                      color: '#2563eb',
                                       fontWeight: 800,
-                                      border: '1px solid var(--color-border)',
+                                      border: '1px solid rgba(37, 99, 235, 0.2)',
+                                      letterSpacing: '0.5px',
                                     }}
                                   >
                                     🔐 {st.parentUsername || `p.${st.name.replace(/\s+/g, '.')}`}
                                   </span>
                                 </div>
-                                <div className="student-row-sub" style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', marginTop: '2px' }}>
+                                <div className="student-row-sub" style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginTop: '3px' }}>
                                   {st.parentPhone && (
-                                    <span style={{ color: '#15803d', fontWeight: 700, fontSize: '11px' }}>
+                                    <span style={{ color: '#15803d', fontWeight: 800, fontSize: '11px', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
                                       👨‍👦 {st.parentName || 'الولي'}: {st.parentPhone}
                                     </span>
                                   )}
                                   {st.points > 0 ? (
-                                    <span style={{ color: '#d97706', fontWeight: 800, fontSize: '11px' }}>• ⭐ {st.points} تميز</span>
+                                    <span
+                                      style={{
+                                        color: '#b45309',
+                                        background: '#fef3c7',
+                                        padding: '1px 7px',
+                                        borderRadius: '10px',
+                                        fontWeight: 900,
+                                        fontSize: '10.5px',
+                                        border: '1px solid #fde68a',
+                                      }}
+                                    >
+                                      ⭐ {st.points} تميز
+                                    </span>
                                   ) : null}
-                                  <span style={{ fontSize: '11px' }}>• كراس: {st.notebookScore}</span>
+                                  <span style={{ fontSize: '11px', color: 'var(--color-muted-fg)', fontWeight: 700 }}>
+                                    📖 كراس: {st.notebookScore}
+                                  </span>
                                 </div>
                               </div>
                             </div>
@@ -1082,22 +1176,22 @@ export default function TeacherPage() {
                                 setShowProfilePassword(false)
                               }}
                               style={{
-                                padding: '5px 8px',
-                                borderRadius: '8px',
-                                fontSize: '11px',
+                                padding: '6px 10px',
+                                borderRadius: '10px',
+                                fontSize: '11.5px',
                                 fontWeight: 800,
-                                background: '#fef3c7',
-                                border: '1px solid #fde68a',
+                                background: 'rgba(245, 158, 11, 0.1)',
+                                border: '1px solid rgba(245, 158, 11, 0.3)',
                                 color: '#b45309',
                                 cursor: 'pointer',
                                 display: 'inline-flex',
                                 alignItems: 'center',
-                                gap: '3px',
+                                gap: '4px',
                                 whiteSpace: 'nowrap',
                               }}
                               title="فتح ملف التلميذ وبيانات حساب الولي 🔐"
                             >
-                              <Key size={12} /> الحساب 🔐
+                              <Key size={13} /> الحساب 🔐
                             </button>
 
                             {/* Attendance Cycle Toggle Button */}
@@ -1105,7 +1199,13 @@ export default function TeacherPage() {
                               className={`attendance-toggle-btn ${st.status}`}
                               onClick={() => toggleStudentStatus(st.id)}
                               title="تغيير حالة الحضور (حاضر / غائب / متأخر)"
-                              style={{ padding: '5px 10px', fontSize: '11px' }}
+                              style={{
+                                padding: '6px 12px',
+                                fontSize: '11.5px',
+                                borderRadius: '10px',
+                                fontWeight: 900,
+                                cursor: 'pointer',
+                              }}
                             >
                               {st.status === 'present' && '🟢 حاضر'}
                               {st.status === 'absent' && '🔴 غائب'}
@@ -1121,9 +1221,9 @@ export default function TeacherPage() {
                                 target="_blank"
                                 rel="noreferrer"
                                 style={{
-                                  width: '30px',
-                                  height: '30px',
-                                  borderRadius: '8px',
+                                  width: '32px',
+                                  height: '32px',
+                                  borderRadius: '10px',
                                   background: '#dcfce7',
                                   border: '1px solid #86efac',
                                   color: '#15803d',
@@ -1131,10 +1231,11 @@ export default function TeacherPage() {
                                   alignItems: 'center',
                                   justifyContent: 'center',
                                   textDecoration: 'none',
+                                  boxShadow: '0 2px 6px rgba(22, 163, 74, 0.15)',
                                 }}
                                 title={`مراسلة ولي التلميذ ${st.name} عبر واتساب`}
                               >
-                                <MessageCircle size={15} />
+                                <MessageCircle size={16} />
                               </a>
                             )}
 
@@ -1143,12 +1244,12 @@ export default function TeacherPage() {
                               <a
                                 href={`tel:${st.parentPhone}`}
                                 style={{
-                                  width: '30px',
-                                  height: '30px',
-                                  borderRadius: '8px',
-                                  background: '#e6f4ee',
-                                  border: '1px solid #a7f3d0',
-                                  color: '#107a57',
+                                  width: '32px',
+                                  height: '32px',
+                                  borderRadius: '10px',
+                                  background: 'var(--color-primary-light)',
+                                  border: '1px solid var(--color-primary)',
+                                  color: 'var(--color-primary)',
                                   display: 'flex',
                                   alignItems: 'center',
                                   justifyContent: 'center',
@@ -1156,7 +1257,7 @@ export default function TeacherPage() {
                                 }}
                                 title={`الاتصال بولي التلميذ ${st.name}`}
                               >
-                                <Phone size={13} />
+                                <Phone size={14} />
                               </a>
                             )}
 
@@ -1164,18 +1265,19 @@ export default function TeacherPage() {
                             <button
                               onClick={() => addPoint(st.id)}
                               style={{
-                                width: '30px',
-                                height: '30px',
-                                borderRadius: '8px',
+                                width: '32px',
+                                height: '32px',
+                                borderRadius: '10px',
                                 background: '#fef3c7',
                                 border: '1px solid #fde68a',
                                 color: '#b45309',
-                                fontSize: '13px',
+                                fontSize: '14px',
                                 cursor: 'pointer',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 fontWeight: 900,
+                                boxShadow: '0 2px 6px rgba(245, 158, 11, 0.2)',
                               }}
                               title="منح نقطة تميز ومشاركة"
                             >
@@ -1186,9 +1288,9 @@ export default function TeacherPage() {
                             <button
                               onClick={() => setSummonsStudent(st)}
                               style={{
-                                padding: '5px 8px',
-                                borderRadius: '8px',
-                                fontSize: '11px',
+                                padding: '6px 10px',
+                                borderRadius: '10px',
+                                fontSize: '11.5px',
                                 fontWeight: 800,
                                 background: 'var(--color-muted)',
                                 border: '1px solid var(--color-border)',

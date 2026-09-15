@@ -364,23 +364,39 @@ export default function ParentPage() {
         {!selectedChild ? (
           <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
             <div
+              className="card-glass-premium"
               style={{
-                maxWidth: '480px',
+                maxWidth: '500px',
                 width: '100%',
-                background: 'var(--color-card)',
-                borderRadius: '24px',
-                border: '1.5px solid var(--color-border)',
-                padding: '36px 24px',
+                borderRadius: '26px',
+                padding: '40px 28px',
                 textAlign: 'center',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.06)',
+                boxShadow: '0 12px 40px rgba(0,0,0,0.08)',
               }}
             >
-              <div style={{ fontSize: '48px', marginBottom: '12px' }}>👨‍👩‍👧</div>
-              <h2 style={{ fontSize: '20px', fontWeight: 950, color: 'var(--color-foreground)', marginBottom: '8px' }}>
+              <div
+                style={{
+                  width: '64px',
+                  height: '64px',
+                  borderRadius: '20px',
+                  background: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
+                  color: '#ffffff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '30px',
+                  margin: '0 auto 16px',
+                  boxShadow: '0 6px 20px rgba(37, 99, 235, 0.3)',
+                }}
+              >
+                👨‍👩‍👧
+              </div>
+
+              <h2 style={{ fontSize: '22px', fontWeight: 950, color: 'var(--color-foreground)', marginBottom: '8px' }}>
                 فضاء ولي الأمر الرقمي 🇩🇿
               </h2>
-              <p style={{ fontSize: '13px', color: 'var(--color-muted-fg)', lineHeight: 1.6, marginBottom: '24px' }}>
-                مرحباً بكم. لمتابعة كراس ودروس وواجبات ونقاط ابنكم، يرجى إدخال <strong>رمز التلميذ العائلي</strong> المسلم لكم من طرف الأستاذ:
+              <p style={{ fontSize: '13px', color: 'var(--color-muted-fg)', lineHeight: 1.7, marginBottom: '24px' }}>
+                مرحباً بكم أولياءنا الكرام. لمتابعة كراس ودروس وواجبات ونقاط ابنكم، يرجى إدخال <strong>رمز التلميذ العائلي</strong> المسلم لكم من طرف الأستاذ:
               </p>
 
               <form
@@ -388,31 +404,44 @@ export default function ParentPage() {
                   e.preventDefault()
                   handleLookupAndLogin(parentCodeInput)
                 }}
-                style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}
+                style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
               >
-                <input
-                  type="text"
-                  required
-                  placeholder="مثال: M4-7842-DZ"
-                  value={parentCodeInput}
-                  onChange={(e) => setParentCodeInput(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '14px 16px',
-                    borderRadius: '12px',
-                    border: '2px solid var(--color-primary)',
-                    background: 'var(--color-muted)',
-                    color: 'var(--color-foreground)',
-                    fontFamily: 'Inter, Cairo, monospace',
-                    fontWeight: 900,
-                    fontSize: '16px',
-                    letterSpacing: '2px',
-                    textAlign: 'center',
-                  }}
-                />
+                <div style={{ position: 'relative' }}>
+                  <input
+                    type="text"
+                    required
+                    placeholder="مثال: M4-7842-DZ"
+                    value={parentCodeInput}
+                    onChange={(e) => setParentCodeInput(e.target.value.toUpperCase())}
+                    style={{
+                      width: '100%',
+                      padding: '16px 20px',
+                      borderRadius: '16px',
+                      border: '2px solid #2563eb',
+                      background: 'var(--color-muted)',
+                      color: 'var(--color-foreground)',
+                      fontFamily: 'Inter, monospace',
+                      fontWeight: 900,
+                      fontSize: '18px',
+                      letterSpacing: '2px',
+                      textAlign: 'center',
+                      boxShadow: '0 2px 8px rgba(37, 99, 235, 0.1)',
+                    }}
+                  />
+                </div>
 
                 {loginError && (
-                  <div style={{ color: '#dc2626', fontSize: '12px', fontWeight: 700, background: '#fef2f2', padding: '10px 14px', borderRadius: '10px', border: '1px solid #fecaca' }}>
+                  <div
+                    style={{
+                      color: '#ef4444',
+                      fontSize: '12px',
+                      fontWeight: 800,
+                      background: 'rgba(239, 68, 68, 0.08)',
+                      padding: '10px 14px',
+                      borderRadius: '12px',
+                      border: '1px solid rgba(239, 68, 68, 0.25)',
+                    }}
+                  >
                     ⚠️ {loginError}
                   </div>
                 )}
@@ -420,15 +449,40 @@ export default function ParentPage() {
                 <button
                   type="submit"
                   disabled={isSearchingCode}
-                  className="btn-primary"
-                  style={{ width: '100%', padding: '12px', fontSize: '14px', borderRadius: '12px', fontWeight: 900, justifyContent: 'center' }}
+                  style={{
+                    width: '100%',
+                    padding: '14px',
+                    fontSize: '15px',
+                    borderRadius: '14px',
+                    background: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
+                    color: '#ffffff',
+                    border: 'none',
+                    fontWeight: 900,
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 16px rgba(37, 99, 235, 0.3)',
+                    fontFamily: 'Cairo, sans-serif',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    transition: 'all 0.2s',
+                  }}
                 >
                   {isSearchingCode ? 'جاري التحقق والبحث في السحابة...' : '🔑 دخول فضاء التلميذ'}
                 </button>
               </form>
 
-              <div style={{ marginTop: '20px', paddingTop: '16px', borderTop: '1px solid var(--color-border)', fontSize: '11px', color: 'var(--color-muted-fg)', lineHeight: 1.6 }}>
-                💡 <strong>نصيحة:</strong> إذا وصلكم رابط من الأستاذ عبر WhatsApp، يكفي النقر عليه ليفتح فضاء ابنكم تلقائياً دون كتابة الرمز.
+              <div
+                style={{
+                  marginTop: '22px',
+                  paddingTop: '16px',
+                  borderTop: '1px solid var(--color-border)',
+                  fontSize: '12px',
+                  color: 'var(--color-muted-fg)',
+                  lineHeight: 1.6,
+                }}
+              >
+                💡 <strong>نصيحة ذكية:</strong> إذا وصلكم رابط من الأستاذ عبر <strong>WhatsApp</strong>، يكفي النقر عليه ليفتح فضاء ابنكم تلقائياً دون كتابة الرمز.
               </div>
             </div>
           </div>
@@ -436,27 +490,35 @@ export default function ParentPage() {
           <>
             {/* ── Top Child Bar & Quick Switcher ── */}
             <div
+              className="card-glass-premium"
               style={{
-                background: 'var(--color-card)',
-                borderBottom: '1px solid var(--color-border)',
-                padding: '12px 16px',
+                borderRadius: '0',
+                borderLeft: 'none',
+                borderRight: 'none',
+                borderTop: 'none',
+                padding: '12px 18px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 flexWrap: 'wrap',
-                gap: '10px',
+                gap: '12px',
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <span style={{ fontSize: '12px', fontWeight: 900, color: 'var(--color-muted-fg)' }}>
-                  التلميذ المتابع:
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                <span style={{ fontSize: '12.5px', fontWeight: 900, color: 'var(--color-primary)' }}>
+                  👨‍👦 التلميذ المتابع:
                 </span>
-                <div className="child-switcher-list">
+                <div className="child-switcher-list" style={{ display: 'flex', gap: '6px', alignItems: 'center', flexWrap: 'wrap' }}>
                   {childrenList.map((ch) => (
                     <button
                       key={ch.id}
-                      className={`child-switcher-btn ${selectedChild.id === ch.id ? 'active' : ''}`}
+                      className={`pill-tab-modern ${selectedChild.id === ch.id ? 'active' : ''}`}
                       onClick={() => setSelectedChild(ch)}
+                      style={{
+                        padding: '6px 14px',
+                        fontSize: '12px',
+                        fontWeight: 900,
+                      }}
                     >
                       {ch.avatar} {ch.name} ({ch.class_name})
                     </button>
@@ -467,7 +529,7 @@ export default function ParentPage() {
                     onClick={() => setIsAddChildModalOpen(true)}
                     className="btn-secondary"
                     style={{
-                      padding: '4px 10px',
+                      padding: '5px 12px',
                       borderRadius: '20px',
                       fontSize: '11px',
                       fontWeight: 800,
@@ -478,20 +540,25 @@ export default function ParentPage() {
                     }}
                     title="ربط ابن آخر أو مادة جديدة برمز التلميذ العائلي"
                   >
-                    <span>➕ إضافة ابن / مادة أخرى</span>
+                    <span>➕ ربط ابن آخر</span>
                   </button>
                 </div>
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span className="badge badge-primary">📐 {subjectName}</span>
-                <span className="badge badge-success">
+                <span className="stat-chip stat-chip-blue" style={{ padding: '4px 10px', fontSize: '11.5px', fontWeight: 800 }}>
+                  📐 {subjectName}
+                </span>
+                <span
+                  className={`stat-chip ${selectedChild.status === 'present' ? 'stat-chip-emerald' : selectedChild.status === 'late' ? 'stat-chip-amber' : 'stat-chip-rose'}`}
+                  style={{ padding: '4px 10px', fontSize: '11.5px', fontWeight: 800 }}
+                >
                   {selectedChild.status === 'present' ? '🟢 حاضر اليوم' : selectedChild.status === 'late' ? '🟡 متأخر' : '🔴 غائب'}
                 </span>
               </div>
             </div>
 
-            {/* ── Simple Parent Navigation Pills Bar ── */}
+            {/* ── Parent Navigation Pills Bar ── */}
             <div
               style={{
                 background: 'var(--color-muted)',
@@ -502,94 +569,38 @@ export default function ParentPage() {
                 overflowX: 'auto',
               }}
             >
-          <button
-            onClick={() => setActiveTab('feed')}
-            style={{
-              padding: '8px 14px',
-              borderRadius: '10px',
-              border: activeTab === 'feed' ? '1px solid var(--color-primary)' : '1px solid var(--color-border)',
-              background: activeTab === 'feed' ? 'var(--color-primary)' : 'var(--color-card)',
-              color: activeTab === 'feed' ? '#ffffff' : 'var(--color-foreground)',
-              fontFamily: 'Cairo, sans-serif',
-              fontWeight: 800,
-              fontSize: '12.5px',
-              cursor: 'pointer',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              whiteSpace: 'nowrap',
-              boxShadow: activeTab === 'feed' ? '0 2px 8px rgba(30,64,175,0.25)' : 'none',
-            }}
-          >
-            <Camera size={15} /> 📌 الدروس والواجبات المصورة
-          </button>
+              <button
+                onClick={() => setActiveTab('feed')}
+                className={`pill-tab-modern ${activeTab === 'feed' ? 'active' : ''}`}
+                style={{ padding: '8px 16px', fontSize: '12.5px', fontWeight: 900 }}
+              >
+                <Camera size={16} /> 📌 الدروس والواجبات المصورة
+              </button>
 
-          <button
-            onClick={() => setActiveTab('grades')}
-            style={{
-              padding: '8px 14px',
-              borderRadius: '10px',
-              border: activeTab === 'grades' ? '1px solid var(--color-primary)' : '1px solid var(--color-border)',
-              background: activeTab === 'grades' ? 'var(--color-primary)' : 'var(--color-card)',
-              color: activeTab === 'grades' ? '#ffffff' : 'var(--color-foreground)',
-              fontFamily: 'Cairo, sans-serif',
-              fontWeight: 800,
-              fontSize: '12.5px',
-              cursor: 'pointer',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              whiteSpace: 'nowrap',
-              boxShadow: activeTab === 'grades' ? '0 2px 8px rgba(30,64,175,0.25)' : 'none',
-            }}
-          >
-            <Award size={15} /> 📊 كشف نقاط الرياضيات
-          </button>
+              <button
+                onClick={() => setActiveTab('grades')}
+                className={`pill-tab-modern ${activeTab === 'grades' ? 'active' : ''}`}
+                style={{ padding: '8px 16px', fontSize: '12.5px', fontWeight: 900 }}
+              >
+                <Award size={16} /> 📊 كشف نقاط المادة
+              </button>
 
-          <button
-            onClick={() => setActiveTab('journal')}
-            style={{
-              padding: '8px 14px',
-              borderRadius: '10px',
-              border: activeTab === 'journal' ? '1px solid var(--color-primary)' : '1px solid var(--color-border)',
-              background: activeTab === 'journal' ? 'var(--color-primary)' : 'var(--color-card)',
-              color: activeTab === 'journal' ? '#ffffff' : 'var(--color-foreground)',
-              fontFamily: 'Cairo, sans-serif',
-              fontWeight: 800,
-              fontSize: '12.5px',
-              cursor: 'pointer',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              whiteSpace: 'nowrap',
-              boxShadow: activeTab === 'journal' ? '0 2px 8px rgba(30,64,175,0.25)' : 'none',
-            }}
-          >
-            <Calendar size={15} /> 📅 مفكرة جدول الحصص
-          </button>
+              <button
+                onClick={() => setActiveTab('journal')}
+                className={`pill-tab-modern ${activeTab === 'journal' ? 'active' : ''}`}
+                style={{ padding: '8px 16px', fontSize: '12.5px', fontWeight: 900 }}
+              >
+                <Calendar size={16} /> 📅 مفكرة جدول الحصص
+              </button>
 
-          <button
-            onClick={() => setActiveTab('badges')}
-            style={{
-              padding: '8px 14px',
-              borderRadius: '10px',
-              border: activeTab === 'badges' ? '1px solid var(--color-primary)' : '1px solid var(--color-border)',
-              background: activeTab === 'badges' ? 'var(--color-primary)' : 'var(--color-card)',
-              color: activeTab === 'badges' ? '#ffffff' : 'var(--color-foreground)',
-              fontFamily: 'Cairo, sans-serif',
-              fontWeight: 800,
-              fontSize: '12.5px',
-              cursor: 'pointer',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              whiteSpace: 'nowrap',
-              boxShadow: activeTab === 'badges' ? '0 2px 8px rgba(30,64,175,0.25)' : 'none',
-            }}
-          >
-            <Trophy size={15} /> 🏆 لوحة الشرف والأوسمة
-          </button>
-        </div>
+              <button
+                onClick={() => setActiveTab('badges')}
+                className={`pill-tab-modern ${activeTab === 'badges' ? 'active' : ''}`}
+                style={{ padding: '8px 16px', fontSize: '12.5px', fontWeight: 900 }}
+              >
+                <Trophy size={16} /> 🏆 لوحة الشرف والأوسمة
+              </button>
+            </div>
 
         {/* ── Page Body ── */}
         <div style={{ flex: 1, padding: '16px', display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '920px', margin: '0 auto', width: '100%' }}>
@@ -601,49 +612,54 @@ export default function ParentPage() {
             <>
               {/* 🟢 Card 1: Today's Student Performance Summary */}
               <div
+                className="card-glass-premium"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(16,122,87,0.08), rgba(30,64,175,0.05))',
-                  border: '1.5px solid #a7f3d0',
-                  borderRadius: '16px',
-                  padding: '16px 18px',
+                  background: 'linear-gradient(135deg, rgba(16,122,87,0.06), rgba(37,99,235,0.04))',
+                  border: '1.5px solid rgba(16, 185, 129, 0.3)',
+                  borderRadius: '20px',
+                  padding: '20px',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '10px',
-                  boxShadow: '0 2px 10px rgba(16,122,87,0.05)',
+                  gap: '12px',
+                  boxShadow: '0 4px 20px rgba(16,122,87,0.06)',
                 }}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
-                  <span style={{ fontSize: '12px', color: 'var(--color-muted-fg)', fontWeight: 800 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+                  <span style={{ fontSize: '12.5px', color: 'var(--color-muted-fg)', fontWeight: 800 }}>
                     متابعة حصة الرياضيات الأخيرة • قسم {selectedChild.class_name}
                   </span>
-                  <span className={`badge ${selectedChild.status === 'present' ? 'badge-success' : selectedChild.status === 'late' ? 'badge-warning' : 'badge-danger'}`}>
+                  <span
+                    className={`stat-chip ${selectedChild.status === 'present' ? 'stat-chip-emerald' : selectedChild.status === 'late' ? 'stat-chip-amber' : 'stat-chip-rose'}`}
+                    style={{ padding: '4px 12px', fontSize: '11.5px', fontWeight: 800 }}
+                  >
                     {selectedChild.status === 'present' ? '🟢 حاضر ومنضبط في الحصة' : selectedChild.status === 'late' ? '🟡 متأخر' : '🔴 غائب'}
                   </span>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                   <div
                     style={{
-                      width: '42px',
-                      height: '42px',
-                      borderRadius: '12px',
-                      background: '#107a57',
+                      width: '46px',
+                      height: '46px',
+                      borderRadius: '14px',
+                      background: 'linear-gradient(135deg, #107a57, #0d6447)',
                       color: '#ffffff',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      fontSize: '18px',
+                      fontSize: '20px',
                       fontWeight: 900,
                       flexShrink: 0,
+                      boxShadow: '0 4px 12px rgba(16, 122, 87, 0.25)',
                     }}
                   >
                     {selectedChild.name.charAt(0)}
                   </div>
                   <div>
-                    <h3 style={{ fontSize: '15.5px', fontWeight: 900, color: 'var(--color-foreground)' }}>
+                    <h3 style={{ fontSize: '17px', fontWeight: 950, color: 'var(--color-foreground)', margin: 0 }}>
                       أداء التلميذ: {selectedChild.name}
                     </h3>
-                    <p style={{ fontSize: '11.5px', color: 'var(--color-muted-fg)', marginTop: '2px' }}>
+                    <p style={{ fontSize: '12px', color: 'var(--color-muted-fg)', marginTop: '2px', margin: 0 }}>
                       متابعة وتقويم مباشر ومسجل من طرف أستاذ الرياضيات في الحصة
                     </p>
                   </div>
@@ -651,15 +667,15 @@ export default function ParentPage() {
 
                 {/* 3 Indicators Pill Badges */}
                 <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '4px' }}>
-                  <span className="badge badge-success" style={{ padding: '6px 10px', fontSize: '11.5px' }}>
+                  <span className="stat-chip stat-chip-emerald" style={{ padding: '6px 12px', fontSize: '11.5px', fontWeight: 800 }}>
                     📖 كراس الدروس: منظم ومكتمل ({selectedChild.notebookScore || '18/20'}) ✓
                   </span>
                   {selectedChild.points ? (
-                    <span className="badge badge-primary" style={{ padding: '6px 10px', fontSize: '11.5px' }}>
+                    <span className="stat-chip stat-chip-amber" style={{ padding: '6px 12px', fontSize: '11.5px', fontWeight: 800 }}>
                       ⭐ +{selectedChild.points} نقاط تميز ومشاركة على السبورة
                     </span>
                   ) : null}
-                  <span className="badge badge-purple" style={{ padding: '6px 10px', fontSize: '11.5px' }}>
+                  <span className="stat-chip stat-chip-blue" style={{ padding: '6px 12px', fontSize: '11.5px', fontWeight: 800 }}>
                     📝 نسبة إنجاز الواجبات: {selectedChild.homeworkRate || '100%'}
                   </span>
                 </div>
@@ -667,22 +683,21 @@ export default function ParentPage() {
 
               {/* 🗂️ SESSIONS TIMELINE SELECTOR (أرشيف الحصص المرتب للمراجعة) */}
               <div
+                className="card-glass-premium"
                 style={{
-                  background: 'var(--color-card)',
-                  border: '1px solid var(--color-border)',
-                  borderRadius: '16px',
-                  padding: '12px 16px',
+                  borderRadius: '18px',
+                  padding: '14px 18px',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '8px',
+                  gap: '10px',
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
-                  <span style={{ fontSize: '12.5px', fontWeight: 900, color: 'var(--color-foreground)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <BookOpen size={16} className="text-emerald-600" />
+                  <span style={{ fontSize: '13px', fontWeight: 950, color: 'var(--color-foreground)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <BookOpen size={17} className="text-emerald-600" />
                     اختر الحصة لمشاهدة سبورتها وواجبها وحلها النموذجي:
                   </span>
-                  <span style={{ fontSize: '11px', color: 'var(--color-muted-fg)' }}>
+                  <span style={{ fontSize: '11px', color: 'var(--color-muted-fg)', fontWeight: 700 }}>
                     سجل مرتب زمنياً لمساعدة التلميذ على المراجعة والتدارك
                   </span>
                 </div>
@@ -695,10 +710,10 @@ export default function ParentPage() {
                         key={sess.id}
                         onClick={() => setSelectedSessionId(sess.id)}
                         style={{
-                          padding: '8px 14px',
-                          borderRadius: '10px',
+                          padding: '10px 16px',
+                          borderRadius: '12px',
                           border: isSelected ? '1.5px solid var(--color-primary)' : '1px solid var(--color-border)',
-                          background: isSelected ? 'linear-gradient(135deg, rgba(30,64,175,0.1), rgba(16,122,87,0.06))' : 'var(--color-muted)',
+                          background: isSelected ? 'linear-gradient(135deg, rgba(37,99,235,0.12), rgba(16,122,87,0.08))' : 'var(--color-muted)',
                           color: isSelected ? 'var(--color-primary)' : 'var(--color-foreground)',
                           fontFamily: 'Cairo, sans-serif',
                           fontWeight: 800,
@@ -710,6 +725,8 @@ export default function ParentPage() {
                           alignItems: 'flex-start',
                           gap: '2px',
                           minWidth: '150px',
+                          boxShadow: isSelected ? '0 3px 10px rgba(16,122,87,0.15)' : 'none',
+                          transition: 'all 0.15s ease',
                         }}
                       >
                         <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
