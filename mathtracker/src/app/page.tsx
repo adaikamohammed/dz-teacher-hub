@@ -241,13 +241,13 @@ export default function HomePage() {
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             
             {/* Right: Showcase Card (50%) */}
-            <div className="lux-card p-6 sm:p-8 space-y-6">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-[#e6f4f1] dark:bg-[#076653]/20 text-[#076653] dark:text-emerald-400 flex items-center justify-center">
+            <div className="section-card p-6 sm:p-8 space-y-6">
+              <div className="flex items-center gap-3.5">
+                <div className="w-12 h-12 rounded-2xl bg-[#e6f4f1] dark:bg-[#076653]/20 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0">
                   <ShieldCheck size={26} />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                  <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
                     نظام موثوق ومعتمد للأستاذ
                   </h3>
                   <p className="text-xs text-slate-400 font-medium">
@@ -257,64 +257,64 @@ export default function HomePage() {
               </div>
 
               <div className="space-y-3.5">
-                <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
-                  <BookOpen size={18} className="text-[#076653] dark:text-emerald-400 shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3.5 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+                  <BookOpen size={20} className="text-[#076653] dark:text-emerald-400 shrink-0 mt-0.5" />
                   <div>
-                    <div className="text-xs font-bold text-slate-800 dark:text-slate-200">الدفتر اليومي الذكي</div>
-                    <div className="text-[11px] text-slate-400">توثيق الحصص والأنشطة والواجبات بنقرة واحدة ووسوم المنهاج.</div>
+                    <div className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200">الدفتر اليومي الذكي</div>
+                    <div className="text-xs text-slate-400 mt-0.5">توثيق الحصص والأنشطة والواجبات بنقرة واحدة ووسوم المنهاج.</div>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
-                  <Award size={18} className="text-amber-500 shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3.5 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+                  <Award size={20} className="text-amber-500 shrink-0 mt-0.5" />
                   <div>
-                    <div className="text-xs font-bold text-slate-800 dark:text-slate-200">حساب العلامات بالمنشور 272</div>
-                    <div className="text-[11px] text-slate-400">حساب تلقائي دقيق للمعدلات المستمرة والفصلية بدون حاسبة.</div>
+                    <div className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200">حساب العلامات بالمنشور 272</div>
+                    <div className="text-xs text-slate-400 mt-0.5">حساب تلقائي دقيق للمعدلات المستمرة والفصلية بدون حاسبة.</div>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
-                  <Clock size={18} className="text-sky-500 shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3.5 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+                  <Clock size={20} className="text-sky-500 shrink-0 mt-0.5" />
                   <div>
-                    <div className="text-xs font-bold text-slate-800 dark:text-slate-200">جدول التوقيت والرزنامة</div>
-                    <div className="text-[11px] text-slate-400">توليد حصص الفصل آلياً وتفادي العطل الرسمية المدرسية.</div>
+                    <div className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200">جدول التوقيت والرزنامة</div>
+                    <div className="text-xs text-slate-400 mt-0.5">توليد حصص الفصل آلياً وتفادي العطل الرسمية المدرسية.</div>
                   </div>
                 </div>
               </div>
 
-              <div className="pt-2 flex items-center justify-between border-t border-slate-100 dark:border-slate-800 text-xs">
+              <div className="pt-3 flex items-center justify-between border-t border-slate-100 dark:border-slate-800 text-xs sm:text-sm">
                 <span className="text-slate-400 font-medium">جاهز للطباعة المباشرة لكافة الوثائق</span>
                 <span className="font-bold text-[#076653] dark:text-emerald-400">A4 PDF جاهز ✓</span>
               </div>
             </div>
 
             {/* Left: Interactive Login Form (50%) */}
-            <div className="lux-card p-6 sm:p-8 shadow-xl">
+            <div className="section-card p-6 sm:p-8 shadow-xl">
               
               {/* Tab Selector */}
-              <div className="flex p-1 rounded-2xl bg-slate-100 dark:bg-slate-800 mb-6">
+              <div className="flex p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-800 mb-6 gap-1.5">
                 <button
                   type="button"
                   onClick={() => setActivePortalTab('teacher')}
-                  className={`flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 ${
+                  className={`flex-1 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 ${
                     activePortalTab === 'teacher'
                       ? 'bg-white dark:bg-slate-700 text-[#076653] dark:text-white shadow-sm'
                       : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
                   }`}
                 >
-                  <GraduationCap size={16} />
+                  <GraduationCap size={18} />
                   <span>فضاء الأستاذ</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setActivePortalTab('parent')}
-                  className={`flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 ${
+                  className={`flex-1 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 ${
                     activePortalTab === 'parent'
                       ? 'bg-white dark:bg-slate-700 text-[#076653] dark:text-white shadow-sm'
                       : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
                   }`}
                 >
-                  <Users size={16} />
+                  <Users size={18} />
                   <span>فضاء الولي العائلي</span>
                 </button>
               </div>
@@ -447,48 +447,48 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             
             {/* Card 1 */}
-            <div className="lux-card p-6 flex flex-col justify-between hover:scale-[1.02] transition-transform">
+            <div className="section-card p-7 sm:p-8 flex flex-col justify-between hover:shadow-lg hover:-translate-y-1 transition-all">
               <div className="space-y-4">
-                <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 text-[#076653] dark:text-emerald-400 flex items-center justify-center shadow-sm">
-                  <ClipboardList size={24} />
+                <div className="w-13 h-13 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 text-[#076653] dark:text-emerald-400 flex items-center justify-center shadow-xs">
+                  <ClipboardList size={26} />
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
                   الحضور والغياب الفوري
                 </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
                   تسجيل الغيابات والتأخرات بنقرة دائرية واحدة، مع خصم آلي لنقاط المواظبة وفق القوانين.
                 </p>
               </div>
             </div>
 
             {/* Card 2 */}
-            <div className="lux-card p-6 flex flex-col justify-between hover:scale-[1.02] transition-transform">
+            <div className="section-card p-7 sm:p-8 flex flex-col justify-between hover:shadow-lg hover:-translate-y-1 transition-all">
               <div className="space-y-4">
-                <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/40 text-amber-500 flex items-center justify-center shadow-sm">
-                  <Award size={24} />
+                <div className="w-13 h-13 rounded-2xl bg-amber-50 dark:bg-amber-950/40 text-amber-500 flex items-center justify-center shadow-xs">
+                  <Award size={26} />
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
                   كشوف العلامات والمنشور 272
                 </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
                   حساب تلقائي لنقاط المتابعة، الفروض، ومعدلات الفصول مع التقديرات الرسمية الفورية.
                 </p>
               </div>
             </div>
 
             {/* Card 3 */}
-            <div className="lux-card p-6 flex flex-col justify-between hover:scale-[1.02] transition-transform">
+            <div className="section-card p-7 sm:p-8 flex flex-col justify-between hover:shadow-lg hover:-translate-y-1 transition-all">
               <div className="space-y-4">
-                <div className="w-12 h-12 rounded-2xl bg-sky-50 dark:bg-sky-950/40 text-sky-500 flex items-center justify-center shadow-sm">
-                  <Calendar size={24} />
+                <div className="w-13 h-13 rounded-2xl bg-sky-50 dark:bg-sky-950/40 text-sky-500 flex items-center justify-center shadow-xs">
+                  <Calendar size={26} />
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
                   التوزيع السنوي وجدول التوقيت
                 </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
                   توليد حصص الفصل آلياً على أيام الأسبوع مع استبعاد العطل المدرسية الرسمية.
                 </p>
               </div>

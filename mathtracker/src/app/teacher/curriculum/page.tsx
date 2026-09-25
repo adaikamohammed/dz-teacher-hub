@@ -93,65 +93,65 @@ export default function CurriculumPage() {
   )
 
   return (
-    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 animate-fade-in" dir="rtl">
-      {/* ── Compact Single-line Page Action Bar ── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in" dir="rtl">
+      {/* ── Page Header ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-lg sm:text-xl font-bold text-slate-800 dark:text-slate-100">
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight">
             البرامج والتدرجات الرسمية
           </h2>
-          <p className="text-xs text-slate-400 font-medium mt-0.5">
+          <p className="text-xs sm:text-sm text-slate-400 font-semibold mt-1">
             132 تدرجًا رسميًّا معتمدًا من المفتشية العامة للبيداغوجيا مع تفصيل الكفاءات
           </p>
         </div>
+      </div>
 
-        {/* Filters wrapped in section-card */}
-        <div className="section-card p-3">
-          <div className="flex flex-wrap items-center gap-2.5">
-            <select
-              value={selectedGrade}
-              onChange={e => setSelectedGrade(e.target.value)}
-              className="select w-auto text-xs font-bold py-1.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-2xs hover:border-[#076653] transition-colors"
-            >
-              <option value="1am">1 متوسط (1AM)</option>
-              <option value="2am">2 متوسط (2AM)</option>
-              <option value="3am">3 متوسط (3AM)</option>
-              <option value="4am">4 متوسط (4AM)</option>
-              <option value="1as">1 ثانوي (1AS)</option>
-              <option value="2as">2 ثانوي (2AS)</option>
-              <option value="3as">3 ثانوي (3AS)</option>
-            </select>
+      {/* ── Filters Card ── */}
+      <div className="section-card p-4 sm:p-5">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+          <select
+            value={selectedGrade}
+            onChange={e => setSelectedGrade(e.target.value)}
+            className="select w-auto text-xs sm:text-sm font-bold py-2.5 px-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-2xs hover:border-[#076653] transition-colors cursor-pointer"
+          >
+            <option value="1am">1 متوسط (1AM)</option>
+            <option value="2am">2 متوسط (2AM)</option>
+            <option value="3am">3 متوسط (3AM)</option>
+            <option value="4am">4 متوسط (4AM)</option>
+            <option value="1as">1 ثانوي (1AS)</option>
+            <option value="2as">2 ثانوي (2AS)</option>
+            <option value="3as">3 ثانوي (3AS)</option>
+          </select>
 
-            <select
-              value={selectedSubject}
-              onChange={e => setSelectedSubject(e.target.value)}
-              className="select w-auto text-xs font-bold py-1.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-2xs hover:border-[#076653] transition-colors"
-            >
-              <option value="math">الرياضيات</option>
-              <option value="arabic">اللغة العربية</option>
-              <option value="physics">العلوم الفيزيائية</option>
-              <option value="science">علوم الطبيعة والحياة</option>
-              <option value="french">اللغة الفرنسية</option>
-              <option value="english">اللغة الإنجليزية</option>
-            </select>
+          <select
+            value={selectedSubject}
+            onChange={e => setSelectedSubject(e.target.value)}
+            className="select w-auto text-xs sm:text-sm font-bold py-2.5 px-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-2xs hover:border-[#076653] transition-colors cursor-pointer"
+          >
+            <option value="math">الرياضيات</option>
+            <option value="arabic">اللغة العربية</option>
+            <option value="physics">العلوم الفيزيائية</option>
+            <option value="science">علوم الطبيعة والحياة</option>
+            <option value="french">اللغة الفرنسية</option>
+            <option value="english">اللغة الإنجليزية</option>
+          </select>
 
-            {/* Search Input inside the card */}
-            <div className="relative flex-1 min-w-[200px]">
-              <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-slate-400" />
-              <input
-                type="text"
-                placeholder="ابحث في عناصر المنهاج..."
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                className="input ps-9 py-1.5 rounded-xl text-xs font-medium w-full"
-              />
-            </div>
+          {/* Search Input inside the card */}
+          <div className="relative flex-1 min-w-[240px]">
+            <Search size={17} className="absolute start-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+            <input
+              type="text"
+              placeholder="ابحث في عناصر المنهاج والكفاءات..."
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              className="input ps-10 py-2.5 rounded-xl text-xs sm:text-sm font-semibold w-full"
+            />
           </div>
         </div>
       </div>
 
       {/* Curriculum Units Breakdown */}
-      <div className="space-y-5">
+      <div className="space-y-6">
         {filteredUnits.map(unit => {
           const isExpanded = expandedUnitId === unit.id
 
@@ -159,30 +159,30 @@ export default function CurriculumPage() {
             <div key={unit.id} className="section-card overflow-hidden hover:shadow-lg transition-all">
               <div
                 onClick={() => setExpandedUnitId(isExpanded ? null : unit.id)}
-                className="p-4 sm:p-5 flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"
+                className="p-5 sm:p-6 flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors select-none"
               >
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-10 h-10 rounded-xl bg-[#076653]/10 text-[#076653] flex items-center justify-center font-bold shrink-0">
-                    <BookOpen size={20} />
+                <div className="flex items-center gap-4 min-w-0">
+                  <div className="w-12 h-12 rounded-2xl bg-[#076653]/10 text-[#076653] dark:text-emerald-400 flex items-center justify-center font-bold shrink-0 shadow-2xs">
+                    <BookOpen size={22} />
                   </div>
                   <div className="min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
+                    <div className="flex items-center gap-2.5 flex-wrap">
                       {getDomainBadge(unit.domain)}
-                      <span className="badge badge-slate text-xs">{unit.hours} ساعة</span>
+                      <span className="badge badge-slate text-xs font-bold">{unit.hours} ساعة</span>
                     </div>
-                    <h2 className="text-base font-bold text-slate-900 dark:text-white mt-1 truncate">
+                    <h2 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mt-1.5 truncate">
                       {unit.title}
                     </h2>
                   </div>
                 </div>
 
-                <div className="text-slate-400">
-                  {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                <div className="text-slate-400 p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                  {isExpanded ? <ChevronUp size={22} /> : <ChevronDown size={22} />}
                 </div>
               </div>
 
               {isExpanded && (
-                <div className="p-4 sm:p-5 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/20 space-y-4 animate-fade-in">
+                <div className="p-6 sm:p-8 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/20 space-y-6 animate-fade-in">
                   {/* Competencies */}
                   <div>
                     <h3 className="text-xs font-bold text-[#076653] dark:text-emerald-400 mb-2 flex items-center gap-1.5">

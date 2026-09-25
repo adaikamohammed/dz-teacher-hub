@@ -54,11 +54,11 @@ export default function SubscribePage() {
       {/* Pricing Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
         {/* Free Plan */}
-        <div className="lux-card p-6 sm:p-9 flex flex-col justify-between border border-slate-200/80 dark:border-slate-800">
+        <div className="section-card p-8 sm:p-10 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-black text-slate-900 dark:text-white">الخطة المجانية</h3>
-              <span className="badge badge-slate text-xs font-bold px-3 py-1 rounded-xl">مستمرة للأبد</span>
+              <span className="badge badge-slate text-xs font-bold px-3 py-1.5 rounded-xl">مستمرة للأبد</span>
             </div>
             <p className="text-xs sm:text-sm text-slate-500 mb-6 leading-relaxed">
               مثالية لتجربة المنصة أو للأساتذة الذين يدرسون فوجًا واحدًا
@@ -69,38 +69,38 @@ export default function SubscribePage() {
               <span className="text-sm text-slate-500 font-bold">دج / مجانًا</span>
             </div>
 
-            <ul className="space-y-3.5 text-xs sm:text-sm text-slate-600 dark:text-slate-300 mb-8 font-medium">
-              <li className="flex items-center gap-2.5">
+            <ul className="space-y-4 text-xs sm:text-sm text-slate-600 dark:text-slate-300 mb-8 font-medium">
+              <li className="flex items-center gap-3">
                 <Check size={18} className="text-[#076653] shrink-0" />
                 <span>إدارة فوج تربوي واحد (1 Class)</span>
               </li>
-              <li className="flex items-center gap-2.5">
+              <li className="flex items-center gap-3">
                 <Check size={18} className="text-[#076653] shrink-0" />
                 <span>سجل الحضور والغياب مع حساب العقوبات</span>
               </li>
-              <li className="flex items-center gap-2.5">
+              <li className="flex items-center gap-3">
                 <Check size={18} className="text-[#076653] shrink-0" />
                 <span>الدفتر اليومي وجدول التوقيت</span>
               </li>
-              <li className="flex items-center gap-2.5">
+              <li className="flex items-center gap-3">
                 <Check size={18} className="text-[#076653] shrink-0" />
                 <span>حساب المعدلات وفق المنشور الوزاري 272</span>
               </li>
-              <li className="flex items-center gap-2.5">
+              <li className="flex items-center gap-3">
                 <Check size={18} className="text-[#076653] shrink-0" />
                 <span>طباعة كشوف النقاط وبطاقات التلاميذ</span>
               </li>
             </ul>
           </div>
 
-          <button className="w-full py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs sm:text-sm">
+          <button className="w-full py-3.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs sm:text-sm">
             خطتك الحالية (مفعلة)
           </button>
         </div>
 
         {/* Pro Plan */}
-        <div className="lux-card p-6 sm:p-9 flex flex-col justify-between border-2 border-amber-400 dark:border-amber-500 shadow-2xl relative bg-gradient-to-b from-amber-500/10 via-emerald-50/5 to-transparent">
-          <div className="absolute -top-3.5 start-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 text-xs font-black px-4 py-1 rounded-full shadow-md flex items-center gap-1">
+        <div className="section-card p-8 sm:p-10 flex flex-col justify-between border-2 border-amber-400 dark:border-amber-500 shadow-2xl relative bg-gradient-to-b from-amber-500/10 via-emerald-50/5 to-transparent">
+          <div className="absolute -top-3.5 start-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 text-xs font-black px-4 py-1 rounded-full shadow-md flex items-center gap-1.5">
             <Sparkles size={14} />
             <span>الخيار الأفضل للأساتذة ★</span>
           </div>
@@ -108,7 +108,7 @@ export default function SubscribePage() {
           <div>
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-black text-slate-900 dark:text-white">الباقة الاحترافية الشاملة</h3>
-              <span className="badge badge-brand text-xs font-bold px-3 py-1 rounded-xl">غير محدودة</span>
+              <span className="badge badge-brand text-xs font-bold px-3 py-1.5 rounded-xl">غير محدودة</span>
             </div>
             <p className="text-xs sm:text-sm text-slate-500 mb-6 leading-relaxed">
               كل المزايا بدون قيود لجميع أفواجك وتلاميذك طوال السنة
@@ -123,28 +123,28 @@ export default function SubscribePage() {
               </span>
             </div>
 
-            <ul className="space-y-3.5 text-xs sm:text-sm text-slate-700 dark:text-slate-200 mb-8 font-medium">
-              <li className="flex items-center gap-2.5 font-bold text-[#076653] dark:text-emerald-400">
+            <ul className="space-y-4 text-xs sm:text-sm text-slate-700 dark:text-slate-200 mb-8 font-medium">
+              <li className="flex items-center gap-3 font-bold text-[#076653] dark:text-emerald-400">
                 <Check size={18} className="shrink-0" />
                 <span>أفواج تربوية غير محدودة (Unlimited Classes)</span>
               </li>
-              <li className="flex items-center gap-2.5">
+              <li className="flex items-center gap-3">
                 <Check size={18} className="text-[#076653] shrink-0" />
                 <span>بوابة خاصة لأولياء التلاميذ لمتابعة الغياب والنقاط</span>
               </li>
-              <li className="flex items-center gap-2.5">
+              <li className="flex items-center gap-3">
                 <Check size={18} className="text-[#076653] shrink-0" />
                 <span>مزامنة سحابية فورية وحفظ دائم على السحابة</span>
               </li>
-              <li className="flex items-center gap-2.5">
+              <li className="flex items-center gap-3">
                 <Check size={18} className="text-[#076653] shrink-0" />
                 <span>تصدير واستيراد قوائم التلاميذ بصيغة Excel</span>
               </li>
-              <li className="flex items-center gap-2.5">
+              <li className="flex items-center gap-3">
                 <Check size={18} className="text-[#076653] shrink-0" />
                 <span>خريطة مقاعد القسم وتوزيع المجموعات الذكي</span>
               </li>
-              <li className="flex items-center gap-2.5">
+              <li className="flex items-center gap-3">
                 <Check size={18} className="text-[#076653] shrink-0" />
                 <span>دعم فني سريع عبر WhatsApp طوال أيام الأسبوع</span>
               </li>
@@ -153,7 +153,7 @@ export default function SubscribePage() {
 
           <button
             onClick={() => alert('طرق الدفع المتاحة: بريدي موب BaridiMob أو CCP. يرجى التواصل مع إدارة المنصة.')}
-            className="gold-btn w-full py-3.5 text-sm font-black flex items-center justify-center gap-2 shadow-lg"
+            className="gold-btn w-full py-4 text-sm font-black flex items-center justify-center gap-2.5 shadow-lg rounded-xl"
           >
             <Sparkles size={18} />
             <span>ترقية الحساب الآن</span>
@@ -162,18 +162,18 @@ export default function SubscribePage() {
       </div>
 
       {/* Payment Methods Notice */}
-      <div className="lux-card p-6 sm:p-8 max-w-4xl mx-auto">
-        <h4 className="text-base font-black text-slate-900 dark:text-white mb-4 flex items-center gap-2.5">
+      <div className="section-card p-6 sm:p-8 max-w-4xl mx-auto space-y-4">
+        <h4 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2.5">
           <ShieldCheck size={20} className="text-[#076653] dark:text-emerald-400" />
           <span>طرق الدفع المعتمدة في الجزائر</span>
         </h4>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
-          <div className="p-4 bg-emerald-50/50 dark:bg-slate-800/60 rounded-2xl border border-emerald-100 dark:border-slate-700">
-            <strong className="block text-slate-900 dark:text-white mb-1.5 font-bold">1. تطبيق بريدي موب (BaridiMob)</strong>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+          <div className="p-5 bg-emerald-50/50 dark:bg-slate-800/60 rounded-2xl border border-emerald-100 dark:border-slate-700 space-y-2">
+            <strong className="block text-slate-900 dark:text-white font-bold">1. تطبيق بريدي موب (BaridiMob)</strong>
             <p className="text-xs text-slate-500 leading-relaxed">تحويل فوري بدون رسوم إضافية عبر تطبيق الهاتف لضمان التفعيل اللحظي.</p>
           </div>
-          <div className="p-4 bg-emerald-50/50 dark:bg-slate-800/60 rounded-2xl border border-emerald-100 dark:border-slate-700">
-            <strong className="block text-slate-900 dark:text-white mb-1.5 font-bold">2. الحساب البريدي الجاري (CCP)</strong>
+          <div className="p-5 bg-emerald-50/50 dark:bg-slate-800/60 rounded-2xl border border-emerald-100 dark:border-slate-700 space-y-2">
+            <strong className="block text-slate-900 dark:text-white font-bold">2. الحساب البريدي الجاري (CCP)</strong>
             <p className="text-xs text-slate-500 leading-relaxed">الدفع عبر أي مكتب بريد جزائري وتأكيد الوصل مع فريق الدعم الفني.</p>
           </div>
         </div>

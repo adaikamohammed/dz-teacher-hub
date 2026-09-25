@@ -148,15 +148,15 @@ function AttendanceContent() {
   }
 
   return (
-    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 animate-fade-in" dir="rtl">
-      {/* ── Compact Single-line Page Action Bar ── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-        <div className="flex flex-wrap items-center gap-2.5">
+    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in" dir="rtl">
+      {/* ── Page Action Bar ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center gap-3">
           {/* Group Selector */}
           <select
             value={selectedGroupId}
             onChange={e => setSelectedGroupId(e.target.value)}
-            className="select w-auto text-xs font-bold py-1.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-2xs"
+            className="select w-auto text-xs sm:text-sm font-bold py-2 px-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-2xs cursor-pointer"
           >
             {groups.map(g => (
               <option key={g.id} value={g.id}>الفوج: {g.name}</option>
@@ -164,10 +164,10 @@ function AttendanceContent() {
           </select>
 
           {/* View Mode Toggle */}
-          <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl text-xs font-semibold">
+          <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl text-xs sm:text-sm font-bold">
             <button
               onClick={() => setViewMode('week')}
-              className={`px-3 py-1 rounded-lg transition-colors ${
+              className={`px-3.5 py-1.5 rounded-lg transition-colors cursor-pointer ${
                 viewMode === 'week' ? 'bg-white dark:bg-slate-700 text-[#076653] dark:text-emerald-400 shadow-2xs font-bold' : 'text-slate-500'
               }`}
             >
@@ -175,7 +175,7 @@ function AttendanceContent() {
             </button>
             <button
               onClick={() => setViewMode('month')}
-              className={`px-3 py-1 rounded-lg transition-colors ${
+              className={`px-3.5 py-1.5 rounded-lg transition-colors cursor-pointer ${
                 viewMode === 'month' ? 'bg-white dark:bg-slate-700 text-[#076653] dark:text-emerald-400 shadow-2xs font-bold' : 'text-slate-500'
               }`}
             >
@@ -183,7 +183,7 @@ function AttendanceContent() {
             </button>
             <button
               onClick={() => setViewMode('all')}
-              className={`px-3 py-1 rounded-lg transition-colors ${
+              className={`px-3.5 py-1.5 rounded-lg transition-colors cursor-pointer ${
                 viewMode === 'all' ? 'bg-white dark:bg-slate-700 text-[#076653] dark:text-emerald-400 shadow-2xs font-bold' : 'text-slate-500'
               }`}
             >
@@ -192,26 +192,26 @@ function AttendanceContent() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2.5 self-start sm:self-auto no-print">
+        <div className="flex items-center gap-3 self-start sm:self-auto no-print">
           <button
             onClick={() => window.print()}
-            className="bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 shadow-2xs text-xs hover:border-[#076653] transition-colors"
+            className="bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold px-4 py-2 rounded-xl flex items-center gap-2 shadow-2xs text-xs sm:text-sm hover:border-[#076653] transition-colors cursor-pointer"
           >
-            <Printer size={14} />
-            <span>طباعة</span>
+            <Printer size={15} />
+            <span>طباعة السجل</span>
           </button>
         </div>
       </div>
 
       {/* KPI Stats */}
-      <div className="grid grid-cols-3 gap-3 sm:gap-4 mb-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6">
         <div className="kpi-card">
           <div>
             <div className="kpi-value text-rose-600">0</div>
             <div className="kpi-label">إجمالي الغيابات هذا الفصل</div>
           </div>
           <div className="kpi-icon bg-rose-50 dark:bg-rose-950/40 text-rose-500 border border-rose-100 dark:border-rose-900/40">
-            <span className="text-lg font-black">غ</span>
+            <span className="text-xl font-black">غ</span>
           </div>
         </div>
         <div className="kpi-card">
@@ -220,7 +220,7 @@ function AttendanceContent() {
             <div className="kpi-label">حالات تأخر هذا الفصل</div>
           </div>
           <div className="kpi-icon bg-amber-50 dark:bg-amber-950/40 text-amber-500 border border-amber-100 dark:border-amber-900/40">
-            <span className="text-lg font-black">ت</span>
+            <span className="text-xl font-black">ت</span>
           </div>
         </div>
         <div className="kpi-card">
@@ -229,35 +229,36 @@ function AttendanceContent() {
             <div className="kpi-label">تلاميذ بعذر مقبول</div>
           </div>
           <div className="kpi-icon bg-sky-50 dark:bg-sky-950/40 text-sky-500 border border-sky-100 dark:border-sky-900/40">
-            <span className="text-lg font-black">ع</span>
+            <span className="text-xl font-black">ع</span>
           </div>
         </div>
       </div>
 
       {/* Legend & Ministry Circular Note */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50 dark:bg-slate-800/40 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 mb-6 text-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-50 dark:bg-slate-800/40 p-4 sm:p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-xs sm:text-sm">
         {/* State Legend */}
-        <div className="flex items-center gap-4">
-          <span className="font-bold text-slate-700 dark:text-slate-300">الدلالات:</span>
+        <div className="flex flex-wrap items-center gap-4">
+          <span className="font-extrabold text-slate-700 dark:text-slate-300">الدلالات:</span>
           {Object.entries(STATUS_CONFIG).map(([k, cfg]) => (
-            <div key={k} className="flex items-center gap-1.5">
-              <span className={`w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs ${cfg.bg} ${cfg.text} border ${cfg.border} shadow-xs`}>
+            <div key={k} className="flex items-center gap-2">
+              <span className={`w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs ${cfg.bg} ${cfg.text} border ${cfg.border} shadow-2xs`}>
                 {cfg.short}
               </span>
-              <span className="text-slate-600 dark:text-slate-400 font-medium">{cfg.label}</span>
+              <span className="text-slate-600 dark:text-slate-400 font-semibold">{cfg.label}</span>
             </div>
           ))}
         </div>
 
         {/* Penalty reminder */}
-        <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
-          <AlertCircle size={15} className="text-amber-500 shrink-0" />
+        <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 font-medium">
+          <AlertCircle size={16} className="text-amber-500 shrink-0" />
           <span>تخصم الغيابات آلياً من نقطة التقويم المستمر (0.5 للغياب، 0.25 للتأخر).</span>
         </div>
       </div>
 
       {/* Main Attendance Table */}
       <div className="section-card overflow-hidden">
+
         <div className="overflow-x-auto">
 
           <table className="w-full text-right border-collapse text-sm">

@@ -196,30 +196,30 @@ export default function GroupsPage() {
   }
 
   return (
-    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 animate-fade-in" dir="rtl">
-      {/* ── Compact Single-line Page Action Bar matching Sanad ── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in" dir="rtl">
+      {/* ── Page Action Bar ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-lg sm:text-xl font-bold text-slate-800 dark:text-slate-100">
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight">
             الأفواج التربوية المسجلة ({groups.length})
           </h2>
-          <p className="text-xs text-slate-400 font-medium mt-0.5">
+          <p className="text-xs sm:text-sm text-slate-400 font-semibold mt-1">
             إدارة الأقسام، الحجم الساعي، وتوزيع الحصص للفصل الدراسي الحالي
           </p>
         </div>
 
         <button
           onClick={handleOpenAdd}
-          className="bg-[#076653] hover:bg-[#065444] text-white font-bold px-4 py-2 rounded-xl flex items-center justify-center gap-1.5 shadow-xs text-xs sm:text-sm transition-colors cursor-pointer self-start sm:self-auto"
+          className="bg-[#076653] hover:bg-[#065444] text-white font-bold px-5 py-2.5 rounded-xl flex items-center justify-center gap-2 shadow-xs text-sm transition-all cursor-pointer self-start sm:self-auto"
         >
-          <Plus size={16} />
+          <Plus size={18} />
           <span>فوج جديد</span>
         </button>
       </div>
 
       {/* Groups Grid */}
       {groups.length === 0 ? (
-        <div className="lux-card text-center py-20 px-6">
+        <div className="section-card text-center py-20 px-6">
           <div className="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-400 mx-auto flex items-center justify-center mb-4">
             <Users size={32} />
           </div>
@@ -233,7 +233,7 @@ export default function GroupsPage() {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {groups.map(g => {
             return (
               <div key={g.id} className="group-card">
@@ -241,57 +241,67 @@ export default function GroupsPage() {
                 <div className={`group-card-top-bar ${COLOR_CLASSES[g.color].bar}`} />
                 <div className="group-card-body">
                   {/* Avatar + info + edit/delete */}
-                  <div className="flex items-start gap-3 mb-3">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center font-black text-sm text-white shrink-0 ${COLOR_CLASSES[g.color].bar}`}>
-                      {g.name}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-black text-slate-900 dark:text-white text-base">{g.name}</h3>
-                      <p className="text-xs text-slate-400 mt-0.5">{g.level} · {g.stream}</p>
+                  <div className="flex items-center justify-between gap-3 mb-4">
+                    <div className="flex items-center gap-3.5 min-w-0">
+                      <div className={`w-13 h-13 rounded-2xl flex items-center justify-center font-black text-sm text-white shrink-0 shadow-sm ${COLOR_CLASSES[g.color].bar}`}>
+                        {g.name}
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="font-black text-slate-900 dark:text-white text-base truncate">{g.name}</h3>
+                        <p className="text-xs text-slate-400 font-semibold mt-0.5 truncate">{g.level} · {g.stream}</p>
+                      </div>
                     </div>
                     {/* Edit / Delete buttons */}
                     <div className="flex items-center gap-1 shrink-0">
                       <button
                         onClick={() => handleOpenEdit(g)}
                         title="تعديل الفوج"
-                        className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                        className="p-2 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                       >
-                        <Edit2 size={14} />
+                        <Edit2 size={15} />
                       </button>
                       <button
                         onClick={() => setDeleteConfirmId(g.id)}
                         title="حذف الفوج"
-                        className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors"
+                        className="p-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors"
                       >
-                        <Trash2 size={14} />
+                        <Trash2 size={15} />
                       </button>
                     </div>
                   </div>
+
                   {/* Stats row */}
-                  <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mb-3">
-                    <span className="flex items-center gap-1"><Users size={12} /> {g.studentsCount} تلميذ</span>
-                    <span className="flex items-center gap-1"><Clock size={12} /> {g.weeklyHours}س/أسبوع</span>
-                    <span className="flex items-center gap-1"><Building size={12} /> {g.room}</span>
+                  <div className="flex items-center justify-between flex-wrap gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400 mb-4 bg-slate-50 dark:bg-slate-800/40 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
+                    <span className="flex items-center gap-1.5"><Users size={13} className="text-[#076653] dark:text-emerald-400" /> {g.studentsCount} تلميذ</span>
+                    <span className="flex items-center gap-1.5"><Clock size={13} className="text-sky-600 dark:text-sky-400" /> {g.weeklyHours}س/أسبوع</span>
+                    <span className="flex items-center gap-1.5"><Building size={13} className="text-amber-600 dark:text-amber-400" /> {g.room}</span>
                   </div>
+
                   {/* Progress bar */}
-                  <div className="mb-1 flex items-center justify-between text-[10px] text-slate-400">
-                    <span>الحصص المنجزة</span>
-                    <span className="nums">{g.completedSessions}/{g.totalSessions}</span>
-                  </div>
-                  <div className="progress-slim">
-                    <div className={`progress-slim-bar ${COLOR_CLASSES[g.color].bar}`} style={{ width: `${Math.round((g.completedSessions / g.totalSessions) * 100)}%` }} />
+                  <div className="mb-2">
+                    <div className="mb-1.5 flex items-center justify-between text-xs font-semibold text-slate-500 dark:text-slate-400">
+                      <span>الحصص المنجزة</span>
+                      <span className="nums font-bold text-slate-700 dark:text-slate-300">{g.completedSessions} من {g.totalSessions}</span>
+                    </div>
+                    <div className="progress-slim">
+                      <div className={`progress-slim-bar ${COLOR_CLASSES[g.color].bar}`} style={{ width: `${Math.round((g.completedSessions / g.totalSessions) * 100)}%` }} />
+                    </div>
                   </div>
                 </div>
+
                 {/* Footer actions */}
                 <div className="group-card-footer">
                   <button onClick={() => router.push('/teacher/attendance?group=' + g.id)} className="group-card-action-btn">
-                    <ClipboardList size={13} /> حضور
+                    <ClipboardList size={15} />
+                    <span>حضور</span>
                   </button>
                   <button onClick={() => router.push('/teacher/grades?group=' + g.id)} className="group-card-action-btn">
-                    <Star size={13} /> علامات
+                    <Star size={15} />
+                    <span>علامات</span>
                   </button>
                   <button onClick={() => router.push('/teacher/journal?group=' + g.id)} className="group-card-action-btn">
-                    <BookOpen size={13} /> دفتر
+                    <BookOpen size={15} />
+                    <span>دفتر</span>
                   </button>
                 </div>
               </div>
@@ -299,6 +309,7 @@ export default function GroupsPage() {
           })}
         </div>
       )}
+
 
       {/* ── Modal mGroup (Add/Edit Group) ── */}
       {isModalOpen && (

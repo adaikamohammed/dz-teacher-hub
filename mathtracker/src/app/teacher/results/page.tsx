@@ -40,31 +40,31 @@ export default function ResultsPage() {
   }
 
   return (
-    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 animate-fade-in" dir="rtl">
-      {/* ── Compact Single-line Page Action Bar matching Sanad ── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in" dir="rtl">
+      {/* ── Page Action Bar ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-lg sm:text-xl font-bold text-slate-800 dark:text-slate-100">
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight">
             إحصائيات وتقييم الأداء العام
           </h2>
-          <p className="text-xs text-slate-400 font-medium mt-0.5">
+          <p className="text-xs sm:text-sm text-slate-400 font-semibold mt-1">
             توزيع المعدلات، نسب النجاح، ومقارنة أداء الأفواج التربوية للفصل الدراسي الحالي
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5 self-start sm:self-auto no-print">
+        <div className="flex items-center gap-3 self-start sm:self-auto no-print">
           <button
             onClick={() => window.print()}
-            className="btn-ghost btn-sm flex items-center gap-2"
+            className="btn-ghost px-4 py-2 rounded-xl flex items-center gap-2 font-bold text-xs sm:text-sm cursor-pointer shadow-2xs"
           >
-            <Printer size={15} />
+            <Printer size={16} />
             <span>طباعة التقرير</span>
           </button>
         </div>
       </div>
 
       {/* ── 3 Balanced KPI Cards ── */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
         {/* Card 1: General Average */}
         <div className="kpi-card">
           <div>
@@ -72,7 +72,7 @@ export default function ResultsPage() {
             <div className="kpi-label">المعدل العام لجميع الأفواج</div>
           </div>
           <div className="kpi-icon bg-emerald-50 dark:bg-emerald-950/50 text-[#076653] dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/40">
-            <TrendingUp size={22} />
+            <TrendingUp size={24} />
           </div>
         </div>
 
@@ -83,7 +83,7 @@ export default function ResultsPage() {
             <div className="kpi-label">نسبة النجاح العامة (معدل ≥ 10)</div>
           </div>
           <div className="kpi-icon bg-teal-50 dark:bg-teal-950/50 text-teal-700 dark:text-teal-400 border border-teal-100 dark:border-teal-900/40">
-            <Award size={22} />
+            <Award size={24} />
           </div>
         </div>
 
@@ -94,13 +94,13 @@ export default function ResultsPage() {
             <div className="kpi-label">إجمالي التلاميذ المسجلين</div>
           </div>
           <div className="kpi-icon bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-900/40">
-            <Users size={22} />
+            <Users size={24} />
           </div>
         </div>
       </div>
 
       {/* ── Analytics Grid (65% Groups Table + 35% Distribution) ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
         {/* Groups Summary Table (8 cols) */}
         <div className="lg:col-span-8">
           <div className="section-card">

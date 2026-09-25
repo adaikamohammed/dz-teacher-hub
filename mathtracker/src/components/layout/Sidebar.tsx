@@ -54,8 +54,8 @@ export default function Sidebar({
   const initial = userName ? userName.charAt(0) : 'م'
 
   const sidebarClass = [
-    'fixed inset-y-0 end-0 z-40 w-64 bg-white dark:bg-slate-900',
-    'border-s border-slate-200/80 dark:border-slate-800',
+    'fixed inset-y-0 start-0 z-40 w-64 bg-white dark:bg-slate-900',
+    'border-e border-slate-200/80 dark:border-slate-800',
     'flex flex-col',
     'transition-transform duration-200 ease-in-out',
     isMobileOpen ? 'translate-x-0' : 'translate-x-full',
@@ -78,17 +78,17 @@ export default function Sidebar({
           <a
             href="#"
             onClick={(e) => { e.preventDefault(); setActiveTab('dashboard') }}
-            className="flex items-center gap-2.5 min-w-0"
+            className="flex items-center gap-3 min-w-0"
           >
             {/* Custom stylized notebook logo icon matching Sanad */}
-            <div className="w-9 h-9 rounded-xl border-2 border-[#076653] flex items-center justify-center text-[#076653] shrink-0 bg-[#076653]/5">
+            <div className="w-10 h-10 rounded-xl border-2 border-[#076653] flex items-center justify-center text-[#076653] shrink-0 bg-[#076653]/5 shadow-2xs">
               <Bookmark size={20} className="fill-[#076653]" />
             </div>
             <div>
               <span className="block font-black text-slate-900 dark:text-white text-base leading-tight">
                 سند الأستاذ
               </span>
-              <span className="block text-[11px] text-slate-400 font-semibold nums">
+              <span className="block text-[11px] text-slate-400 font-bold nums mt-0.5">
                 {schoolYear}
               </span>
             </div>
@@ -96,7 +96,7 @@ export default function Sidebar({
 
           {/* Mobile close */}
           <button
-            className="lg:hidden text-slate-400 hover:text-slate-600 p-1"
+            className="lg:hidden text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
             onClick={onCloseMobile}
           >
             <X size={20} />
@@ -104,7 +104,7 @@ export default function Sidebar({
         </div>
 
         {/* ── Navigation Links (13 items) ── */}
-        <nav className="flex-1 overflow-y-auto min-h-0 px-3 py-3 space-y-1" style={{ scrollbarWidth: 'none' }}>
+        <nav className="flex-1 overflow-y-auto min-h-0 px-3 py-3.5 space-y-1.5" style={{ scrollbarWidth: 'none' }}>
           {NAV_ITEMS.map(({ id, label, icon: Icon }) => {
             const isActive = activeTab === id
             return (
@@ -114,7 +114,7 @@ export default function Sidebar({
                 className={`nav-link w-full text-right ${isActive ? 'nav-link-active' : ''}`}
               >
                 <Icon size={19} className="shrink-0" />
-                <span className="text-sm font-semibold">{label}</span>
+                <span className="text-sm font-bold">{label}</span>
               </button>
             )
           })}
@@ -127,8 +127,8 @@ export default function Sidebar({
             }`}
           >
             <Sparkles size={19} className="shrink-0" />
-            <span className="text-sm font-semibold">الاشتراك</span>
-            <span className="ms-auto text-[9px] font-black px-1.5 py-0.5 rounded-full bg-amber-400 text-slate-950">
+            <span className="text-sm font-bold">الاشتراك</span>
+            <span className="ms-auto text-[10px] font-black px-2 py-0.5 rounded-full bg-amber-400 text-slate-950 shadow-2xs">
               ترقية
             </span>
           </button>
@@ -141,29 +141,18 @@ export default function Sidebar({
             }`}
           >
             <MessageCircle size={19} className="shrink-0" />
-            <span className="text-sm font-semibold">الرسائل</span>
+            <span className="text-sm font-bold">الرسائل</span>
           </button>
         </nav>
 
         {/* ── Bottom Section matching Sanad (Image 1) ── */}
-        <div className="p-3 border-t border-slate-100 dark:border-slate-800 space-y-2.5 flex-shrink-0 bg-white dark:bg-slate-900">
+        <div className="p-3.5 border-t border-slate-100 dark:border-slate-800 space-y-3 flex-shrink-0 bg-white dark:bg-slate-900">
           {/* Setup Progress Widget */}
           <button
             onClick={() => { setActiveTab('settings'); onCloseMobile?.() }}
-            className="w-full rounded-2xl bg-[#f0faf6] dark:bg-[#076653]/15 border border-[#c2ebd9] dark:border-[#076653]/30 p-2.5 flex items-center justify-between text-start transition-colors hover:bg-[#e6f4ee]"
+            className="w-full rounded-2xl bg-[#f0faf6] dark:bg-[#076653]/15 border border-[#c2ebd9] dark:border-[#076653]/30 p-3 flex items-center justify-between gap-2.5 text-start transition-colors hover:bg-[#e6f4ee]"
           >
-            <ChevronLeft size={16} className="text-[#076653] dark:text-emerald-400 shrink-0" />
-
-            <div className="flex-1 px-2 min-w-0">
-              <div className="text-[11px] font-black text-[#065f46] dark:text-emerald-300">
-                تجهيز حسابك — 7 من 8
-              </div>
-              <div className="text-[10px] text-[#076653]/80 dark:text-emerald-400/80 truncate font-medium">
-                {setupNextStep}
-              </div>
-            </div>
-
-            {/* Circular Ring Progress */}
+            {/* Circular Ring Progress on the Right in RTL */}
             <div className="relative w-8 h-8 shrink-0 flex items-center justify-center">
               <svg viewBox="0 0 36 36" className="w-8 h-8 -rotate-90">
                 <circle cx="18" cy="18" r={RADIUS} fill="none" stroke="#d1fae5" strokeWidth="4.5"/>
@@ -180,39 +169,39 @@ export default function Sidebar({
                 {setupProgress}
               </span>
             </div>
+
+            <div className="flex-1 px-1.5 min-w-0">
+              <div className="text-xs font-black text-[#065f46] dark:text-emerald-300">
+                تجهيز حسابك — 7 من 8
+              </div>
+              <div className="text-[11px] text-[#076653]/80 dark:text-emerald-400/80 truncate font-semibold mt-0.5">
+                {setupNextStep}
+              </div>
+            </div>
+
+            <ChevronLeft size={16} className="text-[#076653] dark:text-emerald-400 shrink-0" />
           </button>
 
           {/* Install App Button matching Sanad */}
           <button
             onClick={() => alert('تم تفعيل تطبيق الويب التقدمي (PWA). يمكنك تثبيته كبرنامج مستقل على جهازك أو هاتفك.')}
-            className="w-full py-2 px-3 rounded-xl bg-[#f0faf6] dark:bg-slate-800/80 hover:bg-[#e6f4ee] text-[#076653] dark:text-emerald-400 border border-[#c2ebd9] dark:border-slate-700 font-bold text-xs flex items-center justify-center gap-2 transition-colors"
+            className="w-full py-2.5 px-3.5 rounded-xl bg-[#f0faf6] dark:bg-slate-800/80 hover:bg-[#e6f4ee] text-[#076653] dark:text-emerald-400 border border-[#c2ebd9] dark:border-slate-700 font-bold text-xs flex items-center justify-center gap-2 transition-colors"
           >
             <Download size={15} />
             <span>تثبيت التطبيق على الجهاز</span>
           </button>
 
-          {/* User Profile Row matching Sanad */}
+          {/* User Profile Row matching Sanad (Profile on Right, Tools on Left) */}
           <div className="flex items-center justify-between pt-1">
-            <button
-              onClick={onLogout}
-              title="تسجيل الخروج"
-              className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
-            >
-              <LogOut size={18} />
-            </button>
-
-            <button
-              onClick={toggleTheme}
-              title={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 transition-colors"
-            >
-              {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
-            </button>
-
+            {/* User Info & Avatar on Right */}
             <div
               onClick={() => { setActiveTab('profile'); onCloseMobile?.() }}
-              className="flex items-center gap-2.5 cursor-pointer text-right min-w-0"
+              className="flex items-center gap-2.5 cursor-pointer text-right min-w-0 flex-1"
             >
+              <div className="w-9 h-9 rounded-full bg-[#d1fae5] dark:bg-emerald-950 text-[#065f46] dark:text-emerald-300 font-black text-xs flex items-center justify-center shrink-0 shadow-2xs">
+                {initial}
+              </div>
+
               <div className="min-w-0">
                 <div className="text-xs font-bold text-slate-900 dark:text-white truncate">
                   {userName}
@@ -221,10 +210,25 @@ export default function Sidebar({
                   {subjectName}
                 </div>
               </div>
+            </div>
 
-              <div className="w-8 h-8 rounded-full bg-[#d1fae5] dark:bg-emerald-950 text-[#065f46] dark:text-emerald-300 font-black text-xs flex items-center justify-center shrink-0">
-                {initial}
-              </div>
+            {/* Actions on Left */}
+            <div className="flex items-center gap-1 shrink-0">
+              <button
+                onClick={toggleTheme}
+                title={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
+                className="p-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              >
+                {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+              </button>
+
+              <button
+                onClick={onLogout}
+                title="تسجيل الخروج"
+                className="p-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors"
+              >
+                <LogOut size={16} />
+              </button>
             </div>
           </div>
         </div>

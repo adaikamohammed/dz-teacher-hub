@@ -176,9 +176,9 @@ function JournalContent() {
   }
 
   return (
-    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 animate-fade-in" dir="rtl">
-      {/* ── Compact Single-line Page Action Bar ── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in" dir="rtl">
+      {/* ── Page Action Bar ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         {/* Right: Group Tabs */}
         <div className="filter-tabs">
           {GROUPS_LIST.map(g => (
@@ -193,27 +193,27 @@ function JournalContent() {
         </div>
 
         {/* Left: Action Buttons */}
-        <div className="flex items-center gap-2.5 self-start sm:self-auto no-print">
+        <div className="flex items-center gap-3 self-start sm:self-auto no-print">
           <button
             onClick={() => setIsExtraModalOpen(true)}
-            className="px-3.5 py-2 rounded-xl bg-[#076653] hover:bg-[#065444] text-white font-bold text-xs flex items-center gap-1.5 shadow-xs transition-colors"
+            className="px-4 py-2.5 rounded-xl bg-[#076653] hover:bg-[#065444] text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-xs transition-colors cursor-pointer"
           >
-            <Plus size={15} />
+            <Plus size={16} />
             <span>حصة استثنائية</span>
           </button>
 
           <button
             onClick={() => window.print()}
-            className="px-3.5 py-2 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:border-[#076653] font-bold text-xs flex items-center gap-1.5 transition-colors shadow-xs"
+            className="px-4 py-2.5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:border-[#076653] font-bold text-xs sm:text-sm flex items-center gap-2 transition-colors shadow-xs cursor-pointer"
           >
-            <Printer size={15} />
+            <Printer size={16} />
             <span>طباعة الدفتر</span>
           </button>
         </div>
       </div>
 
       {/* ── KPI Stats for Group ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6">
         <div className="kpi-card">
           <div>
             <div className="kpi-value nums text-[#076653] dark:text-emerald-400">
@@ -222,7 +222,7 @@ function JournalContent() {
             <div className="kpi-label">حصص منجزة مسجلة في الدفتر</div>
           </div>
           <div className="kpi-icon bg-emerald-50 dark:bg-emerald-950/40 text-[#076653] dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/40">
-            <CheckCircle2 size={22} />
+            <CheckCircle2 size={24} />
           </div>
         </div>
 
@@ -234,7 +234,7 @@ function JournalContent() {
             <div className="kpi-label">حصص مبرمجة قادمة</div>
           </div>
           <div className="kpi-icon bg-amber-50 dark:bg-amber-950/40 text-amber-600 border border-amber-100 dark:border-amber-900/40">
-            <Clock size={22} />
+            <Clock size={24} />
           </div>
         </div>
 
@@ -246,13 +246,13 @@ function JournalContent() {
             <div className="kpi-label">نسبة تنفيذ البرنامج المسجل</div>
           </div>
           <div className="kpi-icon bg-blue-50 dark:bg-blue-950/40 text-blue-600 border border-blue-100 dark:border-blue-900/40">
-            <BookOpen size={22} />
+            <BookOpen size={24} />
           </div>
         </div>
       </div>
 
       {/* ── Structured Session Cards (No Sprawl) ── */}
-      <div className="space-y-4">
+      <div className="space-y-5">
         {sessions.map(session => {
           const actCfg = ACTIVITY_CONFIG[session.activity] || ACTIVITY_CONFIG.theory
           const statusCfg = STATUS_SPINE[session.status] || STATUS_SPINE.planned

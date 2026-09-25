@@ -52,77 +52,65 @@ export default function PlannerPage() {
   const filteredWeeks = weeks.filter(w => w.term === selectedTerm)
 
   return (
-    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 animate-fade-in" dir="rtl">
-      {/* ── Compact Single-line Page Action Bar ── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in" dir="rtl">
+      {/* ── Page Action Bar ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex flex-wrap items-center gap-3">
           {/* Term selector tabs matching Sanad Screenshot */}
-          <div className="flex items-center p-0.5 bg-slate-100 dark:bg-slate-800 rounded-xl text-xs font-bold">
+          <div className="filter-tabs">
             <button
               onClick={() => setSelectedTerm(1)}
-              className={`transition-all px-3 py-1.5 rounded-lg ${
-                selectedTerm === 1
-                  ? 'bg-white dark:bg-slate-700 text-[#076653] dark:text-emerald-400 shadow-2xs font-extrabold'
-                  : 'text-slate-500 hover:text-slate-800 dark:text-slate-300'
-              }`}
+              className={`filter-tab ${selectedTerm === 1 ? 'active' : ''}`}
             >
               الفصل الأول
             </button>
             <button
               onClick={() => setSelectedTerm(2)}
-              className={`transition-all px-3 py-1.5 rounded-lg ${
-                selectedTerm === 2
-                  ? 'bg-white dark:bg-slate-700 text-[#076653] dark:text-emerald-400 shadow-2xs font-extrabold'
-                  : 'text-slate-500 hover:text-slate-800 dark:text-slate-300'
-              }`}
+              className={`filter-tab ${selectedTerm === 2 ? 'active' : ''}`}
             >
               الفصل الثاني
             </button>
             <button
               onClick={() => setSelectedTerm(3)}
-              className={`transition-all px-3 py-1.5 rounded-lg ${
-                selectedTerm === 3
-                  ? 'bg-white dark:bg-slate-700 text-[#076653] dark:text-emerald-400 shadow-2xs font-extrabold'
-                  : 'text-slate-500 hover:text-slate-800 dark:text-slate-300'
-              }`}
+              className={`filter-tab ${selectedTerm === 3 ? 'active' : ''}`}
             >
               الفصل الثالث
             </button>
           </div>
-          <span className="text-xs text-slate-400 font-medium hidden sm:inline">
+          <span className="text-xs sm:text-sm text-slate-400 font-semibold hidden md:inline">
             توزيع الموارد المعرفية والكفاءات على أسابيع السنة الدراسية
           </span>
         </div>
 
-        <div className="flex items-center gap-2.5 self-start sm:self-auto no-print">
+        <div className="flex items-center gap-3 self-start sm:self-auto no-print">
           <button
             onClick={() => window.print()}
-            className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-200 font-bold px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 shadow-2xs text-xs hover:border-[#076653] transition-colors"
+            className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-200 font-bold px-4 py-2 rounded-xl flex items-center gap-2 shadow-2xs text-xs sm:text-sm hover:border-[#076653] transition-colors cursor-pointer"
           >
-            <Printer size={14} />
+            <Printer size={15} />
             <span>طباعة التوزيع</span>
           </button>
         </div>
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-2 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
         <div className="kpi-card">
           <div>
-            <div className="kpi-value nums">2/10</div>
+            <div className="kpi-value nums">2 / 10</div>
             <div className="kpi-label">أسابيع منجزة من الفصل الأول</div>
           </div>
-          <div className="kpi-icon bg-emerald-50 dark:bg-emerald-950/40 text-[#076653] border border-emerald-100 dark:border-emerald-900/40">
-            <CheckCircle2 size={22} />
+          <div className="kpi-icon bg-emerald-50 dark:bg-emerald-950/40 text-[#076653] dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/40">
+            <CheckCircle2 size={24} />
           </div>
         </div>
         <div className="kpi-card">
           <div>
-            <div className="kpi-value nums">8/40</div>
+            <div className="kpi-value nums">8 / 40</div>
             <div className="kpi-label">ساعات منجزة من إجمالي الفصل</div>
           </div>
-          <div className="kpi-icon bg-sky-50 dark:bg-sky-950/40 text-sky-600 border border-sky-100 dark:border-sky-900/40">
-            <Clock size={22} />
+          <div className="kpi-icon bg-sky-50 dark:bg-sky-950/40 text-sky-600 dark:text-sky-400 border border-sky-100 dark:border-sky-900/40">
+            <Clock size={24} />
           </div>
         </div>
       </div>

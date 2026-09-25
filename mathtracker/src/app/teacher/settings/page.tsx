@@ -115,41 +115,44 @@ export default function SettingsPage() {
   }
 
   return (
-    <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 animate-fade-in" dir="rtl">
-      {/* ── Compact Single-line Page Action Bar ── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+    <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in" dir="rtl">
+      {/* ── Page Action Bar ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-lg sm:text-xl font-bold text-slate-800 dark:text-slate-100">
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight">
             الإعدادات والرزنامة الرسمية
           </h2>
-          <p className="text-xs text-slate-400 font-medium mt-0.5">
+          <p className="text-xs sm:text-sm text-slate-400 font-semibold mt-1">
             الرزنامة الرسمية 2026/2027، فترات الفصول، خصم الغياب، والنسخ الاحتياطي
           </p>
         </div>
 
         {savedSuccess && (
-          <span className="text-xs font-bold text-emerald-600 flex items-center gap-1.5 animate-fade-in bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1 rounded-xl border border-emerald-200 dark:border-emerald-800">
-            <Check size={14} /> تم الحفظ بنجاح
+          <span className="text-xs sm:text-sm font-bold text-emerald-600 flex items-center gap-2 animate-fade-in bg-emerald-50 dark:bg-emerald-950/40 px-4 py-2 rounded-xl border border-emerald-200 dark:border-emerald-800 shadow-2xs">
+            <Check size={16} /> تم الحفظ بنجاح
           </span>
         )}
       </div>
 
       {/* ── Filter Tabs ── */}
-      <div className="mb-6">
+      <div>
         <div className="filter-tabs">
           <button
+            type="button"
             className={`filter-tab ${activeSection === 'calendar' ? 'active' : ''}`}
             onClick={() => setActiveSection('calendar')}
           >
             📅 الرزنامة الدراسية
           </button>
           <button
+            type="button"
             className={`filter-tab ${activeSection === 'grading' ? 'active' : ''}`}
             onClick={() => setActiveSection('grading')}
           >
             ⚖️ معايير التقييم
           </button>
           <button
+            type="button"
             className={`filter-tab ${activeSection === 'sharing' ? 'active' : ''}`}
             onClick={() => setActiveSection('sharing')}
           >
@@ -158,7 +161,7 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      <form onSubmit={handleSaveSettings} className="space-y-6">
+      <form onSubmit={handleSaveSettings} className="space-y-8">
 
         {/* ── Calendar Section ── */}
         {activeSection === 'calendar' && (

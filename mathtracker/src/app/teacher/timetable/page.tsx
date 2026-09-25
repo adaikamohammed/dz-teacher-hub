@@ -116,57 +116,57 @@ export default function TimetablePage() {
   }
 
   return (
-    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 animate-fade-in" dir="rtl">
-      {/* ── Compact Single-line Page Action Bar ── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in" dir="rtl">
+      {/* ── Page Action Bar ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-lg sm:text-xl font-bold text-slate-800 dark:text-slate-100">
-            توزيع الحصص الأسبوعية
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight">
+            جدول التوقيت وتوزيع الحصص
           </h2>
-          <p className="text-xs text-slate-400 font-medium mt-0.5">
+          <p className="text-xs sm:text-sm text-slate-400 font-semibold mt-1">
             توزيع حصص التدريس على أيام الأسبوع (الأحد إلى الخميس) وتوليد حصص الفصل آليًا
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2.5 no-print">
+        <div className="flex flex-wrap items-center gap-3 no-print">
           <button
             onClick={() => window.print()}
-            className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-200 font-bold px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 shadow-2xs text-xs hover:border-[#076653] transition-colors"
+            className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-200 font-bold px-4 py-2.5 rounded-xl flex items-center gap-2 shadow-2xs text-xs sm:text-sm hover:border-[#076653] transition-colors cursor-pointer"
           >
-            <Printer size={14} />
+            <Printer size={15} />
             <span>طباعة الجدول</span>
           </button>
 
           <button
             onClick={handleGenerateTermSessions}
             disabled={isGenerating}
-            className="px-3.5 py-1.5 rounded-xl bg-[#076653] hover:bg-[#065444] text-white font-bold text-xs flex items-center gap-1.5 shadow-2xs transition-colors"
+            className="px-4 py-2.5 rounded-xl bg-[#076653] hover:bg-[#065444] text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-2xs transition-colors cursor-pointer"
           >
-            <Sparkles size={14} />
+            <Sparkles size={15} />
             <span>{isGenerating ? 'جاري التوليد...' : 'ولّد حصص الفصل آليًا'}</span>
           </button>
         </div>
       </div>
 
       {generationMsg && (
-        <div className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 p-4 rounded-2xl mb-6 text-xs sm:text-sm font-bold flex items-center gap-2.5 animate-fade-in shadow-sm">
-          <Check size={18} className="text-[#076653] shrink-0" />
+        <div className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 p-4 sm:p-5 rounded-2xl text-xs sm:text-sm font-bold flex items-center gap-3 animate-fade-in shadow-sm">
+          <Check size={20} className="text-[#076653] shrink-0" />
           <span>{generationMsg}</span>
         </div>
       )}
 
       {/* Timetable Grid */}
       <div className="section-card overflow-x-auto">
-        <table className="w-full text-center border-collapse min-w-[750px]">
+        <table className="w-full text-center border-collapse min-w-[780px]">
           <thead>
             <tr className="bg-slate-50 dark:bg-slate-800/50">
-              <th className="p-3.5 border-b-2 border-r border-slate-200/60 dark:border-slate-800 text-xs font-bold text-slate-600 dark:text-slate-300 w-28">
+              <th className="p-4 border-b-2 border-r border-slate-200/60 dark:border-slate-800 text-xs font-black text-slate-600 dark:text-slate-300 w-32">
                 الحصة / اليوم
               </th>
               {DAYS.map((d, dIdx) => (
                 <th
                   key={dIdx}
-                  className="p-3.5 border-b-2 border-r last:border-r-0 border-slate-200/60 dark:border-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200"
+                  className="p-4 border-b-2 border-r last:border-r-0 border-slate-200/60 dark:border-slate-800 text-xs sm:text-sm font-black text-slate-700 dark:text-slate-200"
                 >
                   {d}
                 </th>

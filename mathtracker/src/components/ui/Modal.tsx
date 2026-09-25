@@ -46,6 +46,7 @@ export default function Modal({
         className="modal-dialog-card"
         style={{ maxWidth }}
         onClick={(e) => e.stopPropagation()}
+        dir="rtl"
       >
         {/* Modal Header */}
         <div className="modal-dialog-header">

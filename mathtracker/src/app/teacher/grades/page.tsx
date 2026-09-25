@@ -183,44 +183,44 @@ function GradesContent() {
   }, [students])
 
   return (
-    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 animate-fade-in" dir="rtl">
-      {/* ── Compact Single-line Page Action Bar ── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in" dir="rtl">
+      {/* ── Page Action Bar ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex flex-wrap items-center gap-3">
           <select
             value={selectedGroupId}
             onChange={e => setSelectedGroupId(e.target.value)}
-            className="select w-auto text-xs font-bold py-1.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-2xs hover:border-[#076653] transition-colors"
+            className="select w-auto text-xs sm:text-sm font-bold py-2 px-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-2xs hover:border-[#076653] transition-colors cursor-pointer"
           >
             {groups.map(g => (
               <option key={g.id} value={g.id}>كشف علامات الفوج: {g.name}</option>
             ))}
           </select>
-          <span className="text-xs text-slate-400 font-medium hidden sm:inline">
+          <span className="text-xs sm:text-sm text-slate-400 font-semibold hidden md:inline">
             حساب آلي لنقاط التقويم المستمر والاختبارات وفق المنشور 272
           </span>
         </div>
 
-        <div className="flex items-center gap-2.5 self-start sm:self-auto no-print">
+        <div className="flex items-center gap-3 self-start sm:self-auto no-print">
           <button
             onClick={() => window.print()}
-            className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-200 font-bold px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 shadow-2xs text-xs hover:border-[#076653] transition-colors"
+            className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-200 font-bold px-4 py-2 rounded-xl flex items-center gap-2 shadow-2xs text-xs sm:text-sm hover:border-[#076653] transition-colors cursor-pointer"
           >
-            <Printer size={14} />
+            <Printer size={15} />
             <span>طباعة الكشف</span>
           </button>
         </div>
       </div>
 
       {/* 4 KPI Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
         <div className="kpi-card">
           <div>
             <div className="kpi-value nums">{stats.avg}</div>
             <div className="kpi-label">معدل القسم · الفصل 1</div>
           </div>
           <div className="kpi-icon bg-emerald-50 dark:bg-emerald-950/60 text-[#076653] dark:text-emerald-400 border border-emerald-100/80 dark:border-emerald-800/40">
-            <TrendingUp size={22} />
+            <TrendingUp size={24} />
           </div>
         </div>
 
@@ -230,7 +230,7 @@ function GradesContent() {
             <div className="kpi-label">نسبة النجاح (≥ 10)</div>
           </div>
           <div className="kpi-icon bg-emerald-50 dark:bg-emerald-950/60 text-[#065a48] dark:text-emerald-400 border border-emerald-100/80 dark:border-emerald-800/40">
-            <Users size={22} />
+            <Users size={24} />
           </div>
         </div>
 
@@ -240,7 +240,7 @@ function GradesContent() {
             <div className="kpi-label">أعلى معدل بالفوج</div>
           </div>
           <div className="kpi-icon bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-100/80 dark:border-emerald-800/40">
-            <Award size={22} />
+            <Award size={24} />
           </div>
         </div>
 
@@ -250,7 +250,7 @@ function GradesContent() {
             <div className="kpi-label">أدنى معدل بالفوج</div>
           </div>
           <div className="kpi-icon bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border border-rose-100 dark:border-rose-900/40">
-            <AlertCircle size={22} />
+            <AlertCircle size={24} />
           </div>
         </div>
       </div>
