@@ -98,16 +98,57 @@ export default function TimetablePage() {
   const [isGenerating, setIsGenerating] = useState(false)
   const [generationNotice, setGenerationNotice] = useState<string | null>(null)
 
-  // Load from LocalStorage
+  // Robust slot duration calculator preventing any NaN
+  const getSlotDuration = (s: TimetableSlot): number => {
+    const startH = typeof s.startHour === 'number' && !isNaN(s.startHour)
+      ? s.startHour
+      : (s.startTime ? parseInt(s.startTime.split(':')[0], 10) : 8)
+    const endH = typeof s.endHour === 'number' && !isNaN(s.endHour)
+      ? s.endHour
+      : (s.endTime ? parseInt(s.endTime.split(':')[0], 10) : startH + 1)
+    const safeStart = isNaN(startH) ? 8 : startH
+    const safeEnd = isNaN(endH) ? safeStart + 1 : endH
+    const diff = safeEnd - safeStart
+    return isNaN(diff) || diff <= 0 ? 1 : diff
+  }
+
+  // Load and sanitize legacy / existing items from LocalStorage
   useEffect(() => {
     const saved = localStorage.getItem('mt_timetable_slots')
     if (saved) {
       try {
-        setSlots(JSON.parse(saved))
-      } catch {
-        setSlots(DEFAULT_SLOTS)
-      }
+        const parsed = JSON.parse(saved)
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          const sanitized: TimetableSlot[] = parsed.map((s: any, idx: number) => {
+            const rawStart = typeof s.startHour === 'number' && !isNaN(s.startHour)
+              ? s.startHour
+              : (s.startTime ? parseInt(s.startTime.split(':')[0], 10) : (typeof s.periodIndex === 'number' ? s.periodIndex + 8 : 8))
+            const rawEnd = typeof s.endHour === 'number' && !isNaN(s.endHour)
+              ? s.endHour
+              : (s.endTime ? parseInt(s.endTime.split(':')[0], 10) : rawStart + 1)
+            const safeStartH = isNaN(rawStart) ? 8 : rawStart
+            const safeEndH = isNaN(rawEnd) || rawEnd <= safeStartH ? safeStartH + 1 : rawEnd
+            return {
+              id: String(s.id || `ts_${idx}`),
+              dayIndex: typeof s.dayIndex === 'number' && !isNaN(s.dayIndex) ? s.dayIndex : 0,
+              startHour: safeStartH,
+              endHour: safeEndH,
+              startTime: s.startTime || `${safeStartH.toString().padStart(2, '0')}:00`,
+              endTime: s.endTime || `${safeEndH.toString().padStart(2, '0')}:00`,
+              kind: s.kind || (s.groupId && s.groupId !== 'other' ? 'lesson' : 'other'),
+              groupId: s.groupId || '1552',
+              groupName: s.groupName || '1م1',
+              room: s.room || 'القاعة 10',
+            }
+          })
+          setSlots(sanitized)
+          localStorage.setItem('mt_timetable_slots', JSON.stringify(sanitized))
+          return
+        }
+      } catch {}
     }
+    setSlots(DEFAULT_SLOTS)
+    localStorage.setItem('mt_timetable_slots', JSON.stringify(DEFAULT_SLOTS))
   }, [])
 
   const saveSlots = (updated: TimetableSlot[]) => {
@@ -123,11 +164,11 @@ export default function TimetablePage() {
   const morningPeriods = displayedPeriods.filter(p => p.session === 'morning')
   const afternoonPeriods = displayedPeriods.filter(p => p.session === 'afternoon')
 
-  // Compute stats
+  // Compute stats safely
   const lessonSlots = slots.filter(s => s.kind === 'lesson')
   const otherSlots = slots.filter(s => s.kind !== 'lesson')
-  const teachingHours = lessonSlots.reduce((acc, s) => acc + (s.endHour - s.startHour), 0)
-  const otherHours = otherSlots.reduce((acc, s) => acc + (s.endHour - s.startHour), 0)
+  const teachingHours = Number(lessonSlots.reduce((acc, s) => acc + getSlotDuration(s), 0)) || 0
+  const otherHours = Number(otherSlots.reduce((acc, s) => acc + getSlotDuration(s), 0)) || 0
   const totalHours = teachingHours + otherHours
 
   // Open modal for adding a new slot at a specific day/hour
