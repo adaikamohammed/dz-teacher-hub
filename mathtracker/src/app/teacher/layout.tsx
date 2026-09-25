@@ -101,26 +101,26 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
       {/* Main Content Area */}
       <div className="flex-1 min-w-0 flex flex-col">
         {/* Top Header Bar matching Sanad (Image 1) */}
-        <header className="no-print sticky top-0 z-20 bg-white/90 dark:bg-slate-900/90 backdrop-blur border-b border-slate-100 dark:border-slate-800">
+        <header className="no-print sticky top-0 z-20 bg-white/80 dark:bg-[#0f1117]/80 backdrop-blur-md border-b border-slate-100/80 dark:border-slate-800/80 transition-colors">
           <div className="h-16 px-4 sm:px-8 flex items-center justify-between">
             {/* Right: Hamburger for mobile + Page Title */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3.5">
               <button
-                className="lg:hidden text-slate-500 hover:text-slate-800 dark:text-slate-300 p-1"
+                className="lg:hidden text-slate-500 hover:text-slate-800 dark:text-slate-300 p-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                 onClick={() => setIsMobileOpen(true)}
               >
                 <Menu size={22} />
               </button>
-              <h1 className="text-lg font-bold text-slate-900 dark:text-white">
+              <h1 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white">
                 {pageTitle}
               </h1>
             </div>
 
             {/* Left: Date pill + Term selector matching Image 1 */}
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-3">
               {/* Date pill */}
-              <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-semibold text-slate-600 dark:text-slate-300">
-                <Clock size={13} className="text-slate-400" />
+              <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 text-xs font-bold text-slate-600 dark:text-slate-300 shadow-2xs">
+                <Clock size={13} className="text-[#076653] dark:text-emerald-400" />
                 <span>{todayFormatted}</span>
               </div>
 
@@ -129,7 +129,7 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
                 <select
                   value={selectedTerm}
                   onChange={e => setSelectedTerm(e.target.value)}
-                  className="appearance-none pr-3 pl-7 py-1.5 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none cursor-pointer hover:border-slate-300"
+                  className="appearance-none pr-3.5 pl-8 py-1.5 rounded-full border border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 text-xs font-bold text-slate-700 dark:text-slate-200 outline-none cursor-pointer hover:border-[#076653] transition-colors shadow-2xs"
                 >
                   <option value="الفصل الأول">الفصل الأول</option>
                   <option value="الفصل الثاني">الفصل الثاني</option>

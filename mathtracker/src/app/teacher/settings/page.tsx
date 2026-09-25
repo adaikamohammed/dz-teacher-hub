@@ -114,44 +114,49 @@ export default function SettingsPage() {
   }
 
   return (
-    <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
+    <main className="flex-1 p-5 sm:p-8 lg:p-10 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
       {/* Streamlined Action Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-          الرزنامة الرسمية 2026/2027، فترات الفصول، خصم الغياب، والنسخ الاحتياطي
-        </p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div>
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
+            الإعدادات والرزنامة الرسمية
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+            الرزنامة الرسمية 2026/2027، فترات الفصول، خصم الغياب، والنسخ الاحتياطي
+          </p>
+        </div>
 
         {savedSuccess && (
-          <span className="text-xs font-bold text-emerald-600 flex items-center gap-1 animate-fade-in">
+          <span className="text-xs sm:text-sm font-bold text-emerald-600 flex items-center gap-1.5 animate-fade-in bg-emerald-50 dark:bg-emerald-950/40 px-3.5 py-1.5 rounded-xl border border-emerald-200 dark:border-emerald-800">
             <Check size={16} /> تم الحفظ بنجاح
           </span>
         )}
       </div>
 
       {/* Section 0: Referral / Affiliate System matching Sanad */}
-      <div className="card p-5 mb-6 bg-gradient-to-l from-amber-500/10 via-brand-50/10 to-transparent border-amber-200 dark:border-amber-900/30">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="lux-card p-6 sm:p-8 mb-8 bg-gradient-to-l from-amber-500/15 via-emerald-50/10 to-transparent border border-amber-200/80 dark:border-amber-900/40">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
           <div>
-            <div className="flex items-center gap-2 text-amber-800 dark:text-amber-400 font-extrabold text-sm mb-1">
-              <Sparkles size={18} />
+            <div className="flex items-center gap-2 text-amber-800 dark:text-amber-400 font-black text-base mb-1.5">
+              <Sparkles size={20} />
               <span>برنامج دعوة الزملاء الأساتذة (نظام المكافأة)</span>
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-300 max-w-xl">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed">
               شارك المنصة مع زملائك في المؤسسة، واكسب شهور مجانية باقة احترافية لكل أستاذ يقوم بإنشاء حسابه عبر رمزك!
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
-            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-xl flex items-center gap-2">
-              <span className="text-xs text-slate-400">رمزك:</span>
-              <strong className="text-sm font-black text-[#076653] dark:text-emerald-400 tracking-wider nums">
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-2xl flex items-center gap-2 shadow-xs">
+              <span className="text-xs text-slate-400 font-bold">رمزك:</span>
+              <strong className="text-base font-black text-[#076653] dark:text-emerald-400 tracking-wider nums">
                 {referralCode}
               </strong>
             </div>
 
             <button
               onClick={handleCopyCode}
-              className="btn-soft btn-sm flex items-center gap-1 text-xs"
+              className="btn-soft px-4 py-2 rounded-2xl flex items-center gap-1.5 text-xs font-bold"
             >
               {copiedCode ? <Check size={14} className="text-emerald-600" /> : <Copy size={14} />}
               <span>{copiedCode ? 'تم النسخ' : 'نسخ الرمز'}</span>
@@ -159,7 +164,7 @@ export default function SettingsPage() {
 
             <button
               onClick={handleCopyLink}
-              className="btn-primary btn-sm flex items-center gap-1 text-xs"
+              className="gold-btn px-4 py-2 text-xs flex items-center gap-1.5"
             >
               {copiedLink ? <Check size={14} /> : <Share2 size={14} />}
               <span>{copiedLink ? 'تم نسخ الرابط' : 'نسخ رابط الدعوة'}</span>
@@ -168,16 +173,16 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      <form onSubmit={handleSaveSettings} className="space-y-6">
+      <form onSubmit={handleSaveSettings} className="space-y-8">
         {/* Section 1: Official Academic Calendar 2026/2027 */}
-        <div className="card p-5">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
+        <div className="lux-card p-6 sm:p-8">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100 dark:border-slate-800">
             <div>
-              <h3 className="card-title text-base text-[#076653] dark:text-emerald-400">
-                <Calendar size={18} />
+              <h3 className="text-base sm:text-lg font-black text-[#076653] dark:text-emerald-400 flex items-center gap-2">
+                <Calendar size={20} />
                 <span>الرزنامة المدرسية الرسمية 2026 / 2027</span>
               </h3>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-xs text-slate-500 mt-1 font-semibold">
                 تواريخ الفصول الثلاثة المعتمدة من وزارة التربية الوطنية الجزائرية
               </p>
             </div>
@@ -185,16 +190,16 @@ export default function SettingsPage() {
             <button
               type="button"
               onClick={handleAdoptOfficialCalendar}
-              className="btn-soft btn-sm text-xs font-bold text-[#076653] flex items-center gap-1"
+              className="bg-emerald-50 dark:bg-[#076653]/20 hover:bg-emerald-100 text-[#076653] dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/60 px-4 py-2 rounded-2xl text-xs font-bold flex items-center gap-2 transition-colors"
             >
-              <Check size={14} />
+              <Check size={15} />
               <span>اعتماد الرزنامة الرسمية بضغطة زر</span>
             </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {/* Term 1 */}
-            <div className="border border-slate-200 dark:border-slate-700 rounded-xl p-3.5 bg-slate-50 dark:bg-slate-800/40">
+            <div className="border border-slate-200/80 dark:border-slate-700/80 rounded-2xl p-4 bg-slate-50/70 dark:bg-slate-800/40">
               <span className="font-extrabold text-sm text-slate-800 dark:text-slate-100 block mb-2">
                 الفصل الدراسي الأول
               </span>
@@ -277,13 +282,13 @@ export default function SettingsPage() {
         </div>
 
         {/* Section 2: Assessment Preferences & Deduction Rules */}
-        <div className="card p-5">
-          <h3 className="card-title text-base mb-4 text-[#076653] dark:text-emerald-400 pb-2 border-b border-slate-100 dark:border-slate-800">
-            <Award size={18} />
+        <div className="lux-card p-6 sm:p-8">
+          <h3 className="text-base sm:text-lg font-black mb-6 text-[#076653] dark:text-emerald-400 pb-3 border-b border-slate-100 dark:border-slate-800 flex items-center gap-2">
+            <Award size={20} />
             <span>قواعد حساب التقويم المستمر والعقوبات البيداغوجية</span>
           </h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             <div>
               <label className="label">خصم الغياب غير المبرر (لكل غياب)</label>
               <input
@@ -293,9 +298,9 @@ export default function SettingsPage() {
                 max="5"
                 value={prefs.absencePenalty}
                 onChange={e => setPrefs({ ...prefs, absencePenalty: Number(e.target.value) })}
-                className="input nums text-center font-bold"
+                className="input nums text-center font-black text-rose-600 dark:text-rose-400"
               />
-              <p className="text-[11px] text-slate-400 mt-1">القيمة الرسمية: 0.5 نقطة</p>
+              <p className="text-[11px] text-slate-400 font-bold mt-1">القيمة الرسمية: 0.5 نقطة</p>
             </div>
 
             <div>
@@ -307,9 +312,9 @@ export default function SettingsPage() {
                 max="5"
                 value={prefs.latePenalty}
                 onChange={e => setPrefs({ ...prefs, latePenalty: Number(e.target.value) })}
-                className="input nums text-center font-bold"
+                className="input nums text-center font-black text-amber-600 dark:text-amber-400"
               />
-              <p className="text-[11px] text-slate-400 mt-1">القيمة الرسمية: 0.25 نقطة</p>
+              <p className="text-[11px] text-slate-400 font-bold mt-1">القيمة الرسمية: 0.25 نقطة</p>
             </div>
 
             <div>
@@ -318,31 +323,31 @@ export default function SettingsPage() {
                 type="number"
                 value={prefs.maxGrade}
                 onChange={e => setPrefs({ ...prefs, maxGrade: Number(e.target.value) })}
-                className="input nums text-center font-bold"
+                className="input nums text-center font-black text-[#076653] dark:text-emerald-400"
               />
-              <p className="text-[11px] text-slate-400 mt-1">السلّم الجزائري: من 20</p>
+              <p className="text-[11px] text-slate-400 font-bold mt-1">السلّم الجزائري: من 20</p>
             </div>
           </div>
         </div>
 
         {/* Section 3: Official Holidays List */}
-        <div className="card p-5">
-          <div className="flex items-center justify-between mb-4 pb-2 border-b border-slate-100 dark:border-slate-800">
-            <h3 className="card-title text-base text-[#076653] dark:text-emerald-400">
-              <Clock size={18} />
+        <div className="lux-card p-6 sm:p-8">
+          <div className="flex items-center justify-between mb-6 pb-3 border-b border-slate-100 dark:border-slate-800">
+            <h3 className="text-base sm:text-lg font-black text-[#076653] dark:text-emerald-400 flex items-center gap-2">
+              <Clock size={20} />
               <span>العطل المدرسية والأعياد الوطنية والدينية (11 عطلة)</span>
             </h3>
-            <span className="badge badge-brand text-xs nums">{holidays.length} عطلة</span>
+            <span className="badge badge-brand text-xs nums font-bold px-2.5 py-1 rounded-xl">{holidays.length} عطلة</span>
           </div>
 
-          <div className="divide-y divide-slate-100 dark:divide-slate-800">
+          <div className="divide-y divide-slate-100 dark:divide-slate-800/60">
             {holidays.map(h => (
-              <div key={h.id} className="py-2.5 flex items-center justify-between text-xs">
+              <div key={h.id} className="py-3 flex items-center justify-between text-xs sm:text-sm">
                 <div>
                   <span className="font-bold text-slate-800 dark:text-slate-200">{h.label}</span>
-                  <span className="badge badge-slate ms-2 text-[10px]">{h.kind}</span>
+                  <span className="badge badge-slate ms-2 text-[10px] px-2 py-0.5 rounded-lg">{h.kind}</span>
                 </div>
-                <div className="nums text-slate-500 font-medium">
+                <div className="nums text-slate-500 font-semibold">
                   {h.startDate === h.endDate ? h.startDate : `${h.startDate} إلى ${h.endDate}`}
                 </div>
               </div>
@@ -351,9 +356,9 @@ export default function SettingsPage() {
         </div>
 
         {/* Section 4: Data Backup & Restore */}
-        <div className="card p-5">
-          <h3 className="card-title text-base mb-4 text-[#076653] dark:text-emerald-400 pb-2 border-b border-slate-100 dark:border-slate-800">
-            <ShieldCheck size={18} />
+        <div className="lux-card p-6 sm:p-8">
+          <h3 className="text-base sm:text-lg font-black mb-4 text-[#076653] dark:text-emerald-400 pb-3 border-b border-slate-100 dark:border-slate-800 flex items-center gap-2">
+            <ShieldCheck size={20} />
             <span>النسخ الاحتياطي للبيانات واستعادتها</span>
           </h3>
 
@@ -361,13 +366,13 @@ export default function SettingsPage() {
             <button
               type="button"
               onClick={handleExportBackup}
-              className="btn-soft flex items-center gap-2 text-xs"
+              className="btn-soft flex items-center gap-2 text-xs sm:text-sm font-bold px-4 py-2.5 rounded-2xl"
             >
               <Download size={16} />
               <span>تنزيل نسخة احتياطية كاملة (JSON)</span>
             </button>
 
-            <span className="text-xs text-slate-400">
+            <span className="text-xs text-slate-500 font-medium">
               يحفظ جميع الأفواج، كشوف النقاط، وسجلات الغياب على جهازك بشكل آمن.
             </span>
           </div>
@@ -375,7 +380,7 @@ export default function SettingsPage() {
 
         {/* Save Changes Button */}
         <div className="flex items-center justify-end">
-          <button type="submit" className="btn-primary text-sm px-6 py-2.5">
+          <button type="submit" className="gold-btn text-sm px-8 py-3 rounded-2xl flex items-center gap-2 shadow-lg">
             <Check size={18} />
             <span>حفظ الإعدادات</span>
           </button>

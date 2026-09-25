@@ -187,27 +187,27 @@ function JournalContent() {
   }
 
   return (
-    <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
+    <main className="flex-1 p-5 sm:p-8 lg:p-10 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
       {/* Sub-header matching Sanad Screenshot */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        <div className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-full bg-[#e6f4f1] dark:bg-[#076653]/20 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0">
-            <BookOpen size={22} />
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div className="flex items-center gap-3.5">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-[#076653]/25 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0 shadow-sm border border-emerald-100 dark:border-emerald-800/50">
+            <BookOpen size={24} />
           </div>
           <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
               الدفتر اليومي
             </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-0.5">
               سجل وتوثيق الحصص المنجزة، الوحدات التعلمية، والواجبات المنزلية
             </p>
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2.5 self-start sm:self-auto">
+        <div className="flex flex-wrap items-center gap-3 self-start sm:self-auto">
           <button
             onClick={() => setIsExtraModalOpen(true)}
-            className="bg-[#076653] hover:bg-[#065444] text-white font-medium px-4 py-2 rounded-xl flex items-center gap-2 shadow-sm text-xs transition-colors"
+            className="gold-btn py-2 px-5 text-xs sm:text-sm flex items-center gap-2 shadow-md"
           >
             <Plus size={16} />
             <span>حصة استثنائية</span>
@@ -215,16 +215,16 @@ function JournalContent() {
 
           <button
             onClick={() => window.print()}
-            className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-medium px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 shadow-sm text-xs hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors no-print"
+            className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold px-4 py-2 rounded-2xl flex items-center gap-2 shadow-sm text-xs sm:text-sm hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-[#076653] transition-colors no-print"
           >
-            <Printer size={15} />
+            <Printer size={16} />
             <span>طباعة الدفتر</span>
           </button>
         </div>
       </div>
 
       {/* Sessions List */}
-      <div className="space-y-4">
+      <div className="space-y-5">
         {sessions.map(session => {
           const actCfg = ACTIVITY_CONFIG[session.activity] || ACTIVITY_CONFIG.theory
           const statusCfg = STATUS_SPINE[session.status] || STATUS_SPINE.planned
@@ -234,7 +234,7 @@ function JournalContent() {
           return (
             <div
               key={session.id}
-              className="card overflow-hidden transition-all duration-200"
+              className="lux-card overflow-hidden transition-all duration-200 hover:shadow-lg"
             >
               <div className="flex">
                 {/* Colored Spine matching Sanad status */}
@@ -401,15 +401,15 @@ function JournalContent() {
       {/* ── Modal mExtra (Add Extra Session) ── */}
       {isExtraModalOpen && (
         <div className="modal-backdrop">
-          <div className="modal-box max-w-md">
-            <div className="modal-head">
-              <h3>إضافة حصة استثنائية / استدراك</h3>
-              <button onClick={() => setIsExtraModalOpen(false)} className="text-slate-400">
+          <div className="lux-card max-w-md w-full p-6 sm:p-8 rounded-3xl shadow-2xl border border-white/60 dark:border-slate-700/60 animate-nudge">
+            <div className="flex items-center justify-between pb-3.5 border-b border-slate-100 dark:border-slate-800 mb-5">
+              <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white">إضافة حصة استثنائية / استدراك</h3>
+              <button onClick={() => setIsExtraModalOpen(false)} className="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                 <X size={18} />
               </button>
             </div>
 
-            <form onSubmit={handleAddExtraSession} className="modal-body space-y-4">
+            <form onSubmit={handleAddExtraSession} className="space-y-4">
               <div>
                 <label className="label">عنوان الحصة *</label>
                 <input
@@ -453,7 +453,7 @@ function JournalContent() {
                 </div>
               </div>
 
-              <div className="modal-footer -mx-5 -mb-5 mt-6">
+              <div className="flex items-center justify-end gap-3 pt-5 mt-4 border-t border-slate-100 dark:border-slate-800">
                 <button type="button" onClick={() => setIsExtraModalOpen(false)} className="btn-ghost">
                   إلغاء
                 </button>

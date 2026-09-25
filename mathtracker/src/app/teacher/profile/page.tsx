@@ -83,60 +83,65 @@ export default function ProfilePage() {
   }
 
   return (
-    <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
+    <main className="flex-1 p-5 sm:p-8 lg:p-10 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
       {/* Streamlined Action Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-          البيانات الإدارية، الحالة المدنية، نقطة التفتيش والنقطة الإدارية
-        </p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div>
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
+            الملف المهني والإداري
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+            البيانات الإدارية، الحالة المدنية، نقطة التفتيش والنقطة الإدارية
+          </p>
+        </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           {saveSuccess && (
-            <span className="text-xs font-bold text-emerald-600 flex items-center gap-1 animate-fade-in">
+            <span className="text-xs sm:text-sm font-bold text-emerald-600 flex items-center gap-1.5 animate-fade-in bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1.5 rounded-xl border border-emerald-200 dark:border-emerald-800">
               <Check size={16} /> تم الحفظ بنجاح
             </span>
           )}
-          <button onClick={() => window.print()} className="btn-ghost btn-sm no-print text-xs">
-            <Printer size={15} />
+          <button onClick={() => window.print()} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold px-4 py-2 rounded-2xl flex items-center gap-2 shadow-sm text-xs sm:text-sm hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-[#076653] transition-colors no-print">
+            <Printer size={16} />
             <span>طباعة الملف</span>
           </button>
         </div>
       </div>
 
       {/* Profile Overview Banner */}
-      <div className="card p-5 mb-6 bg-gradient-to-l from-slate-50 to-[#076653]/5 dark:from-slate-800 dark:to-[#076653]/15">
-        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-right">
-          <div className="w-20 h-20 rounded-2xl bg-[#076653] text-white flex items-center justify-center font-black text-2xl shadow-md shrink-0">
+      <div className="lux-card p-6 sm:p-8 mb-8 bg-gradient-to-l from-slate-50 to-[#076653]/5 dark:from-slate-900 dark:to-[#076653]/20 border border-emerald-100/60 dark:border-slate-800">
+        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-right">
+          <div className="w-22 h-22 rounded-3xl bg-[#076653] text-white flex items-center justify-center font-black text-3xl shadow-lg shrink-0">
             {profile.firstNameAr.charAt(0)}
           </div>
           <div className="flex-1">
-            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
-              <h2 className="text-xl font-black text-slate-900 dark:text-white">{profile.fullName}</h2>
-              <span className="badge badge-brand text-xs font-bold">{profile.rank}</span>
-              <span className="badge badge-slate text-xs font-medium">{profile.adminStatus}</span>
+            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
+              <h2 className="text-2xl font-black text-slate-900 dark:text-white">{profile.fullName}</h2>
+              <span className="badge badge-brand text-xs font-bold px-2.5 py-1 rounded-xl">{profile.rank}</span>
+              <span className="badge badge-slate text-xs font-semibold px-2.5 py-1 rounded-xl">{profile.adminStatus}</span>
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-300 mt-1 font-semibold">
+            <p className="text-sm text-slate-600 dark:text-slate-300 mt-1.5 font-bold">
               مادة {profile.subject} · {profile.school} ({profile.wilaya})
             </p>
-            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 mt-3 text-xs text-slate-500">
-              <span className="nums font-medium">الرقم الوظيفي: {profile.employeeNumber}</span>
-              <span className="nums font-medium">الهاتف: {profile.phone}</span>
-              <span className="nums font-medium">النقطة التربوية: <strong className="text-emerald-700 dark:text-emerald-400 font-black">{profile.pedagogicScore}/20</strong></span>
+            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-5 mt-4 text-xs font-medium text-slate-500">
+              <span className="nums bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-xl">الرقم الوظيفي: {profile.employeeNumber}</span>
+              <span className="nums bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-xl">الهاتف: {profile.phone}</span>
+              <span className="nums bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 px-3 py-1 rounded-xl font-bold">النقطة التربوية: <strong className="text-emerald-700 dark:text-emerald-400 font-black">{profile.pedagogicScore}/20</strong></span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Main Profile Form */}
-      <form onSubmit={handleSave} className="space-y-6">
+      <form onSubmit={handleSave} className="space-y-8">
         {/* Section 1: Civil & Personal Status */}
-        <div className="card p-5">
-          <h3 className="card-title text-base mb-4 text-[#076653] dark:text-emerald-400 pb-2 border-b border-slate-100 dark:border-slate-800">
-            <User size={18} />
+        <div className="lux-card p-6 sm:p-8">
+          <h3 className="text-base sm:text-lg font-black mb-6 text-[#076653] dark:text-emerald-400 pb-3 border-b border-slate-100 dark:border-slate-800 flex items-center gap-2">
+            <User size={20} />
             <span>أولاً: الحالة المدنية والعائلية</span>
           </h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             <div>
               <label className="label">اللقب بالعربية</label>
               <input
@@ -244,13 +249,13 @@ export default function ProfilePage() {
         </div>
 
         {/* Section 2: Professional & Administrative Status */}
-        <div className="card p-5">
-          <h3 className="card-title text-base mb-4 text-[#076653] dark:text-emerald-400 pb-2 border-b border-slate-100 dark:border-slate-800">
-            <Building size={18} />
+        <div className="lux-card p-6 sm:p-8">
+          <h3 className="text-base sm:text-lg font-black mb-6 text-[#076653] dark:text-emerald-400 pb-3 border-b border-slate-100 dark:border-slate-800 flex items-center gap-2">
+            <Building size={20} />
             <span>ثانياً: الحالة المهنية والوضعية الإدارية</span>
           </h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             <div>
               <label className="label">الرقم الوظيفي</label>
               <input
@@ -376,13 +381,13 @@ export default function ProfilePage() {
         </div>
 
         {/* Section 3: School & Inspection Scores */}
-        <div className="card p-5">
-          <h3 className="card-title text-base mb-4 text-[#076653] dark:text-emerald-400 pb-2 border-b border-slate-100 dark:border-slate-800">
-            <Award size={18} />
+        <div className="lux-card p-6 sm:p-8">
+          <h3 className="text-base sm:text-lg font-black mb-6 text-[#076653] dark:text-emerald-400 pb-3 border-b border-slate-100 dark:border-slate-800 flex items-center gap-2">
+            <Award size={20} />
             <span>ثالثاً: المؤسسة التربوية ونقاط التفتيش والتقييم</span>
           </h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             <div>
               <label className="label">المؤسسة التربوية المعيّن بها</label>
               <input
@@ -461,8 +466,8 @@ export default function ProfilePage() {
         </div>
 
         {/* Save Submit Button */}
-        <div className="flex items-center justify-end gap-3 sticky bottom-4 p-4 bg-white/90 dark:bg-slate-900/90 backdrop-blur rounded-2xl border border-slate-200 dark:border-slate-800 shadow-lg">
-          <button type="submit" className="btn-primary text-sm px-6 py-2.5">
+        <div className="flex items-center justify-end gap-3 sticky bottom-6 p-4 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-2xl">
+          <button type="submit" className="gold-btn text-sm px-8 py-3 rounded-2xl flex items-center gap-2 shadow-lg">
             <Save size={18} />
             <span>حفظ كل البيانات</span>
           </button>

@@ -7,6 +7,7 @@ import {
   User,
   Key,
   ShieldCheck,
+  ArrowLeft,
   ArrowRight,
   Eye,
   EyeOff,
@@ -15,17 +16,19 @@ import {
   GraduationCap,
   Users,
   Sparkles,
-  Camera,
   Award,
   CheckCircle2,
   Calendar,
-  Cloud,
-  FileText,
+  BookOpen,
+  ClipboardList,
+  Clock,
+  ChevronRight,
+  School,
   Smartphone,
-  BookOpen
+  Check
 } from 'lucide-react'
 
-export default function LoginPage() {
+export default function HomePage() {
   const router = useRouter()
   const [activePortalTab, setActivePortalTab] = useState<'teacher' | 'parent'>('teacher')
   const [username, setUsername] = useState('')
@@ -57,778 +60,451 @@ export default function LoginPage() {
   const handleTeacherLogin = (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
-
     const cleanUser = username.trim().toLowerCase()
     if (!cleanUser) {
       setError('يرجى إدخال اسم المستخدم أو البريد')
       return
     }
-
     localStorage.setItem('mt_role', 'teacher')
-    router.push('/teacher')
+    router.push('/teacher/dashboard')
   }
 
-  // Direct 1-Click Fast Teacher Access
+  // Quick 1-Click Fast Teacher Access
   const handleQuickTeacherEnter = () => {
     localStorage.setItem('mt_role', 'teacher')
-    router.push('/teacher')
+    router.push('/teacher/dashboard')
   }
 
   // Parent Code Lookup and Login Handler
   const handleParentLogin = (e: React.FormEvent) => {
     e.preventDefault()
     setParentError('')
-
     const cleanCode = parentFamilyCode.trim().toUpperCase()
     if (!cleanCode) {
       setParentError('يرجى إدخال رمز التلميذ العائلي')
       return
     }
-
     localStorage.setItem('mt_role', 'parent')
     localStorage.setItem('mt_logged_family_code', cleanCode)
     router.push(`/parent?code=${encodeURIComponent(cleanCode)}`)
   }
 
   return (
-    <div
-      style={{
-        minHeight: '100vh',
-        background: 'var(--color-background)',
-        color: 'var(--color-foreground)',
-        display: 'flex',
-        flexDirection: 'column',
-        position: 'relative',
-        overflowX: 'hidden',
-      }}
-    >
-      {/* ── Ambient Background Glows ── */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '-120px',
-          right: '-100px',
-          width: '420px',
-          height: '420px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(16, 122, 87, 0.15) 0%, transparent 70%)',
-          pointerEvents: 'none',
-          zIndex: 0,
-        }}
-      />
-      <div
-        style={{
-          position: 'absolute',
-          top: '30%',
-          left: '-150px',
-          width: '500px',
-          height: '500px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, transparent 70%)',
-          pointerEvents: 'none',
-          zIndex: 0,
-        }}
-      />
-
-      {/* ── Top Official Header Bar ── */}
-      <header
-        style={{
-          width: '100%',
-          borderBottom: '1px solid var(--color-border)',
-          background: 'var(--color-card)',
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
-          padding: '12px 20px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          position: 'sticky',
-          top: 0,
-          zIndex: 50,
-          boxShadow: '0 2px 10px rgba(0,0,0,0.02)',
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div
-            style={{
-              width: '42px',
-              height: '42px',
-              borderRadius: '12px',
-              background: 'linear-gradient(135deg, #107a57, #0d6447)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '20px',
-              color: '#ffffff',
-              boxShadow: '0 4px 12px rgba(16, 122, 87, 0.3)',
-            }}
-          >
-            🎓
-          </div>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <h1 style={{ fontSize: '16px', fontWeight: 900, margin: 0, lineHeight: 1.2 }}>
-                تدريس بلس (TadrisPlus) • المنصة الوطنية الشاملة
-              </h1>
-              <span
-                style={{
-                  fontSize: '11px',
-                  background: 'rgba(16, 122, 87, 0.1)',
-                  color: 'var(--color-primary)',
-                  padding: '2px 8px',
-                  borderRadius: '12px',
-                  fontWeight: 800,
-                  border: '1px solid rgba(16, 122, 87, 0.2)',
-                }}
-              >
-                🇩🇿 الجزائر
-              </span>
+    <div className="min-h-screen bg-white dark:bg-[#0f1117] text-slate-900 dark:text-slate-100 overflow-x-hidden font-sans" dir="rtl">
+      
+      {/* ── Top Navigation Bar (Glassmorphism inspired by Quran Schools) ── */}
+      <header className="sticky top-0 z-40 w-full bg-slate-950/60 backdrop-blur-md border-b border-white/10 px-4 sm:px-8 py-3.5 transition-all">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          
+          {/* Logo & Brand Name */}
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-[#076653] flex items-center justify-center text-white shadow-md shadow-emerald-950/30">
+              <GraduationCap size={22} />
             </div>
-            <p style={{ fontSize: '11.5px', color: 'var(--color-muted-fg)', margin: 0, fontWeight: 700 }}>
-              الجمهورية الجزائرية الديمقراطية الشعبية — وزارة التربية الوطنية
-            </p>
-          </div>
-        </div>
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          {/* Cloud Status Indicator */}
-          <div
-            style={{
-              display: 'none',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '5px 10px',
-              borderRadius: '20px',
-              background: 'rgba(16, 122, 87, 0.08)',
-              border: '1px solid rgba(16, 122, 87, 0.25)',
-              fontSize: '11.5px',
-              fontWeight: 800,
-              color: 'var(--color-primary)',
-            }}
-            className="md:flex"
-          >
-            <span
-              style={{
-                width: '7px',
-                height: '7px',
-                borderRadius: '50%',
-                background: '#107a57',
-                boxShadow: '0 0 8px #107a57',
-              }}
-            />
-            السحابة متصلة (Vercel DB)
+            <div>
+              <div className="text-base sm:text-lg font-black text-white leading-tight">
+                سند الأستاذ الجزائري
+              </div>
+              <div className="text-[11px] font-bold text-amber-300">
+                المنصة البيداغوجية الرقمية الموحدة
+              </div>
+            </div>
           </div>
 
-          {/* Theme Toggle Button */}
-          <button
-            onClick={toggleTheme}
-            aria-label="تبديل وضع الألوان"
-            className="theme-toggle-btn"
-            style={{
-              width: '38px',
-              height: '38px',
-              borderRadius: '10px',
-              border: '1px solid var(--color-border)',
-              background: 'var(--color-muted)',
-              color: 'var(--color-foreground)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              fontSize: '16px',
-              transition: 'all 0.2s',
-            }}
-          >
-            {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
-          </button>
+          {/* Center Links (Desktop) */}
+          <nav className="hidden md:flex items-center gap-6 bg-white/10 border border-white/15 px-6 py-1.5 rounded-full backdrop-blur-md">
+            <a href="#features" className="text-white/80 hover:text-white text-xs font-bold transition-colors">
+              المميزات
+            </a>
+            <a href="#circular272" className="text-white/80 hover:text-white text-xs font-bold transition-colors">
+              المنشور 272
+            </a>
+            <a href="#portals" className="text-amber-300 hover:text-amber-200 text-xs font-black transition-colors">
+              بوابة الدخول
+            </a>
+          </nav>
+
+          {/* Actions on Left */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={toggleTheme}
+              className="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-white flex items-center justify-center transition-all"
+              title="تبديل المظهر"
+            >
+              {theme === 'light' ? <Moon size={16} /> : <Sun size={16} className="text-amber-300" />}
+            </button>
+
+            <button
+              onClick={handleQuickTeacherEnter}
+              className="gold-btn px-4 py-2 text-xs flex items-center gap-1.5 cursor-pointer"
+            >
+              <span>دخول الأستاذ</span>
+              <ArrowLeft size={14} />
+            </button>
+          </div>
         </div>
       </header>
 
-      {/* ── Main Content Area ── */}
-      <main
-        style={{
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '24px 16px 40px',
-          maxWidth: '1200px',
-          margin: '0 auto',
-          width: '100%',
-          zIndex: 1,
-        }}
-      >
-        {/* ── Hero Presentation Banner ── */}
-        <div style={{ textAlign: 'center', maxWidth: '780px', marginBottom: '28px' }}>
-          <div
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '6px 14px',
-              borderRadius: '9999px',
-              background: 'linear-gradient(135deg, rgba(16, 122, 87, 0.12), rgba(16, 122, 87, 0.04))',
-              border: '1px solid rgba(16, 122, 87, 0.25)',
-              color: 'var(--color-primary)',
-              fontSize: '12px',
-              fontWeight: 900,
-              marginBottom: '14px',
-            }}
-          >
-            <Sparkles size={15} />
-            المنظومة التربوية الذكية المتوافقة مع مناهج الجيل الثاني 2025/2026
+      {/* ── Hero Section (Deep Emerald & Ambient Glows from Quran Schools) ── */}
+      <section className="relative overflow-hidden pt-16 pb-24 hero-gradient text-white">
+        {/* Subtle geometric pattern overlay */}
+        <div className="absolute inset-0 islamic-pattern opacity-5 pointer-events-none" />
+
+        {/* Ambient Blur Glows */}
+        <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-emerald-400/10 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-amber-400/10 rounded-full blur-[120px] pointer-events-none" />
+
+        <div className="relative z-10 max-w-5xl mx-auto px-5 text-center space-y-8">
+          
+          {/* Floating Pill Badge */}
+          <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-white/90 text-xs sm:text-sm font-bold backdrop-blur-md shadow-sm">
+            <Sparkles size={16} className="text-amber-400" />
+            <span>مطابقة رسمية للقرارات الوزارية والمناهج الجزائرية 2026/2027</span>
           </div>
 
-          <h2
-            style={{
-              fontSize: 'clamp(24px, 4vw, 36px)',
-              fontWeight: 950,
-              lineHeight: 1.25,
-              marginBottom: '12px',
-            }}
-          >
-            منصة تدريس بلس البيداغوجية المتكاملة{' '}
-            <span className="gradient-text-emerald">لكل أستاذ وولي في الجزائر</span>
-          </h2>
+          {/* Main Headline */}
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-[1.3] max-w-4xl mx-auto">
+            أدِر أقسامك ودفاترك التربوية
+            <br />
+            <span className="text-amber-400">باحترافية كاملة وبدون تكدس</span>
+          </h1>
 
-          <p
-            style={{
-              fontSize: 'clamp(13px, 1.8vw, 15px)',
-              color: 'var(--color-muted-fg)',
-              lineHeight: 1.7,
-              fontWeight: 600,
-              maxWidth: '660px',
-              margin: '0 auto 18px',
-            }}
-          >
-            متابعة حية للقسم، توثيق سبورات الدروس والواجبات، كشوف النقاط والمعاملات الرسمية للابتدائي والمتوسط والثانوي، وتواصل عائلي فوري برمز مبسط دون تعقيد.
+          {/* Subtitle */}
+          <p className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto leading-relaxed font-medium">
+            بدون أوراق ولا فوضى ولا حسابات يدوية مجهدة.
+            <br className="hidden sm:inline" />
+            دفتر نصوص رقمي، حساب آلي للتقويم المستمر وفق المنشور 272، ومتابعة فورية للمواظبة.
           </p>
 
-          {/* Quick Badges Row */}
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'center',
-              gap: '8px',
-            }}
-          >
-            <div className="stat-chip stat-chip-emerald" style={{ padding: '5px 12px', fontSize: '11.5px', fontWeight: 800 }}>
-              ⚡ أوفلاين وسحابي (Dual-Tier)
-            </div>
-            <div className="stat-chip stat-chip-blue" style={{ padding: '5px 12px', fontSize: '11.5px', fontWeight: 800 }}>
-              📱 متوافق تماماً مع الهواتف والحواسيب
-            </div>
-            <div className="stat-chip stat-chip-amber" style={{ padding: '5px 12px', fontSize: '11.5px', fontWeight: 800 }}>
-              💬 إشعارات ورسائل WhatsApp فورية
-            </div>
+          {/* Primary CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-2">
+            <button
+              onClick={handleQuickTeacherEnter}
+              className="gold-btn px-8 py-4 text-base flex items-center justify-center gap-3 w-full sm:w-auto cursor-pointer"
+            >
+              <span>افتح حسابك التربوي مجاناً</span>
+              <ArrowLeft size={18} />
+            </button>
+
+            <a
+              href="#portals"
+              className="px-6 py-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-sm backdrop-blur-md transition-all flex items-center justify-center gap-2 w-full sm:w-auto"
+            >
+              <Users size={16} />
+              <span>فضاء المتابعة العائلية للأولياء</span>
+            </a>
+          </div>
+
+          {/* Trust Guarantees */}
+          <div className="flex flex-wrap justify-center gap-6 text-white/60 text-xs sm:text-sm font-semibold pt-4">
+            <span className="flex items-center gap-1.5"><Check size={16} className="text-emerald-300" /> مجاني بفوج دائم</span>
+            <span className="flex items-center gap-1.5"><Check size={16} className="text-emerald-300" /> حفظ آلي سحابي ومحلي</span>
+            <span className="flex items-center gap-1.5"><Check size={16} className="text-emerald-300" /> دعم التعليمين المتوسط والثانوي</span>
           </div>
         </div>
 
-        {/* ── Interactive Dual Gateway Card ── */}
-        <div
-          className="card-glass-premium"
-          style={{
-            maxWidth: '520px',
-            width: '100%',
-            padding: '24px',
-            borderRadius: '24px',
-          }}
-        >
-          {/* Portal Switcher Tabs */}
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: '6px',
-              background: 'var(--color-muted)',
-              padding: '6px',
-              borderRadius: '16px',
-              marginBottom: '22px',
-              border: '1px solid var(--color-border)',
-            }}
-          >
-            <button
-              type="button"
-              onClick={() => setActivePortalTab('teacher')}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                padding: '10px 14px',
-                borderRadius: '12px',
-                border: 'none',
-                cursor: 'pointer',
-                fontFamily: 'Cairo, sans-serif',
-                fontSize: '13.5px',
-                fontWeight: 900,
-                transition: 'all 0.2s',
-                background: activePortalTab === 'teacher' ? 'linear-gradient(135deg, #107a57, #0d6447)' : 'transparent',
-                color: activePortalTab === 'teacher' ? '#ffffff' : 'var(--color-muted-fg)',
-                boxShadow: activePortalTab === 'teacher' ? '0 4px 12px rgba(16, 122, 87, 0.25)' : 'none',
-              }}
-            >
-              <GraduationCap size={18} />
-              فضاء الأستاذ
-            </button>
+        {/* 3 Metric High-Impact Counters */}
+        <div className="relative z-10 w-full border-t border-white/10 bg-black/20 backdrop-blur-md mt-16">
+          <div className="max-w-4xl mx-auto px-5 py-6 grid grid-cols-3 gap-4 text-center">
+            <div>
+              <p className="text-2xl sm:text-3xl font-black text-amber-400 nums">100%</p>
+              <p className="text-white/70 text-xs sm:text-sm mt-0.5">مطابقة للمنشور 272</p>
+            </div>
+            <div>
+              <p className="text-2xl sm:text-3xl font-black text-amber-400 nums">132</p>
+              <p className="text-white/70 text-xs sm:text-sm mt-0.5">تدرج سنوي وزاري</p>
+            </div>
+            <div>
+              <p className="text-2xl sm:text-3xl font-black text-amber-400 nums">58</p>
+              <p className="text-white/70 text-xs sm:text-sm mt-0.5">ولاية مغطاة</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <button
-              type="button"
-              onClick={() => setActivePortalTab('parent')}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                padding: '10px 14px',
-                borderRadius: '12px',
-                border: 'none',
-                cursor: 'pointer',
-                fontFamily: 'Cairo, sans-serif',
-                fontSize: '13.5px',
-                fontWeight: 900,
-                transition: 'all 0.2s',
-                background: activePortalTab === 'parent' ? 'linear-gradient(135deg, #2563eb, #1d4ed8)' : 'transparent',
-                color: activePortalTab === 'parent' ? '#ffffff' : 'var(--color-muted-fg)',
-                boxShadow: activePortalTab === 'parent' ? '0 4px 12px rgba(37, 99, 235, 0.25)' : 'none',
-              }}
-            >
-              <Users size={18} />
-              فضاء الأولياء
-            </button>
+      {/* ── Split-Screen Access Portals Section (Inspired by Quran Schools /app) ── */}
+      <section id="portals" className="py-20 px-5 sm:px-8 bg-slate-50 dark:bg-[#0a0c10] border-b border-slate-200/80 dark:border-slate-800">
+        <div className="max-w-6xl mx-auto">
+          
+          <div className="text-center mb-12">
+            <span className="inline-block bg-emerald-100 dark:bg-emerald-950/60 text-[#076653] dark:text-emerald-400 text-xs font-black px-4 py-1.5 rounded-full mb-3">
+              منصة سريعة وميسرة
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white">
+              بوابة الدخول الذكية
+            </h2>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-2 max-w-lg mx-auto">
+              اختر فضاءك للانطلاق فوراً، سواء كنت أستاذاً تدير أفواجك أو ولياً يتابع مسار ابنه
+            </p>
           </div>
 
-          {/* ════════════ TEACHER GATEWAY ════════════ */}
-          {activePortalTab === 'teacher' ? (
-            <div>
-              <div style={{ textAlign: 'center', marginBottom: '18px' }}>
-                <h3 style={{ fontSize: '18px', fontWeight: 900, margin: '0 0 6px' }}>
-                  مرحباً بك أستاذنا الفاضل 👨‍🏫
-                </h3>
-                <p style={{ fontSize: '12px', color: 'var(--color-muted-fg)', margin: 0 }}>
-                  سجل دخولك أو اضغط للدخول المباشر لمكتبك الرقمي وقاعات تدريسك
-                </p>
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
+            
+            {/* Right: Showcase Card (50%) */}
+            <div className="lux-card p-6 sm:p-8 space-y-6">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-[#e6f4f1] dark:bg-[#076653]/20 text-[#076653] dark:text-emerald-400 flex items-center justify-center">
+                  <ShieldCheck size={26} />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                    نظام موثوق ومعتمد للأستاذ
+                  </h3>
+                  <p className="text-xs text-slate-400 font-medium">
+                    بياناتك محفوظة محلياً وسحابياً دون خوف من الفقدان
+                  </p>
+                </div>
               </div>
 
-              {/* Fast 1-Click Action */}
-              <button
-                type="button"
-                onClick={handleQuickTeacherEnter}
-                className="btn-glow-primary"
-                style={{
-                  width: '100%',
-                  padding: '14px',
-                  fontSize: '15px',
-                  borderRadius: '14px',
-                  marginBottom: '16px',
-                }}
-              >
-                🚀 الدخول المباشر إلى فضاء الأستاذ
-              </button>
-
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  margin: '16px 0',
-                  color: 'var(--color-muted-fg)',
-                  fontSize: '11px',
-                  fontWeight: 800,
-                }}
-              >
-                <div style={{ flex: 1, height: '1px', background: 'var(--color-border)' }} />
-                <span>أو الدخول ببيانات الاعتماد</span>
-                <div style={{ flex: 1, height: '1px', background: 'var(--color-border)' }} />
-              </div>
-
-              {/* Login Form */}
-              <form onSubmit={handleTeacherLogin}>
-                <div style={{ marginBottom: '14px' }}>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 800, marginBottom: '6px' }}>
-                    اسم المستخدم أو البريد الإلكتروني
-                  </label>
-                  <div style={{ position: 'relative' }}>
-                    <input
-                      type="text"
-                      className="login-input"
-                      placeholder="teacher أو اسم المستخدم الخاص بك"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                      style={{
-                        width: '100%',
-                        padding: '12px 40px 12px 14px',
-                        borderRadius: '12px',
-                        border: '1.5px solid var(--color-border)',
-                        background: 'var(--color-muted)',
-                        color: 'var(--color-foreground)',
-                        fontSize: '13px',
-                        fontFamily: 'Cairo, sans-serif',
-                      }}
-                    />
-                    <User
-                      size={18}
-                      style={{
-                        position: 'absolute',
-                        right: '12px',
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                        color: 'var(--color-muted-fg)',
-                      }}
-                    />
+              <div className="space-y-3.5">
+                <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+                  <BookOpen size={18} className="text-[#076653] dark:text-emerald-400 shrink-0 mt-0.5" />
+                  <div>
+                    <div className="text-xs font-bold text-slate-800 dark:text-slate-200">الدفتر اليومي الذكي</div>
+                    <div className="text-[11px] text-slate-400">توثيق الحصص والأنشطة والواجبات بنقرة واحدة ووسوم المنهاج.</div>
                   </div>
                 </div>
 
-                <div style={{ marginBottom: '16px' }}>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 800, marginBottom: '6px' }}>
-                    كلمة المرور
-                  </label>
-                  <div style={{ position: 'relative' }}>
-                    <input
-                      type={showPassword ? 'text' : 'password'}
-                      className="login-input"
-                      placeholder="••••••••"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      style={{
-                        width: '100%',
-                        padding: '12px 40px 12px 40px',
-                        borderRadius: '12px',
-                        border: '1.5px solid var(--color-border)',
-                        background: 'var(--color-muted)',
-                        color: 'var(--color-foreground)',
-                        fontSize: '13px',
-                        fontFamily: 'Cairo, sans-serif',
-                      }}
-                    />
-                    <Lock
-                      size={18}
-                      style={{
-                        position: 'absolute',
-                        right: '12px',
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                        color: 'var(--color-muted-fg)',
-                      }}
-                    />
+                <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+                  <Award size={18} className="text-amber-500 shrink-0 mt-0.5" />
+                  <div>
+                    <div className="text-xs font-bold text-slate-800 dark:text-slate-200">حساب العلامات بالمنشور 272</div>
+                    <div className="text-[11px] text-slate-400">حساب تلقائي دقيق للمعدلات المستمرة والفصلية بدون حاسبة.</div>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+                  <Clock size={18} className="text-sky-500 shrink-0 mt-0.5" />
+                  <div>
+                    <div className="text-xs font-bold text-slate-800 dark:text-slate-200">جدول التوقيت والرزنامة</div>
+                    <div className="text-[11px] text-slate-400">توليد حصص الفصل آلياً وتفادي العطل الرسمية المدرسية.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-2 flex items-center justify-between border-t border-slate-100 dark:border-slate-800 text-xs">
+                <span className="text-slate-400 font-medium">جاهز للطباعة المباشرة لكافة الوثائق</span>
+                <span className="font-bold text-[#076653] dark:text-emerald-400">A4 PDF جاهز ✓</span>
+              </div>
+            </div>
+
+            {/* Left: Interactive Login Form (50%) */}
+            <div className="lux-card p-6 sm:p-8 shadow-xl">
+              
+              {/* Tab Selector */}
+              <div className="flex p-1 rounded-2xl bg-slate-100 dark:bg-slate-800 mb-6">
+                <button
+                  type="button"
+                  onClick={() => setActivePortalTab('teacher')}
+                  className={`flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 ${
+                    activePortalTab === 'teacher'
+                      ? 'bg-white dark:bg-slate-700 text-[#076653] dark:text-white shadow-sm'
+                      : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+                  }`}
+                >
+                  <GraduationCap size={16} />
+                  <span>فضاء الأستاذ</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActivePortalTab('parent')}
+                  className={`flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 ${
+                    activePortalTab === 'parent'
+                      ? 'bg-white dark:bg-slate-700 text-[#076653] dark:text-white shadow-sm'
+                      : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+                  }`}
+                >
+                  <Users size={16} />
+                  <span>فضاء الولي العائلي</span>
+                </button>
+              </div>
+
+              {/* Tab 1: Teacher Form */}
+              {activePortalTab === 'teacher' && (
+                <form onSubmit={handleTeacherLogin} className="space-y-4">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                      اسم المستخدم أو البريد الإلكتروني
+                    </label>
+                    <div className="relative">
+                      <User size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                      <input
+                        type="text"
+                        value={username}
+                        onChange={e => setUsername(e.target.value)}
+                        placeholder="أدخل اسمك أو بريدك الإلكتروني"
+                        className="w-full h-12 pr-10 pl-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-medium focus:outline-none focus:border-[#076653] transition-colors"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                      كلمة المرور
+                    </label>
+                    <div className="relative">
+                      <Lock size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                      <input
+                        type={showPassword ? 'text' : 'password'}
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        placeholder="••••••••"
+                        className="w-full h-12 pr-10 pl-11 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-medium focus:outline-none focus:border-[#076653] transition-colors"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                      >
+                        {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                      </button>
+                    </div>
+                  </div>
+
+                  {error && (
+                    <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 text-rose-700 dark:text-rose-300 text-xs font-bold">
+                      {error}
+                    </div>
+                  )}
+
+                  <div className="pt-2 space-y-2">
+                    <button
+                      type="submit"
+                      className="w-full h-12 rounded-xl bg-[#076653] hover:bg-[#065444] text-white font-bold text-sm shadow-md shadow-[#076653]/20 flex items-center justify-center gap-2 transition-all cursor-pointer"
+                    >
+                      <span>دخول لوحة التحكم</span>
+                      <ArrowLeft size={16} />
+                    </button>
+
                     <button
                       type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      style={{
-                        position: 'absolute',
-                        left: '12px',
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                        background: 'transparent',
-                        border: 'none',
-                        cursor: 'pointer',
-                        color: 'var(--color-muted-fg)',
-                        padding: 0,
-                      }}
+                      onClick={handleQuickTeacherEnter}
+                      className="w-full h-12 rounded-xl gold-btn text-sm flex items-center justify-center gap-2 cursor-pointer"
                     >
-                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                      <Sparkles size={16} />
+                      <span>دخول سريع مباشر (بنقرة واحدة)</span>
                     </button>
                   </div>
-                </div>
+                </form>
+              )}
 
-                {error && (
-                  <div
-                    style={{
-                      background: 'rgba(239, 68, 68, 0.1)',
-                      border: '1px solid rgba(239, 68, 68, 0.3)',
-                      color: 'var(--color-danger)',
-                      padding: '8px 12px',
-                      borderRadius: '10px',
-                      fontSize: '12px',
-                      fontWeight: 800,
-                      marginBottom: '14px',
-                    }}
-                  >
-                    ⚠️ {error}
+              {/* Tab 2: Parent Form */}
+              {activePortalTab === 'parent' && (
+                <form onSubmit={handleParentLogin} className="space-y-4">
+                  <div className="p-3.5 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 text-xs text-amber-800 dark:text-amber-300 font-medium">
+                    💡 أدخل رمز التلميذ العائلي المسلّم من طرف الأستاذ للاطلاع على كشف النقاط والغيابات الفورية.
                   </div>
-                )}
 
-                <button
-                  type="submit"
-                  className="btn-secondary"
-                  style={{
-                    width: '100%',
-                    padding: '12px',
-                    borderRadius: '12px',
-                    fontSize: '13.5px',
-                    fontWeight: 800,
-                    justifyContent: 'center',
-                  }}
-                >
-                  تسجيل الدخول للمنصة
-                </button>
-              </form>
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                      رمز التلميذ العائلي (Family Access Code)
+                    </label>
+                    <div className="relative">
+                      <Key size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                      <input
+                        type="text"
+                        value={parentFamilyCode}
+                        onChange={e => setParentFamilyCode(e.target.value)}
+                        placeholder="مثال: 1AM-DZ-8942"
+                        className="w-full h-12 pr-10 pl-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-bold uppercase nums focus:outline-none focus:border-[#076653] transition-colors"
+                      />
+                    </div>
+                  </div>
 
-              {/* Teacher Features Highlights */}
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr',
-                  gap: '8px',
-                  marginTop: '20px',
-                  paddingTop: '16px',
-                  borderTop: '1px solid var(--color-border)',
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', color: 'var(--color-muted-fg)', fontWeight: 700 }}>
-                  <CheckCircle2 size={14} className="text-emerald-500" /> دفتر متابعة وحضور حي
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', color: 'var(--color-muted-fg)', fontWeight: 700 }}>
-                  <CheckCircle2 size={14} className="text-emerald-500" /> كشوف النقاط والمعاملات
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', color: 'var(--color-muted-fg)', fontWeight: 700 }}>
-                  <CheckCircle2 size={14} className="text-emerald-500" /> تصوير السبورات والواجبات
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', color: 'var(--color-muted-fg)', fontWeight: 700 }}>
-                  <CheckCircle2 size={14} className="text-emerald-500" /> تصدير PDF واستيراد Excel
-                </div>
-              </div>
+                  {parentError && (
+                    <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 text-rose-700 dark:text-rose-300 text-xs font-bold">
+                      {parentError}
+                    </div>
+                  )}
+
+                  <button
+                    type="submit"
+                    className="w-full h-12 rounded-xl bg-[#076653] hover:bg-[#065444] text-white font-bold text-sm shadow-md shadow-[#076653]/20 flex items-center justify-center gap-2 transition-all cursor-pointer mt-4"
+                  >
+                    <span>معاينة كشف التلميذ</span>
+                    <ArrowLeft size={16} />
+                  </button>
+                </form>
+              )}
             </div>
-          ) : (
-            /* ════════════ PARENT GATEWAY ════════════ */
-            <div>
-              <div style={{ textAlign: 'center', marginBottom: '18px' }}>
-                <h3 style={{ fontSize: '18px', fontWeight: 900, margin: '0 0 6px' }}>
-                  فضاء ولي الأمر الرقمي 👨‍👩‍👧
+          </div>
+        </div>
+      </section>
+
+      {/* ── Feature Cards Section (Spacious, Airy, rounded-3xl) ── */}
+      <section id="features" className="py-24 px-5 sm:px-8 bg-white dark:bg-[#0f1117]">
+        <div className="max-w-6xl mx-auto space-y-14">
+          
+          <div className="text-center max-w-2xl mx-auto space-y-3">
+            <span className="inline-block bg-emerald-100 dark:bg-emerald-950/60 text-[#076653] dark:text-emerald-400 text-xs font-black px-4 py-1.5 rounded-full">
+              ميزات بيداغوجية مصممة للأستاذ
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">
+              كل ما تحتاجه في تدريسك اليومي
+            </h2>
+            <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
+              صممت المنصة بعناية لتوفير الوقت والجهد وتفادي أي تعقيد أو تكدس غير مفيد.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            {/* Card 1 */}
+            <div className="lux-card p-6 flex flex-col justify-between hover:scale-[1.02] transition-transform">
+              <div className="space-y-4">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 text-[#076653] dark:text-emerald-400 flex items-center justify-center shadow-sm">
+                  <ClipboardList size={24} />
+                </div>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                  الحضور والغياب الفوري
                 </h3>
-                <p style={{ fontSize: '12px', color: 'var(--color-muted-fg)', margin: 0 }}>
-                  أدخل رمز التلميذ العائلي المسلم لك من طرف أستاذ المادة للمتابعة اليومية
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                  تسجيل الغيابات والتأخرات بنقرة دائرية واحدة، مع خصم آلي لنقاط المواظبة وفق القوانين.
                 </p>
               </div>
+            </div>
 
-              <form onSubmit={handleParentLogin}>
-                <div style={{ marginBottom: '16px' }}>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 800, marginBottom: '6px' }}>
-                    رمز التلميذ العائلي (Family Access Code)
-                  </label>
-                  <div style={{ position: 'relative' }}>
-                    <input
-                      type="text"
-                      required
-                      placeholder="مثال: M4-7842-DZ"
-                      value={parentFamilyCode}
-                      onChange={(e) => setParentFamilyCode(e.target.value.toUpperCase())}
-                      style={{
-                        width: '100%',
-                        padding: '14px 40px 14px 14px',
-                        borderRadius: '14px',
-                        border: '2px solid #2563eb',
-                        background: 'var(--color-muted)',
-                        color: 'var(--color-foreground)',
-                        fontSize: '16px',
-                        fontWeight: 900,
-                        letterSpacing: '2px',
-                        textAlign: 'center',
-                        fontFamily: 'Inter, monospace',
-                      }}
-                    />
-                    <Key
-                      size={20}
-                      style={{
-                        position: 'absolute',
-                        right: '14px',
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                        color: '#2563eb',
-                      }}
-                    />
-                  </div>
+            {/* Card 2 */}
+            <div className="lux-card p-6 flex flex-col justify-between hover:scale-[1.02] transition-transform">
+              <div className="space-y-4">
+                <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/40 text-amber-500 flex items-center justify-center shadow-sm">
+                  <Award size={24} />
                 </div>
-
-                {parentError && (
-                  <div
-                    style={{
-                      background: 'rgba(239, 68, 68, 0.1)',
-                      border: '1px solid rgba(239, 68, 68, 0.3)',
-                      color: 'var(--color-danger)',
-                      padding: '8px 12px',
-                      borderRadius: '10px',
-                      fontSize: '12px',
-                      fontWeight: 800,
-                      marginBottom: '14px',
-                    }}
-                  >
-                    ⚠️ {parentError}
-                  </div>
-                )}
-
-                <button
-                  type="submit"
-                  style={{
-                    width: '100%',
-                    padding: '14px',
-                    fontSize: '15px',
-                    borderRadius: '14px',
-                    background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
-                    color: '#ffffff',
-                    border: 'none',
-                    fontWeight: 900,
-                    cursor: 'pointer',
-                    boxShadow: '0 4px 16px rgba(37, 99, 235, 0.3)',
-                    fontFamily: 'Cairo, sans-serif',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '8px',
-                    transition: 'all 0.2s',
-                  }}
-                >
-                  🔑 دخول فضاء التلميذ
-                </button>
-              </form>
-
-              {/* Helpful note for parents */}
-              <div
-                style={{
-                  marginTop: '18px',
-                  padding: '12px 14px',
-                  borderRadius: '12px',
-                  background: 'rgba(37, 99, 235, 0.05)',
-                  border: '1px solid rgba(37, 99, 235, 0.15)',
-                  fontSize: '11.5px',
-                  lineHeight: 1.6,
-                  color: 'var(--color-muted-fg)',
-                }}
-              >
-                💡 <strong>ملاحظة هامة:</strong> إذا وصلكم رابط من الأستاذ عبر <strong>WhatsApp</strong>، يكفي النقر عليه ليفتح فضاء ابنكم تلقائياً بدون الحاجة لكتابة الرمز يدوياً.
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                  كشوف العلامات والمنشور 272
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                  حساب تلقائي لنقاط المتابعة، الفروض، ومعدلات الفصول مع التقديرات الرسمية الفورية.
+                </p>
               </div>
             </div>
-          )}
-        </div>
 
-        {/* ── Platform Features Showcase Grid ── */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-            gap: '16px',
-            maxWidth: '1080px',
-            width: '100%',
-            marginTop: '40px',
-          }}
-        >
-          <div className="card-glass-premium" style={{ padding: '20px' }}>
-            <div
-              style={{
-                width: '42px',
-                height: '42px',
-                borderRadius: '12px',
-                background: 'linear-gradient(135deg, #107a57, #0d6447)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '20px',
-                color: '#ffffff',
-                marginBottom: '12px',
-              }}
-            >
-              ⚡
+            {/* Card 3 */}
+            <div className="lux-card p-6 flex flex-col justify-between hover:scale-[1.02] transition-transform">
+              <div className="space-y-4">
+                <div className="w-12 h-12 rounded-2xl bg-sky-50 dark:bg-sky-950/40 text-sky-500 flex items-center justify-center shadow-sm">
+                  <Calendar size={24} />
+                </div>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                  التوزيع السنوي وجدول التوقيت
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                  توليد حصص الفصل آلياً على أيام الأسبوع مع استبعاد العطل المدرسية الرسمية.
+                </p>
+              </div>
             </div>
-            <h4 style={{ fontSize: '15px', fontWeight: 900, margin: '0 0 6px' }}>
-              إدارة صفية فورية وذكية
-            </h4>
-            <p style={{ fontSize: '12px', color: 'var(--color-muted-fg)', lineHeight: 1.6, margin: 0 }}>
-              رصد الحضور بنقرة واحدة، قرعة التلاميذ العشوائية 🎲، تقسيم الأفواج 👥، ومؤقت الحصة الصفي المتكامل.
-            </p>
-          </div>
-
-          <div className="card-glass-premium" style={{ padding: '20px' }}>
-            <div
-              style={{
-                width: '42px',
-                height: '42px',
-                borderRadius: '12px',
-                background: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '20px',
-                color: '#ffffff',
-                marginBottom: '12px',
-              }}
-            >
-              📸
-            </div>
-            <h4 style={{ fontSize: '15px', fontWeight: 900, margin: '0 0 6px' }}>
-              سبورات الدروس والواجبات
-            </h4>
-            <p style={{ fontSize: '12px', color: 'var(--color-muted-fg)', lineHeight: 1.6, margin: 0 }}>
-              توثيق سبورة كل حصة، فلا يحتاج التلميذ لاستعارة الكراس، مع متابعة دقيقة لإنجاز الواجبات والحلول النموذجية.
-            </p>
-          </div>
-
-          <div className="card-glass-premium" style={{ padding: '20px' }}>
-            <div
-              style={{
-                width: '42px',
-                height: '42px',
-                borderRadius: '12px',
-                background: 'linear-gradient(135deg, #d97706, #b45309)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '20px',
-                color: '#ffffff',
-                marginBottom: '12px',
-              }}
-            >
-              🏆
-            </div>
-            <h4 style={{ fontSize: '15px', fontWeight: 900, margin: '0 0 6px' }}>
-              كشوف النقاط والمعاملات
-            </h4>
-            <p style={{ fontSize: '12px', color: 'var(--color-muted-fg)', lineHeight: 1.6, margin: 0 }}>
-              حساب آلي للمراقبة المستمرة، الفروض، الاختبارات، والمعدل الفصلي وفق أحدث المناشير البيداغوجية الجزائرية.
-            </p>
-          </div>
-
-          <div className="card-glass-premium" style={{ padding: '20px' }}>
-            <div
-              style={{
-                width: '42px',
-                height: '42px',
-                borderRadius: '12px',
-                background: 'linear-gradient(135deg, #7c3aed, #6d28d9)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '20px',
-                color: '#ffffff',
-                marginBottom: '12px',
-              }}
-            >
-              🔒
-            </div>
-            <h4 style={{ fontSize: '15px', fontWeight: 900, margin: '0 0 6px' }}>
-              أمان ومزامنة سحابية مزدوجة
-            </h4>
-            <p style={{ fontSize: '12px', color: 'var(--color-muted-fg)', lineHeight: 1.6, margin: 0 }}>
-              حفظ أوفلاين محلي فوري للأستاذ داخل القاعة بدون إنترنت، مع مزامنة سحابية آمنة لحسابات الأولياء فور الاتصال.
-            </p>
           </div>
         </div>
-      </main>
+      </section>
 
       {/* ── Footer ── */}
-      <footer
-        style={{
-          borderTop: '1px solid var(--color-border)',
-          background: 'var(--color-card)',
-          padding: '16px 20px',
-          textAlign: 'center',
-          fontSize: '12px',
-          color: 'var(--color-muted-fg)',
-          fontWeight: 700,
-        }}
-      >
-        منصة الأستاذ الرقمية الموحدة — خدمة للتربية الوطنية والمدرسة الجزائرية • 2025/2026
+      <footer className="py-8 px-5 bg-slate-900 text-white border-t border-slate-800 text-center text-xs space-y-2">
+        <p className="font-bold text-slate-300">
+          منصة سند الأستاذ الجزائري © 2026/2027 — مصممة لخدمة الأستاذ والتلميذ
+        </p>
+        <p className="text-slate-500">
+          تطوير بيداغوجي رقمي متقدم متوافق مع المناهج والمناشير الرسمية لوزارة التربية الوطنية
+        </p>
       </footer>
     </div>
   )

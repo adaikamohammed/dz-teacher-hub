@@ -183,28 +183,28 @@ function GradesContent() {
   }, [students])
 
   return (
-    <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
+    <main className="flex-1 p-5 sm:p-8 lg:p-10 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
       {/* Sub-header matching Sanad Screenshot */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        <div className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-full bg-[#e6f4f1] dark:bg-[#076653]/20 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0">
-            <Award size={22} />
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div className="flex items-center gap-3.5">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-[#076653]/25 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0 shadow-sm border border-emerald-100 dark:border-emerald-800/50">
+            <Award size={24} />
           </div>
           <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
               التقويم والعلامات
             </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-0.5">
               حساب آلي لنقاط التقويم المستمر، الفروض، والاختبارات وفق المنشور الوزاري 272
             </p>
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2.5 self-start sm:self-auto">
+        <div className="flex flex-wrap items-center gap-3 self-start sm:self-auto">
           <select
             value={selectedGroupId}
             onChange={e => setSelectedGroupId(e.target.value)}
-            className="select w-auto text-xs font-bold py-1.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800"
+            className="select w-auto text-xs sm:text-sm font-bold py-2 px-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm hover:border-[#076653] transition-colors"
           >
             {groups.map(g => (
               <option key={g.id} value={g.id}>الفوج: {g.name}</option>
@@ -213,82 +213,86 @@ function GradesContent() {
 
           <button
             onClick={() => window.print()}
-            className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-medium px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 shadow-sm text-xs hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors no-print"
+            className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold px-4 py-2 rounded-2xl flex items-center gap-2 shadow-sm text-xs sm:text-sm hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-[#076653] transition-colors no-print"
           >
-            <Printer size={15} />
+            <Printer size={16} />
             <span>طباعة الكشف</span>
           </button>
         </div>
       </div>
 
       {/* 4 Stat Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
-        <div className="stat-card">
-          <div className="stat-icon" style={{ background: 'var(--color-brand-50)', color: 'var(--color-brand-700)' }}>
-            <TrendingUp size={20} />
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
+        <div className="lux-card p-5 sm:p-6 flex items-center gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-100/80 dark:border-emerald-800/40">
+            <TrendingUp size={22} />
           </div>
           <div>
-            <div className="stat-value nums">{stats.avg}</div>
-            <div className="stat-label">معدل القسم · الفصل الأول</div>
+            <div className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white nums">{stats.avg}</div>
+            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-0.5">معدل القسم · الفصل 1</div>
           </div>
         </div>
 
-        <div className="stat-card">
-          <div className="stat-icon" style={{ background: '#f0faf6', color: '#065a48' }}>
-            <Users size={20} />
+        <div className="lux-card p-5 sm:p-6 flex items-center gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-[#065a48] dark:text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-100/80 dark:border-emerald-800/40">
+            <Users size={22} />
           </div>
           <div>
-            <div className="stat-value nums">{stats.passPct}%</div>
-            <div className="stat-label">نسبة النجاح (≥ 10)</div>
+            <div className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white nums">{stats.passPct}%</div>
+            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-0.5">نسبة النجاح (≥ 10)</div>
           </div>
         </div>
 
-        <div className="stat-card">
-          <div className="stat-icon" style={{ background: '#eff6ff', color: '#1d4ed8' }}>
-            <Award size={20} />
+        <div className="lux-card p-5 sm:p-6 flex items-center gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-100/80 dark:border-emerald-800/40">
+            <Award size={22} />
           </div>
           <div>
-            <div className="stat-value nums text-emerald-600">{stats.max}</div>
-            <div className="stat-label">أعلى معدل في الفوج</div>
+            <div className="text-2xl sm:text-3xl font-black text-emerald-600 dark:text-emerald-400 nums">{stats.max}</div>
+            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-0.5">أعلى معدل بالفوج</div>
           </div>
         </div>
 
-        <div className="stat-card">
-          <div className="stat-icon" style={{ background: '#fef2f2', color: '#be123c' }}>
-            <AlertCircle size={20} />
+        <div className="lux-card p-5 sm:p-6 flex items-center gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0 border border-rose-100 dark:border-rose-900/40">
+            <AlertCircle size={22} />
           </div>
           <div>
-            <div className="stat-value nums text-rose-600">{stats.min}</div>
-            <div className="stat-label">أدنى معدل في الفوج</div>
+            <div className="text-2xl sm:text-3xl font-black text-rose-600 dark:text-rose-400 nums">{stats.min}</div>
+            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-0.5">أدنى معدل بالفوج</div>
           </div>
         </div>
       </div>
 
       {/* Grades Table */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm overflow-hidden">
+      <div className="lux-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-right border-collapse text-sm">
             <thead>
-              <tr className="bg-slate-100 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-300">
-                <th className="py-3 px-2 text-center w-10">ر</th>
-                <th className="py-3 px-3 min-w-[170px] font-bold">التلميذ</th>
-                <th className="py-3 px-2 text-center w-14">الغياب</th>
-                <th className="py-3 px-2 text-center w-16">المتابعة</th>
-                <th className="py-3 px-2 text-center min-w-[90px]">النشاطات (20)</th>
-                <th className="py-3 px-2 text-center min-w-[90px]">م. الفروض (20)</th>
-                <th className="py-3 px-2 text-center min-w-[95px] bg-slate-200/50 dark:bg-slate-700/40 font-bold">
+              <tr className="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200/80 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300">
+                <th className="py-4 px-2 text-center w-12 sticky right-0 z-20 bg-slate-50 dark:bg-slate-800 shadow-[1px_0_0_0_rgba(0,0,0,0.06)] dark:shadow-[1px_0_0_0_rgba(255,255,255,0.06)]">
+                  ر
+                </th>
+                <th className="py-4 px-3 min-w-[170px] font-bold sticky right-12 z-20 bg-slate-50 dark:bg-slate-800 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.08)] dark:shadow-[2px_0_5px_-2px_rgba(0,0,0,0.4)]">
+                  التلميذ
+                </th>
+                <th className="py-4 px-2 text-center w-14">الغياب</th>
+                <th className="py-4 px-2 text-center w-16">المتابعة</th>
+                <th className="py-4 px-2 text-center min-w-[90px]">النشاطات (20)</th>
+                <th className="py-4 px-2 text-center min-w-[90px]">م. الفروض (20)</th>
+                <th className="py-4 px-2 text-center min-w-[95px] bg-slate-100/70 dark:bg-slate-800/50 font-bold">
                   م. التقويم
                 </th>
-                <th className="py-3 px-2 text-center min-w-[90px]">الاختبار (20)</th>
-                <th className="py-3 px-2 text-center min-w-[95px] bg-[#076653]/10 text-[#076653] dark:text-emerald-400 font-extrabold">
+                <th className="py-4 px-2 text-center min-w-[90px]">الاختبار (20)</th>
+                <th className="py-4 px-2 text-center min-w-[95px] bg-[#076653]/10 text-[#076653] dark:text-emerald-400 font-extrabold">
                   المعدل
                 </th>
-                <th className="py-3 px-3 text-center min-w-[95px]">التقدير</th>
-                <th className="py-3 px-3 min-w-[150px]">ملاحظة الأستاذ</th>
+                <th className="py-4 px-3 text-center min-w-[95px]">التقدير</th>
+                <th className="py-4 px-3 min-w-[150px]">ملاحظة الأستاذ</th>
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
               {students.map(st => {
                 const actScore = calculateActivitiesScore(st)
                 const cAssessment = calculateContinuousAssessment(st)
@@ -298,15 +302,15 @@ function GradesContent() {
                 return (
                   <tr
                     key={st.id}
-                    className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"
+                    className="hover:bg-slate-50/70 dark:hover:bg-slate-800/40 transition-colors group"
                   >
-                    {/* Order */}
-                    <td className="py-2.5 px-2 text-center text-xs text-slate-400 nums">
+                    {/* Order - Sticky */}
+                    <td className="py-3.5 px-2 text-center text-xs text-slate-400 nums sticky right-0 z-10 bg-white dark:bg-slate-900 group-hover:bg-slate-50 dark:group-hover:bg-slate-800/60 shadow-[1px_0_0_0_rgba(0,0,0,0.06)] dark:shadow-[1px_0_0_0_rgba(255,255,255,0.06)]">
                       {st.orderNumber}
                     </td>
 
-                    {/* Name */}
-                    <td className="py-2.5 px-3 font-semibold text-slate-900 dark:text-slate-100">
+                    {/* Name - Sticky */}
+                    <td className="py-3.5 px-3 font-semibold text-slate-900 dark:text-slate-100 sticky right-12 z-10 bg-white dark:bg-slate-900 group-hover:bg-slate-50 dark:group-hover:bg-slate-800/60 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.08)] dark:shadow-[2px_0_5px_-2px_rgba(0,0,0,0.4)]">
                       <div className="flex items-center gap-1.5">
                         <span>{st.name}</span>
                         {st.isRepeating && (
@@ -316,7 +320,7 @@ function GradesContent() {
                     </td>
 
                     {/* Attendance badges */}
-                    <td className="py-2.5 px-2 text-center">
+                    <td className="py-3.5 px-2 text-center">
                       <div className="flex items-center justify-center gap-1">
                         {st.absentCount > 0 && (
                           <span className="badge badge-rose text-[10px] nums">{st.absentCount}غ</span>
@@ -331,22 +335,22 @@ function GradesContent() {
                     </td>
 
                     {/* Event note button */}
-                    <td className="py-2.5 px-2 text-center">
+                    <td className="py-3.5 px-2 text-center">
                       <button
                         onClick={() => { setEditingEventStudent(st); setEventText(''); }}
                         title="تسجيل ملاحظة متابعة نوعية"
-                        className="p-1 rounded-lg text-slate-400 hover:text-[#076653] hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+                        className="p-1.5 rounded-xl text-slate-400 hover:text-[#076653] hover:bg-[#076653]/10 dark:hover:bg-slate-800 transition-colors"
                       >
                         <MessageSquarePlus size={16} />
                       </button>
                     </td>
 
                     {/* Activities (with mGrid click) */}
-                    <td className="py-2.5 px-2 text-center">
+                    <td className="py-3.5 px-2 text-center">
                       <button
                         type="button"
                         onClick={() => setEditingCriteriaStudent(st)}
-                        className="px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-bold text-slate-800 dark:text-slate-100 hover:border-[#076653] transition-colors nums flex items-center justify-center gap-1 mx-auto"
+                        className="px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-bold text-slate-800 dark:text-slate-100 hover:border-[#076653] transition-colors nums flex items-center justify-center gap-1 mx-auto shadow-sm"
                         title="انقر لتعديل شبكة الـ 10 معايير"
                       >
                         <span>{actScore}</span>
@@ -355,7 +359,7 @@ function GradesContent() {
                     </td>
 
                     {/* Tests Average Input */}
-                    <td className="py-2.5 px-2 text-center">
+                    <td className="py-3.5 px-2 text-center">
                       <input
                         type="number"
                         step="0.25"
@@ -368,14 +372,14 @@ function GradesContent() {
                     </td>
 
                     {/* Continuous Assessment (Automated) */}
-                    <td className="py-2.5 px-2 text-center bg-slate-50/80 dark:bg-slate-800/30">
-                      <span className="text-sm font-extrabold text-slate-700 dark:text-slate-200 nums">
+                    <td className="py-3.5 px-2 text-center bg-slate-50/50 dark:bg-slate-800/20">
+                      <span className="text-sm font-black text-slate-700 dark:text-slate-200 nums">
                         {cAssessment}
                       </span>
                     </td>
 
                     {/* Exam Input */}
-                    <td className="py-2.5 px-2 text-center">
+                    <td className="py-3.5 px-2 text-center">
                       <input
                         type="number"
                         step="0.25"
@@ -388,7 +392,7 @@ function GradesContent() {
                     </td>
 
                     {/* Term Average (Automated & Highlighted) */}
-                    <td className="py-2.5 px-2 text-center bg-[#076653]/5 dark:bg-[#076653]/10">
+                    <td className="py-3.5 px-2 text-center bg-[#076653]/5 dark:bg-[#076653]/10">
                       <span className={`text-base font-black nums ${
                         termAvg >= 10 ? 'text-[#076653] dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'
                       }`}>
@@ -397,18 +401,18 @@ function GradesContent() {
                     </td>
 
                     {/* Appreciation */}
-                    <td className="py-2.5 px-3 text-center text-xs">
+                    <td className="py-3.5 px-3 text-center text-xs">
                       <span className={apprec.color}>{apprec.text}</span>
                     </td>
 
                     {/* Note */}
-                    <td className="py-2.5 px-3">
+                    <td className="py-3.5 px-3">
                       <input
                         type="text"
                         placeholder="ملاحظة..."
                         value={st.note}
                         onChange={e => handleScoreChange(st.id, 'note', e.target.value)}
-                        className="input text-xs py-1"
+                        className="input text-xs py-1.5"
                       />
                     </td>
                   </tr>
@@ -422,32 +426,32 @@ function GradesContent() {
       {/* ── Modal mGrid (10 Criteria Matrix matching Sanad) ── */}
       {editingCriteriaStudent && (
         <div className="modal-backdrop">
-          <div className="modal-box max-w-lg">
-            <div className="modal-head">
+          <div className="lux-card max-w-lg w-full p-6 sm:p-8 rounded-3xl shadow-2xl border border-white/60 dark:border-slate-700/60 animate-nudge">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 mb-5">
               <div>
-                <h3 className="text-base font-bold">شبكة معايير التقويم المستمر (النشاطات)</h3>
-                <p className="text-xs text-slate-500">التلميذ: {editingCriteriaStudent.name}</p>
+                <h3 className="text-lg font-black text-slate-900 dark:text-white">شبكة معايير التقويم المستمر (النشاطات)</h3>
+                <p className="text-xs text-slate-500 font-bold mt-0.5">التلميذ: {editingCriteriaStudent.name}</p>
               </div>
               <button
                 onClick={() => setEditingCriteriaStudent(null)}
-                className="text-slate-400 hover:text-slate-600"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               >
-                <X size={18} />
+                <X size={20} />
               </button>
             </div>
 
-            <div className="modal-body space-y-4">
+            <div className="space-y-4 max-h-[65vh] overflow-y-auto pr-1">
               {/* Discipline & Regularity (12 pts) */}
-              <div className="border border-slate-200 dark:border-slate-700 rounded-xl p-3.5 bg-slate-50 dark:bg-slate-800/30">
-                <div className="flex items-center justify-between font-bold text-xs text-[#076653] dark:text-emerald-400 mb-2 border-b border-slate-200 dark:border-slate-700 pb-1.5">
+              <div className="border border-slate-200/80 dark:border-slate-700/80 rounded-2xl p-4 bg-slate-50/70 dark:bg-slate-800/30">
+                <div className="flex items-center justify-between font-bold text-xs text-[#076653] dark:text-emerald-400 mb-3 border-b border-slate-200/60 dark:border-slate-700/60 pb-2">
                   <span>الانضباط والمواظبة</span>
-                  <span className="nums">12 نقطة</span>
+                  <span className="nums font-extrabold bg-[#076653]/10 px-2 py-0.5 rounded-full">12 نقطة</span>
                 </div>
 
-                <div className="space-y-2.5 text-xs">
+                <div className="space-y-3 text-xs">
                   {/* Behavior (3) */}
                   <div className="flex items-center justify-between">
-                    <span>السلوك وحسن الخلق داخل القسم (0-3)</span>
+                    <span className="font-semibold text-slate-700 dark:text-slate-200">السلوك وحسن الخلق داخل القسم (0-3)</span>
                     <input
                       type="number" step="0.25" min="0" max="3"
                       value={editingCriteriaStudent.behavior}
@@ -455,14 +459,14 @@ function GradesContent() {
                         ...editingCriteriaStudent,
                         behavior: Number(e.target.value)
                       })}
-                      className="grade-input w-16 text-center"
+                      className="grade-input w-16 text-center rounded-xl"
                     />
                   </div>
 
                   {/* Absence Penalty (Auto computed) */}
                   <div className="flex items-center justify-between text-slate-500">
                     <div>
-                      <span>الغيابات غير المبررة (يُحسب آلياً)</span>
+                      <span className="font-semibold text-slate-700 dark:text-slate-300">الغيابات غير المبررة (يُحسب آلياً)</span>
                       <div className="text-[10px] text-slate-400">
                         3 - ({editingCriteriaStudent.absentCount} غياب × 0.5)
                       </div>
@@ -474,7 +478,7 @@ function GradesContent() {
 
                   {/* Tools (3) */}
                   <div className="flex items-center justify-between">
-                    <span>إحضار أدوات التعلم والكتاب المدرسي (0-3)</span>
+                    <span className="font-semibold text-slate-700 dark:text-slate-200">إحضار أدوات التعلم والكتاب المدرسي (0-3)</span>
                     <input
                       type="number" step="0.25" min="0" max="3"
                       value={editingCriteriaStudent.tools}
@@ -482,13 +486,13 @@ function GradesContent() {
                         ...editingCriteriaStudent,
                         tools: Number(e.target.value)
                       })}
-                      className="grade-input w-16 text-center"
+                      className="grade-input w-16 text-center rounded-xl"
                     />
                   </div>
 
                   {/* Notebook (3) */}
                   <div className="flex items-center justify-between">
-                    <span>تنظيم الكراريس والمحافظة عليها (0-3)</span>
+                    <span className="font-semibold text-slate-700 dark:text-slate-200">تنظيم الكراريس والمحافظة عليها (0-3)</span>
                     <input
                       type="number" step="0.25" min="0" max="3"
                       value={editingCriteriaStudent.notebook}
@@ -496,20 +500,20 @@ function GradesContent() {
                         ...editingCriteriaStudent,
                         notebook: Number(e.target.value)
                       })}
-                      className="grade-input w-16 text-center"
+                      className="grade-input w-16 text-center rounded-xl"
                     />
                   </div>
                 </div>
               </div>
 
               {/* Participation (3 pts) */}
-              <div className="border border-slate-200 dark:border-slate-700 rounded-xl p-3.5 bg-slate-50 dark:bg-slate-800/30">
-                <div className="flex items-center justify-between font-bold text-xs text-[#076653] dark:text-emerald-400 mb-2 border-b border-slate-200 dark:border-slate-700 pb-1.5">
+              <div className="border border-slate-200/80 dark:border-slate-700/80 rounded-2xl p-4 bg-slate-50/70 dark:bg-slate-800/30">
+                <div className="flex items-center justify-between font-bold text-xs text-[#076653] dark:text-emerald-400 mb-3 border-b border-slate-200/60 dark:border-slate-700/60 pb-2">
                   <span>المشاركة والتفاعل الإيجابي</span>
-                  <span className="nums">3 نقاط</span>
+                  <span className="nums font-extrabold bg-[#076653]/10 px-2 py-0.5 rounded-full">3 نقاط</span>
                 </div>
                 <div className="flex items-center justify-between text-xs">
-                  <span>المشاركة الصفية وطرح التساؤلات (0-3)</span>
+                  <span className="font-semibold text-slate-700 dark:text-slate-200">المشاركة الصفية وطرح التساؤلات (0-3)</span>
                   <input
                     type="number" step="0.25" min="0" max="3"
                     value={editingCriteriaStudent.participation}
@@ -517,20 +521,20 @@ function GradesContent() {
                       ...editingCriteriaStudent,
                       participation: Number(e.target.value)
                     })}
-                    className="grade-input w-16 text-center"
+                    className="grade-input w-16 text-center rounded-xl"
                   />
                 </div>
               </div>
 
               {/* Activity in class (5 pts) */}
-              <div className="border border-slate-200 dark:border-slate-700 rounded-xl p-3.5 bg-slate-50 dark:bg-slate-800/30">
-                <div className="flex items-center justify-between font-bold text-xs text-[#076653] dark:text-emerald-400 mb-2 border-b border-slate-200 dark:border-slate-700 pb-1.5">
+              <div className="border border-slate-200/80 dark:border-slate-700/80 rounded-2xl p-4 bg-slate-50/70 dark:bg-slate-800/30">
+                <div className="flex items-center justify-between font-bold text-xs text-[#076653] dark:text-emerald-400 mb-3 border-b border-slate-200/60 dark:border-slate-700/60 pb-2">
                   <span>النشاط داخل القسم</span>
-                  <span className="nums">5 نقاط</span>
+                  <span className="nums font-extrabold bg-[#076653]/10 px-2 py-0.5 rounded-full">5 نقاط</span>
                 </div>
-                <div className="space-y-2.5 text-xs">
+                <div className="space-y-3 text-xs">
                   <div className="flex items-center justify-between">
-                    <span>العمل الفردي والإنجازات والواجبات (0-3)</span>
+                    <span className="font-semibold text-slate-700 dark:text-slate-200">العمل الفردي والإنجازات والواجبات (0-3)</span>
                     <input
                       type="number" step="0.25" min="0" max="3"
                       value={editingCriteriaStudent.tasks}
@@ -538,11 +542,11 @@ function GradesContent() {
                         ...editingCriteriaStudent,
                         tasks: Number(e.target.value)
                       })}
-                      className="grade-input w-16 text-center"
+                      className="grade-input w-16 text-center rounded-xl"
                     />
                   </div>
                   <div className="flex items-center justify-between">
-                    <span>العمل ضمن الفوج والتعاون (0-1)</span>
+                    <span className="font-semibold text-slate-700 dark:text-slate-200">العمل ضمن الفوج والتعاون (0-1)</span>
                     <input
                       type="number" step="0.25" min="0" max="1"
                       value={editingCriteriaStudent.team}
@@ -550,11 +554,11 @@ function GradesContent() {
                         ...editingCriteriaStudent,
                         team: Number(e.target.value)
                       })}
-                      className="grade-input w-16 text-center"
+                      className="grade-input w-16 text-center rounded-xl"
                     />
                   </div>
                   <div className="flex items-center justify-between">
-                    <span>المبادرة والإبداع والحلول المبتكرة (0-1)</span>
+                    <span className="font-semibold text-slate-700 dark:text-slate-200">المبادرة والإبداع والحلول المبتكرة (0-1)</span>
                     <input
                       type="number" step="0.25" min="0" max="1"
                       value={editingCriteriaStudent.initiative}
@@ -562,20 +566,20 @@ function GradesContent() {
                         ...editingCriteriaStudent,
                         initiative: Number(e.target.value)
                       })}
-                      className="grade-input w-16 text-center"
+                      className="grade-input w-16 text-center rounded-xl"
                     />
                   </div>
                 </div>
               </div>
 
               {/* Total calculated */}
-              <div className="flex items-center justify-between p-3 rounded-xl bg-[#076653]/10 text-[#076653] dark:text-emerald-400 font-extrabold text-sm">
+              <div className="flex items-center justify-between p-3.5 rounded-2xl bg-[#076653]/10 text-[#076653] dark:text-emerald-400 font-extrabold text-sm border border-[#076653]/20">
                 <span>المجموع النهائي للنشاطات:</span>
                 <span className="nums text-lg">{calculateActivitiesScore(editingCriteriaStudent)} / 20</span>
               </div>
             </div>
 
-            <div className="modal-footer">
+            <div className="flex items-center justify-end gap-3 pt-5 mt-4 border-t border-slate-100 dark:border-slate-800">
               <button
                 type="button"
                 onClick={() => setEditingCriteriaStudent(null)}
@@ -602,15 +606,15 @@ function GradesContent() {
       {/* ── Modal mEvent (Pedagogical Observation) ── */}
       {editingEventStudent && (
         <div className="modal-backdrop">
-          <div className="modal-box max-w-sm">
-            <div className="modal-head">
-              <h3>تسجيل ملاحظة متابعة نوعية</h3>
-              <button onClick={() => setEditingEventStudent(null)} className="text-slate-400">
+          <div className="lux-card max-w-sm w-full p-6 rounded-3xl shadow-2xl border border-white/60 dark:border-slate-700/60 animate-nudge">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-4">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">تسجيل ملاحظة متابعة نوعية</h3>
+              <button onClick={() => setEditingEventStudent(null)} className="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600">
                 <X size={18} />
               </button>
             </div>
-            <div className="modal-body space-y-3">
-              <p className="text-xs text-slate-500">التلميذ: {editingEventStudent.name}</p>
+            <div className="space-y-3.5">
+              <p className="text-xs text-slate-500 font-semibold">التلميذ: {editingEventStudent.name}</p>
               <div>
                 <label className="label">نوع الملاحظة</label>
                 <select
@@ -636,7 +640,7 @@ function GradesContent() {
                 />
               </div>
             </div>
-            <div className="modal-footer">
+            <div className="flex items-center justify-end gap-2.5 pt-4 mt-4 border-t border-slate-100 dark:border-slate-800">
               <button onClick={() => setEditingEventStudent(null)} className="btn-ghost">إلغاء</button>
               <button
                 onClick={() => {

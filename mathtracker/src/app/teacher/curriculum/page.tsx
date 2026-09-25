@@ -80,29 +80,29 @@ export default function CurriculumPage() {
   )
 
   return (
-    <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
+    <main className="flex-1 p-5 sm:p-8 lg:p-10 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
       {/* Sub-header matching Sanad Screenshot */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        <div className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-full bg-[#e6f4f1] dark:bg-[#076653]/20 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0">
-            <Library size={22} />
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div className="flex items-center gap-3.5">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-[#076653]/25 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0 shadow-sm border border-emerald-100 dark:border-emerald-800/50">
+            <Library size={24} />
           </div>
           <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
-              البرامج التعليمية
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
+              البرامج التعليمية الرسمية
             </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-0.5">
               132 تدرجًا رسميًّا معتمدًا من المفتشية العامة للبيداغوجيا مع تفصيل الكفاءات والمحتويات
             </p>
           </div>
         </div>
 
         {/* Filters */}
-        <div className="flex flex-wrap items-center gap-2.5 self-start sm:self-auto">
+        <div className="flex flex-wrap items-center gap-3 self-start sm:self-auto">
           <select
             value={selectedGrade}
             onChange={e => setSelectedGrade(e.target.value)}
-            className="select w-auto text-xs font-bold py-1.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800"
+            className="select w-auto text-xs sm:text-sm font-bold py-2 px-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm hover:border-[#076653] transition-colors"
           >
             <option value="1am">السنة الأولى متوسط (1AM)</option>
             <option value="2am">السنة الثانية متوسط (2AM)</option>
@@ -116,7 +116,7 @@ export default function CurriculumPage() {
           <select
             value={selectedSubject}
             onChange={e => setSelectedSubject(e.target.value)}
-            className="select w-auto text-xs font-bold py-1.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800"
+            className="select w-auto text-xs sm:text-sm font-bold py-2 px-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm hover:border-[#076653] transition-colors"
           >
             <option value="math">الرياضيات</option>
             <option value="arabic">اللغة العربية</option>
@@ -129,24 +129,24 @@ export default function CurriculumPage() {
       </div>
 
       {/* Search Input */}
-      <div className="mb-6 relative">
-        <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-slate-400" />
+      <div className="mb-8 relative">
+        <Search size={20} className="absolute start-4 top-1/2 -translate-y-1/2 text-slate-400" />
         <input
           type="text"
           placeholder="ابحث في عناصر المنهاج والكفاءات والمحتويات..."
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
-          className="input ps-10"
+          className="input ps-12 py-3 rounded-2xl text-sm font-medium"
         />
       </div>
 
       {/* Curriculum Units Breakdown */}
-      <div className="space-y-4">
+      <div className="space-y-5">
         {filteredUnits.map(unit => {
           const isExpanded = expandedUnitId === unit.id
 
           return (
-            <div key={unit.id} className="card overflow-hidden">
+            <div key={unit.id} className="lux-card overflow-hidden hover:shadow-lg transition-all">
               <div
                 onClick={() => setExpandedUnitId(isExpanded ? null : unit.id)}
                 className="p-4 sm:p-5 flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"

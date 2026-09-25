@@ -116,52 +116,59 @@ export default function TimetablePage() {
   }
 
   return (
-    <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
+    <main className="flex-1 p-5 sm:p-8 lg:p-10 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
       {/* Streamlined Action Bar matching Sanad */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-          توزيع حصص التدريس على أيام الأسبوع (الأحد إلى الخميس) وتوليد حصص الفصل آليًا
-        </p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div>
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
+            جدول التوقيت الأسبوعي
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+            توزيع حصص التدريس على أيام الأسبوع (الأحد إلى الخميس) وتوليد حصص الفصل آليًا
+          </p>
+        </div>
 
-        <div className="flex flex-wrap items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-3">
           <button
             onClick={() => window.print()}
-            className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-medium px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 shadow-sm text-xs hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors no-print"
+            className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold px-4 py-2 rounded-2xl flex items-center gap-2 shadow-sm text-xs sm:text-sm hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-[#076653] transition-colors no-print"
           >
-            <Printer size={15} />
+            <Printer size={16} />
             <span>طباعة الجدول</span>
           </button>
 
           <button
             onClick={handleGenerateTermSessions}
             disabled={isGenerating}
-            className="bg-[#076653] hover:bg-[#065444] text-white font-medium px-4 py-1.5 rounded-xl flex items-center gap-2 shadow-sm text-xs transition-colors"
+            className="gold-btn py-2 px-5 text-xs sm:text-sm flex items-center gap-2 shadow-md"
           >
-            <Sparkles size={15} />
+            <Sparkles size={16} />
             <span>{isGenerating ? 'جاري التوليد...' : 'ولّد حصص الفصل آليًا'}</span>
           </button>
         </div>
       </div>
 
       {generationMsg && (
-        <div className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 p-3 rounded-xl mb-4 text-xs font-bold flex items-center gap-2 animate-fade-in">
-          <Check size={16} />
+        <div className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 p-4 rounded-2xl mb-6 text-xs sm:text-sm font-bold flex items-center gap-2.5 animate-fade-in shadow-sm">
+          <Check size={18} className="text-[#076653] shrink-0" />
           <span>{generationMsg}</span>
         </div>
       )}
 
       {/* Timetable Grid */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm p-4 overflow-x-auto">
-        <table className="w-full text-center border-collapse min-w-[700px]">
+      <div className="lux-card p-5 sm:p-7 overflow-x-auto">
+        <table className="w-full text-center border-collapse min-w-[750px]">
           <thead>
             <tr>
-              <th className="p-3 border border-slate-200/60 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/50 text-xs font-bold text-slate-700 dark:text-slate-200 w-28">
+              <th className="p-3.5 border border-slate-200/60 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-800/60 text-xs font-bold text-slate-700 dark:text-slate-200 w-28 rounded-tr-2xl">
                 الحصة / اليوم
               </th>
               {DAYS.map((d, dIdx) => (
                 <th
                   key={dIdx}
-                  className="p-3 border border-slate-200/60 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/50 text-xs font-bold text-slate-700 dark:text-slate-200"
+                  className={`p-3.5 border border-slate-200/60 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-800/60 text-xs font-bold text-slate-700 dark:text-slate-200 ${
+                    dIdx === DAYS.length - 1 ? 'rounded-tl-2xl' : ''
+                  }`}
                 >
                   {d}
                 </th>
@@ -173,7 +180,7 @@ export default function TimetablePage() {
             {PERIODS.slice(0, 5).map((period, pIdx) => (
               <tr key={pIdx}>
                 {/* Time Period Column */}
-                <td className="p-3 border border-slate-200/60 dark:border-slate-800 bg-slate-50/40 dark:bg-slate-800/30 text-xs font-bold text-slate-600 dark:text-slate-300 nums whitespace-nowrap">
+                <td className="p-3.5 border border-slate-200/60 dark:border-slate-800 bg-slate-50/40 dark:bg-slate-800/30 text-xs font-black text-slate-600 dark:text-slate-300 nums whitespace-nowrap">
                   {period.label}
                 </td>
 
@@ -185,21 +192,21 @@ export default function TimetablePage() {
                     <td
                       key={dIdx}
                       onClick={() => handleCellClick(dIdx, pIdx)}
-                      className="p-2 border border-slate-200/60 dark:border-slate-800 h-20 align-middle transition-colors cursor-pointer"
+                      className="p-2 border border-slate-200/60 dark:border-slate-800 h-22 align-middle transition-colors cursor-pointer group hover:bg-emerald-50/30 dark:hover:bg-slate-800/30"
                     >
                       {slot ? (
-                        <div className={`w-full h-16 rounded-2xl p-2.5 flex flex-col items-center justify-center shadow-sm cursor-pointer hover:opacity-95 transition-all text-white ${slot.color}`}>
-                          <div className="font-bold text-sm text-white text-center leading-tight">
+                        <div className={`w-full h-18 rounded-2xl p-2.5 flex flex-col items-center justify-center shadow-md cursor-pointer hover:scale-[1.02] transition-all text-white ${slot.color}`}>
+                          <div className="font-black text-sm text-white text-center leading-tight">
                             {slot.groupName}
                           </div>
-                          <div className="text-xs text-white/90 font-normal flex items-center justify-center gap-1 mt-1">
+                          <div className="text-[11px] text-white/90 font-medium flex items-center justify-center gap-1 mt-1">
                             <Building size={12} />
                             <span>{slot.room}</span>
                           </div>
                         </div>
                       ) : (
-                        <div className="w-full h-16 rounded-2xl border border-dashed border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-300 dark:text-slate-600 hover:border-[#076653] hover:text-[#076653] hover:bg-[#076653]/5 transition-all">
-                          <Plus size={16} />
+                        <div className="w-full h-18 rounded-2xl border-2 border-dashed border-slate-200/80 dark:border-slate-700/80 flex items-center justify-center text-slate-300 dark:text-slate-600 group-hover:border-[#076653] group-hover:text-[#076653] group-hover:bg-[#076653]/5 transition-all">
+                          <Plus size={18} />
                         </div>
                       )}
                     </td>
@@ -214,17 +221,17 @@ export default function TimetablePage() {
       {/* ── Modal (Assign Slot) ── */}
       {activeModalSlot && (
         <div className="modal-backdrop">
-          <div className="modal-box max-w-sm">
-            <div className="modal-head">
-              <h3>
+          <div className="lux-card max-w-sm w-full p-6 rounded-3xl shadow-2xl border border-white/60 dark:border-slate-700/60 animate-nudge">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-4">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">
                 تحديد حصة: {DAYS[activeModalSlot.dayIndex]} ({PERIODS[activeModalSlot.periodIndex].label})
               </h3>
-              <button onClick={() => setActiveModalSlot(null)} className="text-slate-400">
+              <button onClick={() => setActiveModalSlot(null)} className="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600">
                 <X size={18} />
               </button>
             </div>
 
-            <form onSubmit={handleAssignSlot} className="modal-body space-y-3">
+            <form onSubmit={handleAssignSlot} className="space-y-4">
               <div>
                 <label className="label">الفوج التربوي *</label>
                 <select
@@ -249,7 +256,7 @@ export default function TimetablePage() {
                 />
               </div>
 
-              <div className="modal-footer -mx-5 -mb-5 mt-5 flex justify-between">
+              <div className="flex items-center justify-between pt-4 mt-4 border-t border-slate-100 dark:border-slate-800">
                 {slots.some(s => s.dayIndex === activeModalSlot.dayIndex && s.periodIndex === activeModalSlot.periodIndex) && (
                   <button
                     type="button"

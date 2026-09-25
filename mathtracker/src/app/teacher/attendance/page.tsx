@@ -148,29 +148,29 @@ function AttendanceContent() {
   }
 
   return (
-    <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
+    <main className="flex-1 p-5 sm:p-8 lg:p-10 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
       {/* Sub-header matching Sanad Screenshot */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        <div className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-full bg-[#e6f4f1] dark:bg-[#076653]/20 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0">
-            <ClipboardList size={22} />
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div className="flex items-center gap-3.5">
+          <div className="w-12 h-12 rounded-2xl bg-[#e6f4f1] dark:bg-[#076653]/20 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0 shadow-sm">
+            <ClipboardList size={24} />
           </div>
           <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
               الحضور والغياب
             </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-0.5">
               متابعة مواظبة التلاميذ وتسجيل الغيابات والتأخرات لكل حصة دراسية
             </p>
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2.5 self-start sm:self-auto">
+        <div className="flex flex-wrap items-center gap-3 self-start sm:self-auto">
           {/* Group Selector */}
           <select
             value={selectedGroupId}
             onChange={e => setSelectedGroupId(e.target.value)}
-            className="select w-auto text-xs font-bold py-1.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800"
+            className="select w-auto text-xs font-bold py-2 px-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm"
           >
             {groups.map(g => (
               <option key={g.id} value={g.id}>الفوج: {g.name}</option>
@@ -178,10 +178,10 @@ function AttendanceContent() {
           </select>
 
           {/* View Mode Toggle */}
-          <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl text-xs font-semibold">
+          <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl text-xs font-semibold">
             <button
               onClick={() => setViewMode('week')}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
+              className={`px-3.5 py-1.5 rounded-lg transition-colors ${
                 viewMode === 'week' ? 'bg-white dark:bg-slate-700 text-[#076653] shadow-sm font-bold' : 'text-slate-500'
               }`}
             >
@@ -189,7 +189,7 @@ function AttendanceContent() {
             </button>
             <button
               onClick={() => setViewMode('month')}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
+              className={`px-3.5 py-1.5 rounded-lg transition-colors ${
                 viewMode === 'month' ? 'bg-white dark:bg-slate-700 text-[#076653] shadow-sm font-bold' : 'text-slate-500'
               }`}
             >
@@ -197,7 +197,7 @@ function AttendanceContent() {
             </button>
             <button
               onClick={() => setViewMode('all')}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
+              className={`px-3.5 py-1.5 rounded-lg transition-colors ${
                 viewMode === 'all' ? 'bg-white dark:bg-slate-700 text-[#076653] shadow-sm font-bold' : 'text-slate-500'
               }`}
             >
@@ -207,7 +207,7 @@ function AttendanceContent() {
 
           <button
             onClick={() => window.print()}
-            className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-medium px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 shadow-sm text-xs hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors no-print"
+            className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 shadow-sm text-xs hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors no-print"
           >
             <Printer size={15} />
             <span>طباعة</span>
@@ -216,13 +216,13 @@ function AttendanceContent() {
       </div>
 
       {/* Legend & Ministry Circular Note */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50 dark:bg-slate-800/40 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 mb-5 text-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50 dark:bg-slate-800/40 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 mb-6 text-xs">
         {/* State Legend */}
         <div className="flex items-center gap-4">
           <span className="font-bold text-slate-700 dark:text-slate-300">الدلالات:</span>
           {Object.entries(STATUS_CONFIG).map(([k, cfg]) => (
             <div key={k} className="flex items-center gap-1.5">
-              <span className={`w-5 h-5 rounded-md flex items-center justify-center font-bold text-[10px] ${cfg.bg} ${cfg.text} border ${cfg.border}`}>
+              <span className={`w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs ${cfg.bg} ${cfg.text} border ${cfg.border} shadow-xs`}>
                 {cfg.short}
               </span>
               <span className="text-slate-600 dark:text-slate-400 font-medium">{cfg.label}</span>
@@ -232,31 +232,35 @@ function AttendanceContent() {
 
         {/* Penalty reminder */}
         <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
-          <AlertCircle size={14} className="text-amber-500 shrink-0" />
+          <AlertCircle size={15} className="text-amber-500 shrink-0" />
           <span>تخصم الغيابات آلياً من نقطة التقويم المستمر (0.5 للغياب، 0.25 للتأخر).</span>
         </div>
       </div>
 
       {/* Main Attendance Table */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm overflow-hidden">
+      <div className="lux-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-right border-collapse text-sm">
             <thead>
-              <tr className="bg-slate-100 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700">
-                <th className="py-3 px-3 w-10 text-center text-xs font-bold text-slate-500">ر</th>
-                <th className="py-3 px-4 min-w-[180px] font-bold text-slate-700 dark:text-slate-200">اسم ولقب التلميذ</th>
+              <tr className="bg-slate-100/80 dark:bg-slate-800/80 border-b border-slate-200/80 dark:border-slate-700">
+                <th className="sticky right-0 z-20 bg-slate-100 dark:bg-slate-800 py-3.5 px-3 w-12 text-center text-xs font-bold text-slate-500 shadow-[1px_0_4px_rgba(0,0,0,0.05)]">
+                  ر
+                </th>
+                <th className="sticky right-12 z-20 bg-slate-100 dark:bg-slate-800 py-3.5 px-4 min-w-[200px] font-bold text-slate-800 dark:text-slate-100 text-xs shadow-[2px_0_4px_rgba(0,0,0,0.05)]">
+                  اسم ولقب التلميذ
+                </th>
                 
                 {/* Session Columns */}
                 {visibleSessions.map(session => (
-                  <th key={session.id} className="py-2.5 px-1.5 text-center min-w-[58px]">
-                    <div className="text-[11px] font-bold text-slate-700 dark:text-slate-200 nums">
+                  <th key={session.id} className="py-3 px-2 text-center min-w-[62px]">
+                    <div className="text-xs font-bold text-slate-700 dark:text-slate-200 nums">
                       {session.date}
                     </div>
-                    <div className="text-[9px] text-slate-400">{session.dayName}</div>
+                    <div className="text-[10px] text-slate-400 font-medium">{session.dayName}</div>
                     <button
                       onClick={() => handleMarkAllPresent(session.id)}
                       title="تعليم الكل حاضر في هذه الحصة"
-                      className="mt-1 text-[9px] px-1.5 py-0.5 rounded bg-white dark:bg-slate-700 text-[#076653] dark:text-emerald-400 font-bold border border-slate-200 dark:border-slate-600 hover:bg-[#076653] hover:text-white transition-colors"
+                      className="mt-1 text-[9px] px-2 py-0.5 rounded-md bg-white dark:bg-slate-700 text-[#076653] dark:text-emerald-400 font-bold border border-slate-200 dark:border-slate-600 hover:bg-[#076653] hover:text-white transition-colors cursor-pointer"
                     >
                       الكل ✓
                     </button>
@@ -264,9 +268,9 @@ function AttendanceContent() {
                 ))}
 
                 {/* Summary Columns */}
-                <th className="py-3 px-2 text-center text-xs font-bold text-rose-600 min-w-[50px]">غياب</th>
-                <th className="py-3 px-2 text-center text-xs font-bold text-amber-600 min-w-[50px]">تأخر</th>
-                <th className="py-3 px-2 text-center text-xs font-bold text-sky-600 min-w-[50px]">عذر</th>
+                <th className="py-3.5 px-2 text-center text-xs font-bold text-rose-600 min-w-[55px]">غياب</th>
+                <th className="py-3.5 px-2 text-center text-xs font-bold text-amber-600 min-w-[55px]">تأخر</th>
+                <th className="py-3.5 px-2 text-center text-xs font-bold text-sky-600 min-w-[55px]">عذر</th>
               </tr>
             </thead>
 
@@ -277,14 +281,14 @@ function AttendanceContent() {
                 return (
                   <tr
                     key={student.id}
-                    className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+                    className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors"
                   >
-                    <td className="py-2.5 px-3 text-center text-xs text-slate-400 nums">
+                    <td className="sticky right-0 z-10 bg-white dark:bg-slate-900 py-3.5 px-3 text-center text-xs text-slate-400 nums shadow-[1px_0_4px_rgba(0,0,0,0.05)]">
                       {student.orderNumber}
                     </td>
 
                     {/* Student Name */}
-                    <td className="py-2.5 px-4 font-semibold text-slate-800 dark:text-slate-200">
+                    <td className="sticky right-12 z-10 bg-white dark:bg-slate-900 py-3.5 px-4 font-bold text-slate-800 dark:text-slate-100 text-sm shadow-[2px_0_4px_rgba(0,0,0,0.05)]">
                       <div className="flex items-center gap-2">
                         <span>{student.name}</span>
                         {student.isRepeating && (

@@ -389,14 +389,14 @@ export default function ParentPage() {
                   width: '64px',
                   height: '64px',
                   borderRadius: '20px',
-                  background: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
+                  background: 'linear-gradient(135deg, #076653, #065a48)',
                   color: '#ffffff',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   fontSize: '30px',
                   margin: '0 auto 16px',
-                  boxShadow: '0 6px 20px rgba(37, 99, 235, 0.3)',
+                  boxShadow: '0 6px 20px rgba(7, 102, 83, 0.3)',
                 }}
               >
                 👨‍👩‍👧
@@ -427,7 +427,7 @@ export default function ParentPage() {
                       width: '100%',
                       padding: '16px 20px',
                       borderRadius: '16px',
-                      border: '2px solid #2563eb',
+                      border: '2px solid #076653',
                       background: 'var(--color-muted)',
                       color: 'var(--color-foreground)',
                       fontFamily: 'Inter, monospace',
@@ -435,7 +435,7 @@ export default function ParentPage() {
                       fontSize: '18px',
                       letterSpacing: '2px',
                       textAlign: 'center',
-                      boxShadow: '0 2px 8px rgba(37, 99, 235, 0.1)',
+                      boxShadow: '0 2px 8px rgba(7, 102, 83, 0.1)',
                     }}
                   />
                 </div>
@@ -464,12 +464,12 @@ export default function ParentPage() {
                     padding: '14px',
                     fontSize: '15px',
                     borderRadius: '14px',
-                    background: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
+                    background: 'linear-gradient(135deg, #076653, #065a48)',
                     color: '#ffffff',
                     border: 'none',
                     fontWeight: 900,
                     cursor: 'pointer',
-                    boxShadow: '0 4px 16px rgba(37, 99, 235, 0.3)',
+                    boxShadow: '0 4px 16px rgba(7, 102, 83, 0.3)',
                     fontFamily: 'Cairo, sans-serif',
                     display: 'flex',
                     alignItems: 'center',

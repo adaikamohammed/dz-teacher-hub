@@ -54,50 +54,55 @@ export default function MessagesPage() {
   }
 
   return (
-    <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1200px] w-full mx-auto animate-fade-in" dir="rtl">
+    <main className="flex-1 p-5 sm:p-8 lg:p-10 max-w-[1200px] w-full mx-auto animate-fade-in" dir="rtl">
       {/* Streamlined Action Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-          تنبيهات الإدارة، التحديثات البيداغوجية، ورسائل النظام
-        </p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div>
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
+            الرسائل والإشعارات
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+            تنبيهات الإدارة، التحديثات البيداغوجية، ورسائل النظام
+          </p>
+        </div>
 
         <button
           onClick={handleMarkAllRead}
-          className="btn-ghost btn-sm text-xs font-semibold"
+          className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold px-4 py-2 rounded-2xl flex items-center gap-2 shadow-sm text-xs sm:text-sm hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-[#076653] transition-colors"
         >
-          <CheckCheck size={15} />
+          <CheckCheck size={16} />
           <span>تحديد الكل كمقروء</span>
         </button>
       </div>
 
       {/* Messages List */}
-      <div className="space-y-3">
+      <div className="space-y-4">
         {messages.map(msg => (
           <div
             key={msg.id}
             onClick={() => handleMarkAsRead(msg.id)}
-            className={`card p-4 sm:p-5 transition-all cursor-pointer ${
+            className={`lux-card p-5 sm:p-6 transition-all cursor-pointer ${
               !msg.read
-                ? 'border-s-4 border-s-[#076653] bg-gradient-to-l from-[#076653]/5 to-transparent'
-                : 'opacity-80 hover:opacity-100'
+                ? 'border-s-4 border-s-[#076653] bg-gradient-to-l from-[#076653]/10 to-transparent'
+                : 'opacity-85 hover:opacity-100'
             }`}
           >
-            <div className="flex items-start justify-between gap-3 mb-2">
-              <div className="flex items-center gap-2">
+            <div className="flex items-start justify-between gap-3 mb-2.5">
+              <div className="flex items-center gap-2.5">
                 {!msg.read && (
-                  <span className="w-2 h-2 rounded-full bg-[#076653] shrink-0" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#076653] shrink-0 animate-pulse" />
                 )}
-                <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                <h3 className="text-base font-black text-slate-900 dark:text-white">
                   {msg.title}
                 </h3>
               </div>
-              <span className="text-[11px] text-slate-400 nums flex items-center gap-1 shrink-0">
-                <Clock size={12} />
+              <span className="text-xs text-slate-400 nums flex items-center gap-1.5 shrink-0 font-medium">
+                <Clock size={13} />
                 {msg.date}
               </span>
             </div>
 
-            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed pr-4">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed pr-5">
               {msg.content}
             </p>
           </div>

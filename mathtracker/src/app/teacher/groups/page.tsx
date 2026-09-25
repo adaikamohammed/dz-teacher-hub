@@ -196,18 +196,18 @@ export default function GroupsPage() {
   }
 
   return (
-    <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
+    <main className="flex-1 p-5 sm:p-8 lg:p-10 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
       {/* Sub-header matching Sanad Screenshot */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        <div className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-full bg-[#e6f4f1] dark:bg-[#076653]/20 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0">
-            <Users size={22} />
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div className="flex items-center gap-3.5">
+          <div className="w-12 h-12 rounded-2xl bg-[#e6f4f1] dark:bg-[#076653]/20 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0 shadow-sm">
+            <Users size={24} />
           </div>
           <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
               الأفواج التربوية
             </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-0.5">
               إدارة الأقسام، الحجم الساعي، وتوزيع الحصص للفصل الدراسي الحالي
             </p>
           </div>
@@ -215,7 +215,7 @@ export default function GroupsPage() {
 
         <button
           onClick={handleOpenAdd}
-          className="bg-[#076653] hover:bg-[#065444] text-white font-semibold px-4 py-2 rounded-xl flex items-center justify-center gap-2 shadow-sm text-sm transition-colors self-start sm:self-auto"
+          className="bg-[#076653] hover:bg-[#065444] text-white font-bold px-5 py-2.5 rounded-xl flex items-center justify-center gap-2 shadow-md shadow-[#076653]/20 text-sm transition-all cursor-pointer self-start sm:self-auto"
         >
           <Plus size={18} />
           <span>فوج جديد</span>
@@ -224,7 +224,7 @@ export default function GroupsPage() {
 
       {/* Groups Grid */}
       {groups.length === 0 ? (
-        <div className="card text-center py-16 px-4">
+        <div className="lux-card text-center py-20 px-6">
           <div className="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-400 mx-auto flex items-center justify-center mb-4">
             <Users size={32} />
           </div>
@@ -238,7 +238,7 @@ export default function GroupsPage() {
           </button>
         </div>
       ) : (
-        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
           {groups.map(group => {
             const colorCfg = COLOR_CLASSES[group.color] || COLOR_CLASSES.brand
             const progressPct = group.totalSessions > 0
@@ -248,10 +248,10 @@ export default function GroupsPage() {
             return (
               <div
                 key={group.id}
-                className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow p-5 flex flex-col justify-between"
+                className="lux-card p-6 sm:p-7 flex flex-col justify-between hover:scale-[1.01] transition-all"
               >
                 {/* Top Accent Rounded Pill Bar */}
-                <div className={`h-1.5 w-full rounded-full mb-3.5 ${colorCfg.bar}`} />
+                <div className={`h-2 w-full rounded-full mb-4 ${colorCfg.bar}`} />
 
                 <div>
                   {/* Card Title & Room */}

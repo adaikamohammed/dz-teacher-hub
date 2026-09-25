@@ -110,26 +110,59 @@ input, select, textarea, button { font-family: inherit; }
 }
 
 /* ════════════════════════════════════
-   CARDS — مطابق لسند الأستاذ (نظيف، واسع، بدون تكدس)
+   CARDS & PANELS — مطابق لسند الأستاذ وفرسان القرآن (نظيف، واسع، بدون تكدس)
    ════════════════════════════════════ */
 .card {
   background: var(--color-card);
-  border-radius: 1rem;
+  border-radius: 1.25rem;
   border: 1px solid #eef2f6;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.04);
   overflow: hidden;
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
 }
 [data-theme="dark"] .card {
   border-color: #242938;
   box-shadow: none;
+}
+.lux-card {
+  background: var(--color-card);
+  border-radius: 1.75rem;
+  border: 1px solid #edf2f7;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+}
+[data-theme="dark"] .lux-card {
+  border-color: #242938;
+  box-shadow: none;
+}
+.lux-card:hover {
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.08);
+}
+.gold-btn {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  color: #0f172a !important;
+  font-weight: 800;
+  border-radius: 1rem;
+  box-shadow: 0 8px 20px -4px rgba(245, 158, 11, 0.35);
+  transition: all 0.2s ease;
+}
+.gold-btn:hover {
+  background: linear-gradient(135deg, #fcd34d 0%, #fbbf24 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 25px -4px rgba(245, 158, 11, 0.45);
+}
+.hero-gradient {
+  background: linear-gradient(135deg, #0a5c40 0%, #076653 50%, #0d3d2a 100%);
+}
+.islamic-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 .card-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  padding: 1rem 1.25rem;
+  padding: 1.25rem 1.5rem;
   border-bottom: 1px solid #f1f5f9;
 }
 [data-theme="dark"] .card-head {
@@ -239,6 +272,25 @@ input, select, textarea, button { font-family: inherit; }
   font-family: inherit;
 }
 .btn-soft:hover { background: #e2e8f0; }
+
+/* Attendance interactive cells */
+.att-cell {
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 0.65rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.825rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+.att-cell:hover {
+  transform: scale(1.08);
+}
 
 .btn-danger {
   display: inline-flex; align-items: center; gap: 0.375rem;
