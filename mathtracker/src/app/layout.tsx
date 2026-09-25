@@ -2,13 +2,13 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'منصة الأستاذ الرقمية | دفتر الأستاذ وفضاء الأولياء',
-  description: 'المنصة الوطنية المتكاملة لأساتذة الجزائر لمتابعة التلاميذ، دفتر النصوص، السبورات المصورة، كشوفات النقاط، وتواصل الأولياء',
+  title: 'تدريس بلس | المنصة الوطنية الشاملة للأستاذ وفضاء الأولياء',
+  description: 'المنصة الوطنية لأساتذة كافة المواد والأطوار (ابتدائي، متوسط، ثانوي) لمتابعة الأقسام، الحصص اليومية، صور السبورة والواجبات، والربط المباشر مع الأولياء',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'منصة الأستاذ',
+    title: 'تدريس بلس',
   },
 }
 

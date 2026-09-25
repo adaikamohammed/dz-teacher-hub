@@ -168,7 +168,7 @@ export default function LoginPage() {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <h1 style={{ fontSize: '16px', fontWeight: 900, margin: 0, lineHeight: 1.2 }}>
-                منصة الأستاذ الرقمية الموحدة
+                تدريس بلس (TadrisPlus) • المنصة الوطنية الشاملة
               </h1>
               <span
                 style={{
@@ -288,8 +288,8 @@ export default function LoginPage() {
               marginBottom: '12px',
             }}
           >
-            البوابة البيداغوجية المتكاملة{' '}
-            <span className="gradient-text-emerald">للأستاذ وأولياء التلاميذ</span>
+            منصة تدريس بلس البيداغوجية المتكاملة{' '}
+            <span className="gradient-text-emerald">لكل أستاذ وولي في الجزائر</span>
           </h2>
 
           <p
@@ -302,7 +302,7 @@ export default function LoginPage() {
               margin: '0 auto 18px',
             }}
           >
-            متابعة حية للقسم، توثيق سبورات الدروس والواجبات، كشوف النقاط والمعاملات الرسمية، وتواصل عائلي مباشر برابط سحري بنقرة واحدة.
+            متابعة حية للقسم، توثيق سبورات الدروس والواجبات، كشوف النقاط والمعاملات الرسمية للابتدائي والمتوسط والثانوي، وتواصل عائلي فوري برمز مبسط دون تعقيد.
           </p>
 
           {/* Quick Badges Row */}

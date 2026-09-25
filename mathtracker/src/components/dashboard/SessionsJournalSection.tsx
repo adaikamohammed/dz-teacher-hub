@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import LiveSessionStudio, { LiveSessionData } from './LiveSessionStudio'
 import InteractiveCalendarView from './InteractiveCalendarView'
 import { generateSessionJournalPDF } from '@/lib/pdfGenerator'
+import { exportSessionsToICS } from '@/lib/calendarExport'
 import Modal from '@/components/ui/Modal'
 import {
   Calendar,
@@ -38,6 +39,9 @@ interface ClassRef {
 interface SessionsJournalSectionProps {
   classes: ClassRef[]
   activeClassId: string
+  subjectName?: string
+  stageName?: string
+  teacherName?: string
 }
 
 const INITIAL_LIVE_SESSIONS: LiveSessionData[] = [
@@ -92,7 +96,13 @@ const INITIAL_LIVE_SESSIONS: LiveSessionData[] = [
   },
 ]
 
-export default function SessionsJournalSection({ classes, activeClassId }: SessionsJournalSectionProps) {
+export default function SessionsJournalSection({
+  classes,
+  activeClassId,
+  subjectName,
+  stageName,
+  teacherName,
+}: SessionsJournalSectionProps) {
   const [sessions, setSessions] = useState<LiveSessionData[]>(INITIAL_LIVE_SESSIONS)
   const [activeView, setActiveView] = useState<'calendar' | 'journal'>('calendar')
   const [currentStudioSession, setCurrentStudioSession] = useState<LiveSessionData | null>(null)
@@ -180,6 +190,22 @@ export default function SessionsJournalSection({ classes, activeClassId }: Sessi
     showToast(`✓ تم نسخ الدرس والسبورة والواجب بنجاح إلى قسم ${targetClass.name}`)
   }
 
+  // Export to .ICS Calendar
+  const handleExportICS = () => {
+    const calendarItems = sessions.map((s) => ({
+      id: s.id,
+      className: s.className,
+      subjectName: s.subjectName || subjectName || 'المادة المقررة',
+      lessonTitle: s.lessonTitle,
+      date: s.date,
+      startTime: s.startTime,
+      endTime: s.endTime,
+      description: s.explainedContent,
+    }))
+    exportSessionsToICS(calendarItems, teacherName || 'الأستاذ', 'المؤسسة التعليمية')
+    showToast('📅 تم تصدير جدول الحصص بصيغة .ICS لمزامنته مع تقويم الهاتف!')
+  }
+
   // Export PDF
   const handleExportJournalPDF = () => {
     const selectedCls = classes.find((c) => c.id === filterClass)
@@ -223,6 +249,8 @@ export default function SessionsJournalSection({ classes, activeClassId }: Sessi
       <LiveSessionStudio
         session={currentStudioSession}
         classStudents={studioClass?.students || []}
+        subjectName={subjectName}
+        stageName={stageName}
         onBack={() => setCurrentStudioSession(null)}
         onSaveSession={handleSaveFromStudio}
       />
@@ -303,6 +331,15 @@ export default function SessionsJournalSection({ classes, activeClassId }: Sessi
               📖 سجل دفتر النصوص
             </button>
           </div>
+
+          <button
+            className="btn-secondary"
+            style={{ padding: '7px 12px', fontSize: '12px', borderRadius: '10px' }}
+            onClick={handleExportICS}
+            title="تصدير ومزامنة جدول الحصص مع تقويم الهاتف أو Google Calendar"
+          >
+            <Calendar size={14} /> تصدير للتقويم (.ICS) 📲
+          </button>
 
           <button
             className="btn-secondary"

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import Modal from '@/components/ui/Modal'
-import { ALGERIAN_STAGES } from '@/lib/pedagogicalData'
+import { ALGERIAN_STAGES, ALGERIAN_WILAYAS } from '@/lib/pedagogicalData'
 import {
   Sparkles,
   School,
@@ -104,8 +104,8 @@ export default function TeacherOnboardingWizardModal({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="مرحباً بك في منصة الأستاذ الرقمية 🇩🇿"
-      subtitle="معالج إعداد حسابك وأقسامك لأول مرة في 4 خطوات بسيطة"
+      title="مرحباً بك في منصة تدريس بلس (فضاء الأستاذ) 🇩🇿"
+      subtitle="معالج إعداد حسابك وأقسامك لأول مرة في 4 خطوات بسيطة لكافة المواد والأطوار"
       icon="🎓"
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -179,13 +179,17 @@ export default function TeacherOnboardingWizardModal({
                 <label style={{ fontSize: '12px', fontWeight: 800, display: 'block', marginBottom: '4px' }}>
                   الولاية:
                 </label>
-                <input
-                  type="text"
-                  placeholder="مثال: الجزائر، وهران، سطيف..."
+                <select
                   value={wilaya}
                   onChange={(e) => setWilaya(e.target.value)}
-                  style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1px solid var(--color-border)', background: 'var(--color-card)', color: 'var(--color-foreground)', fontFamily: 'Cairo, sans-serif' }}
-                />
+                  style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1px solid var(--color-border)', background: 'var(--color-card)', color: 'var(--color-foreground)', fontFamily: 'Cairo, sans-serif', fontSize: '12.5px' }}
+                >
+                  {ALGERIAN_WILAYAS.map((w) => (
+                    <option key={w.id} value={w.name}>
+                      {w.code} - {w.name}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div>

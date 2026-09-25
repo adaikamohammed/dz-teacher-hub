@@ -17,7 +17,7 @@ import {
   RotateCcw
 } from 'lucide-react'
 
-import { ALGERIAN_STAGES, StageId, SubjectItem } from '@/lib/pedagogicalData'
+import { ALGERIAN_STAGES, ALGERIAN_WILAYAS, StageId, SubjectItem } from '@/lib/pedagogicalData'
 
 export interface TeacherProfile {
   name: string
@@ -226,13 +226,19 @@ export default function TeacherProfileSettingsModal({
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
           <div>
-            <label className="login-label">الولاية / مديرية التربية</label>
-            <input
-              type="text"
+            <label className="login-label">الولاية / مديرية التربية *</label>
+            <select
               className="login-input"
               value={wilaya}
               onChange={(e) => setWilaya(e.target.value)}
-            />
+            >
+              {ALGERIAN_WILAYAS.map((w) => (
+                <option key={w.code} value={w.name}>
+                  {w.code} - ولاية {w.name} ({w.directorate.replace('مديرية التربية لولاية ', '')})
+                </option>
+              ))}
+              <option value="ولاية أخرى">ولاية أخرى...</option>
+            </select>
           </div>
           <div>
             <label className="login-label">السنة الدراسية</label>

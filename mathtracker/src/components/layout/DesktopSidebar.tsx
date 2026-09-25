@@ -37,6 +37,8 @@ interface DesktopSidebarProps {
   setActiveTab: (tab: string) => void
   userRole?: 'teacher' | 'parent'
   userName?: string
+  subjectName?: string
+  stageName?: string
   theme: 'light' | 'dark'
   toggleTheme: () => void
   onLogout: () => void
@@ -109,7 +111,7 @@ interface ParentNavItem {
 
 const PARENT_NAV_ITEMS: ParentNavItem[] = [
   { id: 'feed',    label: '📌 حصة اليوم والواجبات', icon: Home },
-  { id: 'grades',  label: '📊 كشف نقاط الرياضيات',  icon: Award },
+  { id: 'grades',  label: '📊 كشف نقاط المادة',     icon: Award },
   { id: 'journal', label: '📅 مفكرة جدول الحصص',    icon: Calendar },
   { id: 'badges',  label: '🏆 لوحة الشرف والأوسمة',  icon: Trophy },
 ]
@@ -118,7 +120,9 @@ export default function DesktopSidebar({
   activeTab,
   setActiveTab,
   userRole = 'teacher',
-  userName = 'أستاذ الرياضيات',
+  userName = 'أستاذ المادة',
+  subjectName,
+  stageName,
   theme,
   toggleTheme,
   onLogout,
@@ -181,10 +185,17 @@ export default function DesktopSidebar({
 
             {!isCollapsed && (
               <div className="sidebar-brand-text">
-                <h2 className="sidebar-brand-title">منصة الأستاذ الرقمية</h2>
+                <h2 className="sidebar-brand-title">تدريس بلس</h2>
                 <span className="sidebar-role-badge">
-                  {isTeacher ? (userName || '👨‍🏫 حساب الأستاذ') : '👨‍👩‍👧 فضاء الولي'}
+                  {isTeacher
+                    ? `${userName || 'الأستاذ'} • ${subjectName || 'المادة'}`
+                    : '👨‍👩‍👧 فضاء الولي'}
                 </span>
+                {stageName && isTeacher && (
+                  <span style={{ fontSize: '9.5px', color: 'var(--color-muted-fg)', marginTop: '2px', display: 'block' }}>
+                    🏫 {stageName}
+                  </span>
+                )}
               </div>
             )}
           </div>

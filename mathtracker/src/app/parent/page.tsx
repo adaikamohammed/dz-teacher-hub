@@ -211,6 +211,15 @@ export default function ParentPage() {
               }
               setChildrenList((prev) => (prev.some((c) => c.id === newChild.id) ? prev : [...prev, newChild]))
               setSelectedChild(newChild)
+              const teacherProfileStr = localStorage.getItem('mt_teacher_profile')
+              if (teacherProfileStr) {
+                try {
+                  const tp = JSON.parse(teacherProfileStr)
+                  if (tp.subject) setSubjectName(tp.subject)
+                  if (tp.name) setTeacherName(tp.name)
+                  if (tp.school) setSchoolName(tp.school)
+                } catch (e) {}
+              }
               localStorage.setItem('mt_logged_child_id', newChild.id)
               localStorage.setItem('mt_logged_family_code', cleanCode)
               setIsSearchingCode(false)
@@ -323,6 +332,7 @@ export default function ParentPage() {
         setActiveTab={(tab) => setActiveTab(tab as any)}
         userRole="parent"
         userName={selectedChild ? `ولي ${selectedChild.name}` : 'فضاء ولي الأمر'}
+        subjectName={subjectName}
         theme={theme}
         toggleTheme={() => setTheme((p) => (p === 'light' ? 'dark' : 'light'))}
         onLogout={handleLogout}
@@ -347,8 +357,8 @@ export default function ParentPage() {
             <div className="app-brand">
               <div className="app-logo">🎓</div>
               <div>
-                <h1 className="app-title">منصة الأستاذ الرقمية</h1>
-                <p className="app-subtitle">فضاء ولي الأمر • {schoolName} — {subjectName}</p>
+                <h1 className="app-title">تدريس بلس • فضاء الولي</h1>
+                <p className="app-subtitle">متابعة الأبناء • {schoolName} — {subjectName}</p>
               </div>
             </div>
           </div>

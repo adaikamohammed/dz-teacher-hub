@@ -1,11 +1,11 @@
 {
-  "name": "MathTracker - متابعة تلاميذ الرياضيات",
-  "short_name": "MathTracker",
-  "description": "منصة رقمية لمتابعة تلاميذ الرياضيات والحضور والدروس المصورة والواجبات",
+  "name": "تدريس بلس - فضاء الأستاذ والمتابعة اليومية للأولياء",
+  "short_name": "تدريس بلس",
+  "description": "منصة رقمية شاملة لأساتذة جميع المواد والأطوار لمتابعة الحصص والحضور والواجبات والتواصل مع الأولياء",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0A0F1E",
-  "theme_color": "#0A0F1E",
+  "theme_color": "#107a57",
   "dir": "rtl",
   "lang": "ar",
   "icons": [

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import PhotoUpload from '@/components/PhotoUpload'
+import { getSubjectTools } from '@/lib/pedagogicalData'
 import {
   ArrowRight,
   CheckCircle2,
@@ -17,7 +18,9 @@ import {
   X,
   Star,
   Edit3,
-  HelpCircle
+  HelpCircle,
+  Wrench,
+  CalendarCheck
 } from 'lucide-react'
 
 export interface StudentInspectionState {
@@ -27,7 +30,9 @@ export interface StudentInspectionState {
   minutesLate: number
   previousHomework: 'done' | 'not_done'
   previousLessonWritten: 'written' | 'not_written'
+  toolsMissing?: string[]
   sessionBonusPoints: number
+  quickRemark?: string
 }
 
 export interface LiveSessionData {
@@ -38,6 +43,8 @@ export interface LiveSessionData {
   day: string
   startTime: string
   endTime: string
+  subjectName?: string
+  stageName?: string
   lessonTitle: string
   explainedContent: string
   roughNotebookActivities: string
@@ -46,6 +53,9 @@ export interface LiveSessionData {
   todayHomework: string
   todayHomeworkDueDate: string
   todayHomeworkPhotoUrl?: string
+  homeworkSolutionPhotoUrl?: string
+  homeworkSolutionScheduledDate?: string
+  homeworkSolutionPublished?: boolean
   teacherNotes: string
   status: 'completed' | 'in_progress' | 'scheduled'
   studentsState: StudentInspectionState[]
@@ -59,6 +69,8 @@ interface StudentRef {
 interface LiveSessionStudioProps {
   session: LiveSessionData
   classStudents: StudentRef[]
+  subjectName?: string
+  stageName?: string
   onBack: () => void
   onSaveSession: (updatedSession: LiveSessionData) => void
 }
@@ -66,6 +78,8 @@ interface LiveSessionStudioProps {
 export default function LiveSessionStudio({
   session,
   classStudents,
+  subjectName = 'الرياضيات',
+  stageName,
   onBack,
   onSaveSession,
 }: LiveSessionStudioProps) {
@@ -160,6 +174,24 @@ export default function LiveSessionStudio({
     showToast('✅ تم تحديد الكل: كراس الدروس مكتمل')
   }
 
+  const availableTools = getSubjectTools(subjectName || session.subjectName || 'الرياضيات')
+  const [solutionPhotoUrl, setSolutionPhotoUrl] = useState(session.homeworkSolutionPhotoUrl || '')
+  const [solutionScheduledDate, setSolutionScheduledDate] = useState(session.homeworkSolutionScheduledDate || session.todayHomeworkDueDate || '2026-08-18')
+  const [solutionPublished, setSolutionPublished] = useState(session.homeworkSolutionPublished ?? false)
+
+  // ── Missing Tools Handler ──
+  const toggleToolMissing = (studentId: string, toolId: string) => {
+    setStudents((prev) =>
+      prev.map((s) => {
+        if (s.id !== studentId) return s
+        const current = s.toolsMissing || []
+        const hasIt = current.includes(toolId)
+        const updated = hasIt ? current.filter((t) => t !== toolId) : [...current, toolId]
+        return { ...s, toolsMissing: updated }
+      })
+    )
+  }
+
   // ── Bonus Points Handler ──
   const addSessionBonus = (studentId: string) => {
     setStudents((prev) =>
@@ -178,6 +210,8 @@ export default function LiveSessionStudio({
 
     const updated: LiveSessionData = {
       ...session,
+      subjectName,
+      stageName,
       lessonTitle: lessonTitle.trim(),
       explainedContent: explainedContent.trim(),
       roughNotebookActivities: roughNotebook.trim(),
@@ -185,6 +219,10 @@ export default function LiveSessionStudio({
       boardPhotoUrl,
       todayHomework: todayHomework.trim(),
       todayHomeworkDueDate: todayHwDueDate,
+      todayHomeworkPhotoUrl: session.todayHomeworkPhotoUrl,
+      homeworkSolutionPhotoUrl: solutionPhotoUrl,
+      homeworkSolutionScheduledDate: solutionScheduledDate,
+      homeworkSolutionPublished: solutionPublished,
       teacherNotes: teacherNotes.trim(),
       status: 'completed',
       studentsState: students,
@@ -199,6 +237,7 @@ export default function LiveSessionStudio({
   const lateStudents = students.filter((s) => s.attendance === 'late')
   const missingHwStudents = students.filter((s) => s.previousHomework === 'not_done')
   const unwrittenLessonStudents = students.filter((s) => s.previousLessonWritten === 'not_written')
+  const missingToolsStudents = students.filter((s) => s.toolsMissing && s.toolsMissing.length > 0)
   const totalBonusInSession = students.reduce((acc, s) => acc + s.sessionBonusPoints, 0)
 
   return (
@@ -416,6 +455,13 @@ export default function LiveSessionStudio({
                 {unwrittenLessonStudents.length}
               </div>
             </div>
+
+            <div style={{ background: 'var(--color-card)', border: '1px solid var(--color-border)', borderRadius: '12px', padding: '10px', textAlign: 'center' }}>
+              <div style={{ fontSize: '10px', fontWeight: 700, color: 'var(--color-muted-fg)' }}>ناقص الأدوات</div>
+              <div style={{ fontSize: '20px', fontWeight: 900, color: '#ea580c' }}>
+                {missingToolsStudents.length}
+              </div>
+            </div>
           </div>
 
           {/* Students Inspection Interactive Table */}
@@ -572,7 +618,35 @@ export default function LiveSessionStudio({
                     📖 {st.previousLessonWritten === 'written' ? 'الدرس مكتوب بالكراس' : 'لم يكتب الدرس'}
                   </button>
 
-                  {/* 4. Live Bonus Point Button */}
+                  {/* 4. Missing Tools Toggle */}
+                  <div style={{ display: 'inline-flex', gap: '4px', alignItems: 'center' }}>
+                    {availableTools.map((tool) => {
+                      const isMissing = st.toolsMissing?.includes(tool.id)
+                      return (
+                        <button
+                          key={tool.id}
+                          type="button"
+                          onClick={() => toggleToolMissing(st.id, tool.id)}
+                          style={{
+                            padding: '4px 8px',
+                            borderRadius: '8px',
+                            fontSize: '10px',
+                            fontWeight: 800,
+                            cursor: 'pointer',
+                            border: '1px solid',
+                            background: isMissing ? '#fff7ed' : 'var(--color-muted)',
+                            borderColor: isMissing ? '#fdba74' : 'var(--color-border)',
+                            color: isMissing ? '#c2410c' : 'var(--color-muted-fg)',
+                          }}
+                          title={isMissing ? `نسي: ${tool.label}` : `أحضر: ${tool.label}`}
+                        >
+                          {tool.icon} {isMissing ? `نسي ${tool.label.slice(0, 8)}` : tool.label.slice(0, 8)}
+                        </button>
+                      )
+                    })}
+                  </div>
+
+                  {/* 5. Live Bonus Point Button */}
                   <button
                     onClick={() => addSessionBonus(st.id)}
                     style={{
@@ -778,7 +852,7 @@ export default function LiveSessionStudio({
             {/* 1. Board Summary Photo Upload */}
             <div>
               <label className="login-label">📷 صورة سبورة ملخص درس اليوم (لكتابته في كراس الدروس):</label>
-              <PhotoUpload label="التقط صورة لسبورة ملخص الدرس" icon="📷" onUpload={() => {}} />
+              <PhotoUpload label="التقط صورة لسبورة ملخص الدرس" icon="📷" onUpload={(_file, preview) => setBoardPhotoUrl(preview)} />
             </div>
 
             {/* 2. Today's Homework Photo & Details */}
@@ -804,6 +878,40 @@ export default function LiveSessionStudio({
 
               <div style={{ fontSize: '11px', color: '#107a57', fontWeight: 700, background: '#e6f4ee', padding: '6px 10px', borderRadius: '8px' }}>
                 ✓ يحل التلاميذ الواجب في كراس المحاولات، ويقوم الأستاذ بمراقبة الإنجاز في بداية الحصة الموالية مباشرة.
+              </div>
+            </div>
+
+            {/* 3. Homework Solution Key & Auto-Reveal Schedule */}
+            <div style={{ background: 'linear-gradient(135deg, rgba(16,122,87,0.06), rgba(30,64,175,0.04))', padding: '14px', borderRadius: '14px', border: '1px solid #86efac', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
+                <label className="login-label" style={{ margin: 0, color: '#107a57', fontWeight: 900 }}>
+                  💡 صورة الحل النموذجي للواجب (مع إمكانية الجدولة للأولياء):
+                </label>
+                <span className="badge badge-success" style={{ fontSize: '11px' }}>
+                  يظهر تلقائياً للأولياء والتلاميذ
+                </span>
+              </div>
+
+              <PhotoUpload label="التقط أو ارفع صورة الحل النموذجي للواجب" icon="💡" onUpload={(_file, preview) => setSolutionPhotoUrl(preview)} />
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap', marginTop: '4px' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', fontWeight: 800, cursor: 'pointer', color: 'var(--color-foreground)' }}>
+                  <input
+                    type="checkbox"
+                    checked={solutionPublished}
+                    onChange={(e) => setSolutionPublished(e.target.checked)}
+                  />
+                  <span>نشر الحل النموذجي تلقائياً عند حلول موعد التسليم</span>
+                </label>
+
+                <input
+                  type="date"
+                  className="login-input"
+                  style={{ width: '160px', padding: '4px 8px', fontSize: '11px' }}
+                  value={solutionScheduledDate}
+                  onChange={(e) => setSolutionScheduledDate(e.target.value)}
+                  title="تاريخ نشر الحل النموذجي"
+                />
               </div>
             </div>
 

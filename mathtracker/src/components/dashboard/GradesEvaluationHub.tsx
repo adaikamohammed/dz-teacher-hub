@@ -8,6 +8,7 @@ import {
 import { exportToExcel } from '@/lib/excelUtils'
 import Modal from '@/components/ui/Modal'
 import PhotoUpload from '@/components/PhotoUpload'
+import EditablePDFPreviewModal, { EditablePDFReportConfig } from './EditablePDFPreviewModal'
 import {
   Award,
   Download,
@@ -56,6 +57,10 @@ interface ClassRef {
 interface GradesEvaluationHubProps {
   classes: ClassRef[]
   activeClassId: string
+  teacherName?: string
+  subjectName?: string
+  schoolName?: string
+  wilayaName?: string
 }
 
 const DEFAULT_GRADES_DATA: Record<string, StudentGradeRecord[]> = {
@@ -92,7 +97,8 @@ function calcControlAverage(continuous: number, testsAvg: number): number {
 }
 
 function calcTermAverage(control: number, exam: number): number {
-  return Number(((control + exam * 2) / 3).toFixed(2))
+  // Official Algerian Ministerial formula: (تقويم + فرض + اختبار * 2) / 4
+  return Number(((control * 2 + exam * 2) / 4).toFixed(2))
 }
 
 function getAppreciation(termAvg: number): string {
@@ -104,7 +110,14 @@ function getAppreciation(termAvg: number): string {
   return 'غير كافٍ ومدرج في المعالجة البيداغوجية ⚠️'
 }
 
-export default function GradesEvaluationHub({ classes, activeClassId }: GradesEvaluationHubProps) {
+export default function GradesEvaluationHub({
+  classes,
+  activeClassId,
+  teacherName = 'أستاذ المادة',
+  subjectName = 'المادة المقررة',
+  schoolName = 'المؤسسة التربوية',
+  wilayaName = 'الجزائر',
+}: GradesEvaluationHubProps) {
   const [selectedClass, setSelectedClass] = useState<string>(activeClassId || classes[0]?.id || 'cls_1')
   const [gradesData, setGradesData] = useState<Record<string, StudentGradeRecord[]>>(DEFAULT_GRADES_DATA)
   const [testsCount, setTestsCount] = useState<1 | 2>(1) // 1 Test or 2 Tests
@@ -113,6 +126,10 @@ export default function GradesEvaluationHub({ classes, activeClassId }: GradesEv
   const [searchQuery, setSearchQuery] = useState('')
   const [sortBy, setSortBy] = useState<'roll' | 'average'>('roll')
   const [toastMessage, setToastMessage] = useState<string | null>(null)
+
+  // Editable PDF Preview Modal State
+  const [isPdfPreviewOpen, setIsPdfPreviewOpen] = useState(false)
+  const [pdfReportConfig, setPdfReportConfig] = useState<EditablePDFReportConfig | null>(null)
 
   // Modals state
   const [isRapidGradingOpen, setIsRapidGradingOpen] = useState(false)
@@ -265,15 +282,31 @@ export default function GradesEvaluationHub({ classes, activeClassId }: GradesEv
     return Math.min(...computedStudents.map((s) => s.termAverage))
   }, [computedStudents])
 
-  // Export PDF
+  // Open Editable PDF Preview Modal before generating
   const handleExportPDF = () => {
-    generateOfficialTermGradesPDF({
-      teacherName: 'أستاذ مادة الرياضيات',
+    setPdfReportConfig({
+      schoolName: schoolName || 'المؤسسة التربوية',
+      directorateName: wilayaName ? `مديرية التربية لولاية ${wilayaName}` : 'مديرية التربية الوطنية',
+      teacherName: teacherName || 'أستاذ المادة',
+      subjectName: subjectName || 'المادة المقررة',
       className: currentClassObj.name,
+      academicYear: academicYear || '2026/2027',
+      reportTitle: `كشف النقاط والمعدلات الرسمية — ${termName}`,
+      reportDate: new Date().toLocaleDateString('ar-DZ', { year: 'numeric', month: 'long', day: 'numeric' }),
+      notes: 'النتائج تعكس المجهود والمواظبة على مدار الفصل الدراسي.',
+    })
+    setIsPdfPreviewOpen(true)
+  }
+
+  // Generate & Download PDF with customized config
+  const handleConfirmExportPDF = (cfg: EditablePDFReportConfig) => {
+    generateOfficialTermGradesPDF({
+      teacherName: cfg.teacherName,
+      className: cfg.className,
       gradeLevel: currentClassObj.grade,
-      subjectName: 'الرياضيات',
+      subjectName: cfg.subjectName,
       termName,
-      academicYear,
+      academicYear: cfg.academicYear,
       classAverage: classAvg,
       passRate,
       testsCount,
@@ -294,7 +327,8 @@ export default function GradesEvaluationHub({ classes, activeClassId }: GradesEv
         appreciation: st.appreciation,
       })),
     })
-    showToast(`📄 تم تحميل كشف نقاط قسم ${currentClassObj.name} PDF (${testsCount === 2 ? 'نظام الفرضين' : 'فرض واحد'})`)
+    setIsPdfPreviewOpen(false)
+    showToast(`📄 تم استخراج كشف نقاط قسم ${cfg.className} PDF (${testsCount === 2 ? 'نظام الفرضين' : 'فرض واحد'})`)
   }
 
   // Export Excel
@@ -1275,6 +1309,43 @@ export default function GradesEvaluationHub({ classes, activeClassId }: GradesEv
           </button>
         </div>
       </Modal>
+
+      {/* ── MODAL: Editable PDF Reports Preview (معاينة وتحرير تقرير PDF) ── */}
+      {pdfReportConfig && (
+        <EditablePDFPreviewModal
+          isOpen={isPdfPreviewOpen}
+          onClose={() => setIsPdfPreviewOpen(false)}
+          initialConfig={pdfReportConfig}
+          onGenerateAndDownloadPDF={handleConfirmExportPDF}
+          tablePreviewComponent={
+            <div style={{ fontSize: '11.5px', border: '1px solid #e2e8f0', borderRadius: '8px', overflow: 'hidden' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '40px 1fr 90px 90px 90px 120px', background: '#047857', color: '#fff', padding: '8px 10px', fontWeight: 800 }}>
+                <span>الرقم</span>
+                <span>اسم ولقب التلميذ</span>
+                <span>التقويم /20</span>
+                <span>الفرض /20</span>
+                <span>المعدل /20</span>
+                <span>التقدير البيداغوجي</span>
+              </div>
+              {displayStudents.slice(0, 8).map((s, idx) => (
+                <div key={s.id} style={{ display: 'grid', gridTemplateColumns: '40px 1fr 90px 90px 90px 120px', padding: '6px 10px', borderBottom: '1px solid #f1f5f9', background: idx % 2 === 0 ? '#f8fafc' : '#fff' }}>
+                  <span>{s.rollNumber}</span>
+                  <span style={{ fontWeight: 800 }}>{s.name}</span>
+                  <span>{s.continuousScore}</span>
+                  <span>{s.testScore}</span>
+                  <span style={{ fontWeight: 900, color: s.termAverage >= 10 ? '#047857' : '#dc2626' }}>{s.termAverage}</span>
+                  <span style={{ fontSize: '10.5px' }}>{s.appreciation}</span>
+                </div>
+              ))}
+              {displayStudents.length > 8 && (
+                <div style={{ textAlign: 'center', padding: '8px', color: '#64748b', fontSize: '11px', background: '#f8fafc' }}>
+                  ... وباقي تلاميذ القسم ({displayStudents.length} تلميذ مدرج بالتقرير الرسمي)
+                </div>
+              )}
+            </div>
+          }
+        />
+      )}
 
       {/* Toast Notification */}
       {toastMessage && (

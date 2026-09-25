@@ -139,8 +139,10 @@ export function calculateTermAverageAlgeria(
   appreciation: string
 } {
   const testAvg = test2 !== undefined && test2 > 0 ? (test1 + test2) / 2 : test1
+  // Formula according to Ministry of National Education circular:
+  // (تقويم مستمر + معدل الفروض + اختبار * 2) / 4
+  const termAvg = (continuousAssessment + testAvg + exam * 2) / 4
   const controlAvg = (continuousAssessment + testAvg) / 2
-  const termAvg = (controlAvg + exam * 2) / 3
 
   let appreciation = ''
   if (termAvg >= 18) {
@@ -162,4 +164,128 @@ export function calculateTermAverageAlgeria(
     termAverage: Number(termAvg.toFixed(2)),
     appreciation,
   }
+}
+
+/**
+ * Complete list of the 58 Algerian Wilayas
+ */
+export interface WilayaItem {
+  id: number
+  code: string
+  name: string
+  directorate: string
+}
+
+export const ALGERIAN_WILAYAS: WilayaItem[] = [
+  { id: 1, code: '01', name: 'أدرار', directorate: 'مديرية التربية لولاية أدرار' },
+  { id: 2, code: '02', name: 'الشلف', directorate: 'مديرية التربية لولاية الشلف' },
+  { id: 3, code: '03', name: 'الأغواط', directorate: 'مديرية التربية لولاية الأغواط' },
+  { id: 4, code: '04', name: 'أم البواقي', directorate: 'مديرية التربية لولاية أم البواقي' },
+  { id: 5, code: '05', name: 'باتنة', directorate: 'مديرية التربية لولاية باتنة' },
+  { id: 6, code: '06', name: 'بجاية', directorate: 'مديرية التربية لولاية بجاية' },
+  { id: 7, code: '07', name: 'بسكرة', directorate: 'مديرية التربية لولاية بسكرة' },
+  { id: 8, code: '08', name: 'بشار', directorate: 'مديرية التربية لولاية بشار' },
+  { id: 9, code: '09', name: 'البليدة', directorate: 'مديرية التربية لولاية البليدة' },
+  { id: 10, code: '10', name: 'البويرة', directorate: 'مديرية التربية لولاية البويرة' },
+  { id: 11, code: '11', name: 'تمنراست', directorate: 'مديرية التربية لولاية تمنراست' },
+  { id: 12, code: '12', name: 'تبسة', directorate: 'مديرية التربية لولاية تبسة' },
+  { id: 13, code: '13', name: 'تلمسان', directorate: 'مديرية التربية لولاية تلمسان' },
+  { id: 14, code: '14', name: 'تيارت', directorate: 'مديرية التربية لولاية تيارت' },
+  { id: 15, code: '15', name: 'تيزي وزو', directorate: 'مديرية التربية لولاية تيزي وزو' },
+  { id: 16, code: '16', name: 'الجزائر', directorate: 'مديرية التربية لولاية الجزائر' },
+  { id: 17, code: '17', name: 'الجلفة', directorate: 'مديرية التربية لولاية الجلفة' },
+  { id: 18, code: '18', name: 'جيجل', directorate: 'مديرية التربية لولاية جيجل' },
+  { id: 19, code: '19', name: 'سطيف', directorate: 'مديرية التربية لولاية سطيف' },
+  { id: 20, code: '20', name: 'سعيدة', directorate: 'مديرية التربية لولاية سعيدة' },
+  { id: 21, code: '21', name: 'سكيكدة', directorate: 'مديرية التربية لولاية سكيكدة' },
+  { id: 22, code: '22', name: 'سيدي بلعباس', directorate: 'مديرية التربية لولاية سيدي بلعباس' },
+  { id: 23, code: '23', name: 'عنابة', directorate: 'مديرية التربية لولاية عنابة' },
+  { id: 24, code: '24', name: 'قالمة', directorate: 'مديرية التربية لولاية قالمة' },
+  { id: 25, code: '25', name: 'قسنطينة', directorate: 'مديرية التربية لولاية قسنطينة' },
+  { id: 26, code: '26', name: 'المدية', directorate: 'مديرية التربية لولاية المدية' },
+  { id: 27, code: '27', name: 'مستغانم', directorate: 'مديرية التربية لولاية مستغانم' },
+  { id: 28, code: '28', name: 'المسيلة', directorate: 'مديرية التربية لولاية المسيلة' },
+  { id: 29, code: '29', name: 'معسكر', directorate: 'مديرية التربية لولاية معسكر' },
+  { id: 30, code: '30', name: 'ورقلة', directorate: 'مديرية التربية لولاية ورقلة' },
+  { id: 31, code: '31', name: 'وهران', directorate: 'مديرية التربية لولاية وهران' },
+  { id: 32, code: '32', name: 'البيض', directorate: 'مديرية التربية لولاية البيض' },
+  { id: 33, code: '33', name: 'إليزي', directorate: 'مديرية التربية لولاية إليزي' },
+  { id: 34, code: '34', name: 'برج بوعريريج', directorate: 'مديرية التربية لولاية برج بوعريريج' },
+  { id: 35, code: '35', name: 'بومرداس', directorate: 'مديرية التربية لولاية بومرداس' },
+  { id: 36, code: '36', name: 'الطارف', directorate: 'مديرية التربية لولاية الطارف' },
+  { id: 37, code: '37', name: 'تندوف', directorate: 'مديرية التربية لولاية تندوف' },
+  { id: 38, code: '38', name: 'تسمسيلت', directorate: 'مديرية التربية لولاية تسمسيلت' },
+  { id: 39, code: '39', name: 'الوادي', directorate: 'مديرية التربية لولاية الوادي' },
+  { id: 40, code: '40', name: 'خنشلة', directorate: 'مديرية التربية لولاية خنشلة' },
+  { id: 41, code: '41', name: 'سوق أهراس', directorate: 'مديرية التربية لولاية سوق أهراس' },
+  { id: 42, code: '42', name: 'تيبازة', directorate: 'مديرية التربية لولاية تيبازة' },
+  { id: 43, code: '43', name: 'ميلة', directorate: 'مديرية التربية لولاية ميلة' },
+  { id: 44, code: '44', name: 'عين الدفلى', directorate: 'مديرية التربية لولاية عين الدفلى' },
+  { id: 45, code: '45', name: 'النعامة', directorate: 'مديرية التربية لولاية النعامة' },
+  { id: 46, code: '46', name: 'عين تموشنت', directorate: 'مديرية التربية لولاية عين تموشنت' },
+  { id: 47, code: '47', name: 'غرداية', directorate: 'مديرية التربية لولاية غرداية' },
+  { id: 48, code: '48', name: 'غليزان', directorate: 'مديرية التربية لولاية غليزان' },
+  { id: 49, code: '49', name: 'تيميمون', directorate: 'مديرية التربية لولاية تيميمون' },
+  { id: 50, code: '50', name: 'برج باجي مختار', directorate: 'مديرية التربية لولاية برج باجي مختار' },
+  { id: 51, code: '51', name: 'أولاد جلال', directorate: 'مديرية التربية لولاية أولاد جلال' },
+  { id: 52, code: '52', name: 'بني عباس', directorate: 'مديرية التربية لولاية بني عباس' },
+  { id: 53, code: '53', name: 'عين صالح', directorate: 'مديرية التربية لولاية عين صالح' },
+  { id: 54, code: '54', name: 'عين قزام', directorate: 'مديرية التربية لولاية عين قزام' },
+  { id: 55, code: '55', name: 'تقرت', directorate: 'مديرية التربية لولاية تقرت' },
+  { id: 56, code: '56', name: 'جانت', directorate: 'مديرية التربية لولاية جانت' },
+  { id: 57, code: '57', name: 'المغير', directorate: 'مديرية التربية لولاية المغير' },
+  { id: 58, code: '58', name: 'المنيعة', directorate: 'مديرية التربية لولاية المنيعة' },
+]
+
+/**
+ * Returns pedagogical tools/supplies checklist required for a given subject
+ */
+export function getSubjectTools(subjectNameOrId: string = ''): {
+  id: string
+  label: string
+  icon: string
+}[] {
+  const norm = subjectNameOrId.toLowerCase()
+  if (norm.includes('رياضيات') || norm.includes('math')) {
+    return [
+      { id: 'geometry', label: 'الأدوات الهندسية (المدور والكوس)', icon: '📐' },
+      { id: 'calculator', label: 'الآلة الحاسبة العلمية', icon: '🔢' },
+      { id: 'draft_book', label: 'كراس المحاولات', icon: '📝' },
+    ]
+  }
+  if (norm.includes('فيزياء') || norm.includes('physics') || norm.includes('علوم') || norm.includes('science')) {
+    return [
+      { id: 'lab_coat', label: 'المئزر المدرسي الأبيض', icon: '🥼' },
+      { id: 'calculator', label: 'الآلة الحاسبة', icon: '🔢' },
+      { id: 'draft_book', label: 'كراس المحاولات / التجارب', icon: '🔬' },
+    ]
+  }
+  if (norm.includes('عربية') || norm.includes('arabic') || norm.includes('فرنسية') || norm.includes('french') || norm.includes('إنجليزية') || norm.includes('english')) {
+    return [
+      { id: 'dictionary', label: 'القاموس / المعجم اللغوي', icon: '📖' },
+      { id: 'draft_book', label: 'كراس المحاولات والتطبيقات', icon: '📝' },
+      { id: 'textbook', label: 'كتاب القراءة والمطالعة', icon: '📚' },
+    ]
+  }
+  if (norm.includes('تاريخ') || norm.includes('جغرافيا') || norm.includes('history') || norm.includes('geo')) {
+    return [
+      { id: 'atlas', label: 'الأطلس والخرائط الجغرافية', icon: '🗺️' },
+      { id: 'colors', label: 'أقلام التلوين للرسم والتعيين', icon: '🎨' },
+      { id: 'draft_book', label: 'كراس الأنشطة والوثائق', icon: '📑' },
+    ]
+  }
+  return [
+    { id: 'tools', label: 'الأدوات المدرسية والكتاب', icon: '✏️' },
+    { id: 'draft_book', label: 'كراس المحاولات', icon: '📝' },
+    { id: 'lesson_book', label: 'كراس الدروس المكتمل', icon: '📖' },
+  ]
+}
+
+/**
+ * Maps stage display name to StageId
+ */
+export function getStageIdFromArabic(stageName: string = ''): StageId {
+  if (stageName.includes('ابتدائي') || stageName === 'primary') return 'primary'
+  if (stageName.includes('ثانوي') || stageName === 'secondary') return 'secondary'
+  return 'middle'
 }
