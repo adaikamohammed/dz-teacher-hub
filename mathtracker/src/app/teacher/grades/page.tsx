@@ -7,6 +7,7 @@ import {
   Check, X, AlertCircle, Edit3, MessageSquarePlus,
   HelpCircle, Sparkles, TrendingUp, ChevronDown
 } from 'lucide-react'
+import Modal from '@/components/ui/Modal'
 
 export interface StudentGrade {
   id: string
@@ -416,25 +417,42 @@ function GradesContent() {
 
       {/* ── Modal mGrid (10 Criteria Matrix matching Sanad) ── */}
       {editingCriteriaStudent && (
-        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto animate-fade-in" onClick={() => setEditingCriteriaStudent(null)}>
-          <div
-            className="bg-white dark:bg-slate-900 max-w-2xl w-full rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xl overflow-hidden my-auto"
-            onClick={e => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-slate-800">
-              <div>
-                <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">شبكة معايير التقويم المستمر (النشاطات)</h3>
-                <p className="text-xs text-slate-400 font-semibold mt-0.5">التلميذ: {editingCriteriaStudent.name}</p>
+        <Modal
+          isOpen={!!editingCriteriaStudent}
+          onClose={() => setEditingCriteriaStudent(null)}
+          title="شبكة معايير التقويم المستمر (النشاطات)"
+          subtitle={`التلميذ: ${editingCriteriaStudent.name}`}
+          icon={<Award size={20} />}
+          maxWidth="640px"
+          footer={
+            <div className="flex items-center justify-between w-full">
+              <div className="text-xs font-bold text-slate-600 dark:text-slate-300">
+                المجموع الكلي: <strong className="text-[#076653] dark:text-emerald-400 text-sm font-black nums">{calculateActivitiesScore(editingCriteriaStudent)} / 20</strong>
               </div>
-              <button
-                onClick={() => setEditingCriteriaStudent(null)}
-                className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
-              >
-                <X size={16} />
-              </button>
+              <div className="flex items-center gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => setEditingCriteriaStudent(null)}
+                  className="btn-ghost py-2 px-4 text-xs font-bold"
+                >
+                  إلغاء
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const updated = students.map(s => s.id === editingCriteriaStudent.id ? editingCriteriaStudent : s)
+                    saveStudents(updated)
+                    setEditingCriteriaStudent(null)
+                  }}
+                  className="btn-primary py-2 px-5 text-xs font-bold shadow-sm"
+                >
+                  حفظ الدرجات
+                </button>
+              </div>
             </div>
-
-            <div className="space-y-4 max-h-[65vh] overflow-y-auto pr-1">
+          }
+        >
+          <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-1">
               {/* Discipline & Regularity (12 pts) */}
               <div className="border border-slate-200/80 dark:border-slate-700/80 rounded-2xl p-4 bg-slate-50/70 dark:bg-slate-800/30">
                 <div className="flex items-center justify-between font-bold text-xs text-[#076653] dark:text-emerald-400 mb-3 border-b border-slate-200/60 dark:border-slate-700/60 pb-2">
@@ -572,89 +590,24 @@ function GradesContent() {
                 <span className="nums text-lg">{calculateActivitiesScore(editingCriteriaStudent)} / 20</span>
               </div>
             </div>
-
-            <div className="px-6 py-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 flex items-center justify-between">
-              <div className="text-xs font-bold text-slate-600 dark:text-slate-300">
-                المجموع الكلي: <strong className="text-[#076653] dark:text-emerald-400 text-sm font-black nums">{calculateActivitiesScore(editingCriteriaStudent)} / 20</strong>
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => setEditingCriteriaStudent(null)}
-                  className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                >
-                  إلغاء
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    const updated = students.map(s => s.id === editingCriteriaStudent.id ? editingCriteriaStudent : s)
-                    saveStudents(updated)
-                    setEditingCriteriaStudent(null)
-                  }}
-                  className="px-5 py-2 rounded-xl bg-[#076653] hover:bg-[#065444] text-white text-xs font-bold shadow-xs transition-colors"
-                >
-                  حفظ الدرجات
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        </Modal>
       )}
 
       {/* ── Modal mEvent (Pedagogical Observation) ── */}
       {editingEventStudent && (
-        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto animate-fade-in" onClick={() => setEditingEventStudent(null)}>
-          <div
-            className="bg-white dark:bg-slate-900 max-w-lg w-full rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xl overflow-hidden my-auto"
-            onClick={e => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-slate-800">
-              <div>
-                <h3 className="text-base font-bold text-slate-900 dark:text-white">تسجيل ملاحظة متابعة نوعية</h3>
-                <p className="text-xs text-slate-400 font-semibold mt-0.5">التلميذ: {editingEventStudent.name}</p>
-              </div>
-              <button
-                onClick={() => setEditingEventStudent(null)}
-                className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
-              >
-                <X size={16} />
-              </button>
-            </div>
-
-            <div className="p-6 space-y-4">
-              <div>
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1.5">نوع الملاحظة</label>
-                <select
-                  value={eventKind}
-                  onChange={e => setEventKind(e.target.value as any)}
-                  className="w-full text-sm font-semibold px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 outline-none focus:border-[#076653] focus:ring-2 focus:ring-[#076653]/15 transition-all shadow-2xs"
-                >
-                  <option value="discipline">انضباط وسلوك</option>
-                  <option value="homework">وظيفة منزلية</option>
-                  <option value="notebook">إحضار الكراس والأدوات</option>
-                  <option value="participation">مشاركة وتميز</option>
-                  <option value="other">ملاحظة أخرى</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1.5">نص الملاحظة</label>
-                <textarea
-                  rows={3}
-                  className="w-full text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 outline-none focus:border-[#076653] focus:ring-2 focus:ring-[#076653]/15 transition-all shadow-2xs"
-                  placeholder="اكتب الملاحظة هنا لتظهر في الملف وتقرير الولي..."
-                  value={eventText}
-                  onChange={e => setEventText(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className="px-6 py-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 flex items-center justify-end gap-2.5">
+        <Modal
+          isOpen={!!editingEventStudent}
+          onClose={() => setEditingEventStudent(null)}
+          title="تسجيل ملاحظة متابعة نوعية"
+          subtitle={`التلميذ: ${editingEventStudent.name}`}
+          icon={<MessageSquarePlus size={20} />}
+          maxWidth="500px"
+          footer={
+            <div className="flex items-center justify-end gap-2.5 w-full">
               <button
                 type="button"
                 onClick={() => setEditingEventStudent(null)}
-                className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="btn-ghost py-2 px-4 text-xs font-bold"
               >
                 إلغاء
               </button>
@@ -664,13 +617,41 @@ function GradesContent() {
                   alert('تم تسجيل الملاحظة في السجل بنجاح!')
                   setEditingEventStudent(null)
                 }}
-                className="px-5 py-2 rounded-xl bg-[#076653] hover:bg-[#065444] text-white text-xs font-bold shadow-xs transition-colors"
+                className="btn-primary py-2 px-5 text-xs font-bold shadow-sm"
               >
                 حفظ الملاحظة
               </button>
             </div>
+          }
+        >
+          <div className="space-y-4">
+            <div>
+              <label className="label mb-2 block font-bold text-slate-700 dark:text-slate-300 text-xs">نوع الملاحظة</label>
+              <select
+                value={eventKind}
+                onChange={e => setEventKind(e.target.value as any)}
+                className="select w-full"
+              >
+                <option value="discipline">انضباط وسلوك</option>
+                <option value="homework">وظيفة منزلية</option>
+                <option value="notebook">إحضار الكراس والأدوات</option>
+                <option value="participation">مشاركة وتميز</option>
+                <option value="other">ملاحظة أخرى</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="label mb-2 block font-bold text-slate-700 dark:text-slate-300 text-xs">نص الملاحظة</label>
+              <textarea
+                rows={3}
+                className="input w-full"
+                placeholder="اكتب الملاحظة هنا لتظهر في الملف وتقرير الولي..."
+                value={eventText}
+                onChange={e => setEventText(e.target.value)}
+              />
+            </div>
           </div>
-        </div>
+        </Modal>
       )}
     </main>
   )

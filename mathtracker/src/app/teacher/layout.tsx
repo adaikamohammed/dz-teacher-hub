@@ -81,7 +81,7 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
   const pageTitle = PAGE_TITLES[activeTab] || 'لوحة القيادة'
 
   return (
-    <div className="min-h-screen lg:flex bg-[#fafbfc] dark:bg-[#0f1117]" dir="rtl">
+    <div className="min-h-screen bg-[#fafbfc] dark:bg-[#0f1117]" dir="rtl">
       {/* Sidebar matching Sanad */}
       <Sidebar
         activeTab={activeTab}
@@ -99,7 +99,7 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
       />
 
       {/* Main Content Area */}
-      <div className="flex-1 min-w-0 flex flex-col">
+      <div className="lg:ms-64 min-w-0 flex flex-col min-h-screen">
         {/* Top Header Bar matching Sanad (Image 1) */}
         <header className="no-print sticky top-0 z-20 bg-white/90 dark:bg-[#0f1117]/90 backdrop-blur-md border-b border-slate-200/70 dark:border-slate-800 transition-colors">
           <div className="max-w-7xl mx-auto w-full h-16 px-4 sm:px-6 lg:px-8 flex items-center justify-between">

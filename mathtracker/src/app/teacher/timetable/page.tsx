@@ -5,6 +5,7 @@ import {
   Calendar, Clock, Plus, Sparkles, Printer,
   RefreshCw, Check, X, AlertCircle, Building
 } from 'lucide-react'
+import Modal from '@/components/ui/Modal'
 
 interface TimetableSlot {
   id: string
@@ -234,104 +235,78 @@ export default function TimetablePage() {
 
       {/* ── Modal (Assign Slot) ── */}
       {activeModalSlot && (
-        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto animate-fade-in" onClick={() => setActiveModalSlot(null)}>
-          <div
-            className="bg-white dark:bg-slate-900 max-w-lg w-full rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xl overflow-hidden my-auto"
-            onClick={e => e.stopPropagation()}
-          >
-            {/* Modal Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-slate-800">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0">
-                  <Clock size={18} />
-                </div>
-                <div>
-                  <h3 className="text-base font-bold text-slate-900 dark:text-white">
-                    تحديد حصة: {DAYS[activeModalSlot.dayIndex]}
-                  </h3>
-                  <p className="text-xs text-slate-400 font-semibold mt-0.5">
-                    الفترة: {PERIODS[activeModalSlot.periodIndex].label}
-                  </p>
-                </div>
-              </div>
-
-              <button
-                onClick={() => setActiveModalSlot(null)}
-                className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
-                aria-label="إغلاق"
-              >
-                <X size={16} />
-              </button>
-            </div>
-
-            {/* Modal Form */}
-            <form onSubmit={handleAssignSlot}>
-              <div className="p-6 space-y-4">
-                <div>
-                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1.5">
-                    الفوج التربوي *
-                  </label>
-                  <select
-                    value={selectedGroup}
-                    onChange={e => setSelectedGroup(e.target.value)}
-                    className="w-full text-sm font-semibold px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 outline-none focus:border-[#076653] focus:ring-2 focus:ring-[#076653]/15 transition-all shadow-2xs"
-                  >
-                    {availableGroups.map(g => (
-                      <option key={g.id} value={g.id}>الفوج: {g.name}</option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1.5">
-                    القاعة / المدرج
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={roomInput}
-                      onChange={e => setRoomInput(e.target.value)}
-                      className="w-full text-sm font-semibold ps-10 pe-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 outline-none focus:border-[#076653] focus:ring-2 focus:ring-[#076653]/15 transition-all shadow-2xs"
-                      placeholder="مثال: القاعة 04"
-                    />
-                    <Building size={16} className="text-slate-400 absolute start-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Modal Footer */}
-              <div className="px-6 py-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 flex items-center justify-between">
-                <div>
-                  {slots.some(s => s.dayIndex === activeModalSlot.dayIndex && s.periodIndex === activeModalSlot.periodIndex) && (
-                    <button
-                      type="button"
-                      onClick={handleRemoveSlot}
-                      className="px-3.5 py-2 rounded-xl bg-rose-50 text-rose-600 hover:bg-rose-100 dark:bg-rose-950/40 dark:text-rose-400 border border-rose-200 dark:border-rose-900 text-xs font-bold transition-colors"
-                    >
-                      حذف الحصة
-                    </button>
-                  )}
-                </div>
-
-                <div className="flex items-center gap-2">
+        <Modal
+          isOpen={!!activeModalSlot}
+          onClose={() => setActiveModalSlot(null)}
+          title={`تحديد حصة: ${DAYS[activeModalSlot.dayIndex]}`}
+          subtitle={`الفترة الزمنية: ${PERIODS[activeModalSlot.periodIndex].label}`}
+          icon={<Clock size={20} />}
+          maxWidth="480px"
+          footer={
+            <div className="flex items-center justify-between w-full gap-3">
+              <div>
+                {slots.some(s => s.dayIndex === activeModalSlot.dayIndex && s.periodIndex === activeModalSlot.periodIndex) && (
                   <button
                     type="button"
-                    onClick={() => setActiveModalSlot(null)}
-                    className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                    onClick={handleRemoveSlot}
+                    className="btn-danger flex items-center gap-1.5 py-2 px-3.5 text-xs font-bold"
                   >
-                    إلغاء
+                    حذف الحصة
                   </button>
-                  <button
-                    type="submit"
-                    className="px-5 py-2 rounded-xl bg-[#076653] hover:bg-[#065444] text-white text-xs font-bold shadow-xs transition-colors"
-                  >
-                    تثبيت الحصة
-                  </button>
-                </div>
+                )}
               </div>
-            </form>
-          </div>
-        </div>
+              <div className="flex items-center gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => setActiveModalSlot(null)}
+                  className="btn-ghost py-2 px-4 text-xs font-bold"
+                >
+                  إلغاء
+                </button>
+                <button
+                  type="submit"
+                  form="timetable-slot-form"
+                  className="btn-primary py-2 px-5 text-xs font-bold shadow-sm"
+                >
+                  تثبيت الحصة
+                </button>
+              </div>
+            </div>
+          }
+        >
+          <form id="timetable-slot-form" onSubmit={handleAssignSlot} className="space-y-5">
+            <div>
+              <label className="label mb-2 block font-bold text-slate-700 dark:text-slate-300 text-xs">
+                الفوج التربوي *
+              </label>
+              <select
+                value={selectedGroup}
+                onChange={e => setSelectedGroup(e.target.value)}
+                className="select w-full"
+              >
+                {availableGroups.map(g => (
+                  <option key={g.id} value={g.id}>الفوج: {g.name}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="label mb-2 block font-bold text-slate-700 dark:text-slate-300 text-xs">
+                القاعة / المدرج
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  value={roomInput}
+                  onChange={e => setRoomInput(e.target.value)}
+                  className="input w-full ps-10"
+                  placeholder="مثال: القاعة 04"
+                />
+                <Building size={16} className="text-slate-400 absolute start-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              </div>
+            </div>
+          </form>
+        </Modal>
       )}
     </main>
   )

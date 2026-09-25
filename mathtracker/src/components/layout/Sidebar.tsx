@@ -5,7 +5,7 @@ import {
   Home, Users, ClipboardList, Star, BarChart3,
   BookOpen, Table2, Library, Calendar, IdCard,
   Settings, Sparkles, MessageCircle, LogOut, X,
-  Moon, Sun, ChevronLeft, Download, Bookmark
+  Moon, Sun, Bookmark
 } from 'lucide-react'
 
 export interface SidebarProps {
@@ -37,9 +37,6 @@ const NAV_ITEMS = [
   { id: 'settings',    label: 'الإعدادات',           icon: Settings },
 ] as const
 
-const RADIUS = 15
-const CIRCUMFERENCE = 2 * Math.PI * RADIUS
-
 export default function Sidebar({
   activeTab, setActiveTab,
   userName = 'محمد',
@@ -50,16 +47,14 @@ export default function Sidebar({
   setupProgress = 88,
   setupNextStep = 'اعتمد الرزنامة الرسمية'
 }: SidebarProps) {
-  const dashOffset = CIRCUMFERENCE - (setupProgress / 100) * CIRCUMFERENCE
   const initial = userName ? userName.charAt(0) : 'م'
 
   const sidebarClass = [
     'fixed inset-y-0 start-0 z-40 w-64 bg-white dark:bg-slate-900',
     'border-e border-slate-200/80 dark:border-slate-800',
-    'flex flex-col',
+    'flex flex-col h-screen max-h-screen',
     'transition-transform duration-200 ease-in-out',
-    isMobileOpen ? 'translate-x-0' : 'translate-x-full',
-    'lg:sticky lg:top-0 lg:h-screen lg:max-h-screen lg:translate-x-0 lg:flex-shrink-0'
+    isMobileOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'
   ].join(' ')
 
   return (
@@ -145,60 +140,36 @@ export default function Sidebar({
           </button>
         </nav>
 
-        {/* ── Bottom Section matching Sanad (Image 1) ── */}
-        <div className="p-3.5 border-t border-slate-100 dark:border-slate-800 space-y-3 flex-shrink-0 bg-white dark:bg-slate-900">
-          {/* Setup Progress Widget */}
-          <button
+        {/* ── Bottom Section matching Sanad ── */}
+        <div className="p-3 border-t border-slate-100 dark:border-slate-800 space-y-2.5 flex-shrink-0 bg-white dark:bg-slate-900">
+          {/* Setup Progress Widget - Compact & sleek */}
+          <div
             onClick={() => { setActiveTab('settings'); onCloseMobile?.() }}
-            className="w-full rounded-2xl bg-[#f0faf6] dark:bg-[#076653]/15 border border-[#c2ebd9] dark:border-[#076653]/30 p-3 flex items-center justify-between gap-2.5 text-start transition-colors hover:bg-[#e6f4ee]"
+            className="rounded-xl bg-[#f0faf6] dark:bg-[#076653]/10 border border-[#c2ebd9]/70 dark:border-[#076653]/25 p-2.5 cursor-pointer hover:bg-[#e6f4ee] dark:hover:bg-[#076653]/20 transition-colors"
           >
-            {/* Circular Ring Progress on the Right in RTL */}
-            <div className="relative w-8 h-8 shrink-0 flex items-center justify-center">
-              <svg viewBox="0 0 36 36" className="w-8 h-8 -rotate-90">
-                <circle cx="18" cy="18" r={RADIUS} fill="none" stroke="#d1fae5" strokeWidth="4.5"/>
-                <circle
-                  cx="18" cy="18" r={RADIUS} fill="none"
-                  stroke="#076653" strokeWidth="4.5"
-                  strokeLinecap="round"
-                  strokeDasharray={`${CIRCUMFERENCE} 999`}
-                  strokeDashoffset={dashOffset}
-                  style={{ transition: 'stroke-dashoffset 0.5s ease' }}
-                />
-              </svg>
-              <span className="absolute inset-0 grid place-items-center text-[10px] font-black text-[#076653] dark:text-emerald-300 nums">
-                {setupProgress}
+            <div className="flex items-center justify-between text-xs font-bold mb-1.5 text-[#065f46] dark:text-emerald-300">
+              <span className="flex items-center gap-1.5">
+                <Sparkles size={13} className="text-[#076653] dark:text-emerald-400" />
+                <span>إعداد الحساب</span>
               </span>
+              <span className="nums text-[11px] font-extrabold text-[#076653] dark:text-emerald-400">{setupProgress}%</span>
             </div>
-
-            <div className="flex-1 px-1.5 min-w-0">
-              <div className="text-xs font-black text-[#065f46] dark:text-emerald-300">
-                تجهيز حسابك — 7 من 8
-              </div>
-              <div className="text-[11px] text-[#076653]/80 dark:text-emerald-400/80 truncate font-semibold mt-0.5">
-                {setupNextStep}
-              </div>
+            <div className="h-1.5 w-full bg-[#d1fae5] dark:bg-emerald-950/60 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-[#076653] dark:bg-emerald-400 rounded-full transition-all duration-500"
+                style={{ width: `${setupProgress}%` }}
+              />
             </div>
-
-            <ChevronLeft size={16} className="text-[#076653] dark:text-emerald-400 shrink-0" />
-          </button>
-
-          {/* Install App Button matching Sanad */}
-          <button
-            onClick={() => alert('تم تفعيل تطبيق الويب التقدمي (PWA). يمكنك تثبيته كبرنامج مستقل على جهازك أو هاتفك.')}
-            className="w-full py-2.5 px-3.5 rounded-xl bg-[#f0faf6] dark:bg-slate-800/80 hover:bg-[#e6f4ee] text-[#076653] dark:text-emerald-400 border border-[#c2ebd9] dark:border-slate-700 font-bold text-xs flex items-center justify-center gap-2 transition-colors"
-          >
-            <Download size={15} />
-            <span>تثبيت التطبيق على الجهاز</span>
-          </button>
+          </div>
 
           {/* User Profile Row matching Sanad (Profile on Right, Tools on Left) */}
-          <div className="flex items-center justify-between pt-1">
+          <div className="flex items-center justify-between pt-0.5">
             {/* User Info & Avatar on Right */}
             <div
               onClick={() => { setActiveTab('profile'); onCloseMobile?.() }}
-              className="flex items-center gap-2.5 cursor-pointer text-right min-w-0 flex-1"
+              className="flex items-center gap-2.5 cursor-pointer text-right min-w-0 flex-1 hover:opacity-85 transition-opacity"
             >
-              <div className="w-9 h-9 rounded-full bg-[#d1fae5] dark:bg-emerald-950 text-[#065f46] dark:text-emerald-300 font-black text-xs flex items-center justify-center shrink-0 shadow-2xs">
+              <div className="w-9 h-9 rounded-full bg-[#076653]/10 dark:bg-emerald-950 text-[#076653] dark:text-emerald-300 font-black text-xs flex items-center justify-center shrink-0 border border-[#076653]/20">
                 {initial}
               </div>
 
@@ -217,7 +188,7 @@ export default function Sidebar({
               <button
                 onClick={toggleTheme}
                 title={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
-                className="p-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               >
                 {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
               </button>
@@ -225,7 +196,7 @@ export default function Sidebar({
               <button
                 onClick={onLogout}
                 title="تسجيل الخروج"
-                className="p-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors"
+                className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors"
               >
                 <LogOut size={16} />
               </button>

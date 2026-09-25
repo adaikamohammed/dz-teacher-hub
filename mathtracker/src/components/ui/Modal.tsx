@@ -1,9 +1,10 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
 
-interface ModalProps {
+export interface ModalProps {
   isOpen: boolean
   onClose: () => void
   title: string
@@ -22,8 +23,14 @@ export default function Modal({
   icon,
   children,
   footer,
-  maxWidth = '540px',
+  maxWidth = '520px',
 }: ModalProps) {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
@@ -33,20 +40,25 @@ export default function Modal({
       window.addEventListener('keydown', handleKeyDown)
     }
     return () => {
-      document.body.style.overflow = 'auto'
+      document.body.style.overflow = ''
       window.removeEventListener('keydown', handleKeyDown)
     }
   }, [isOpen, onClose])
 
-  if (!isOpen) return null
+  if (!isOpen || !mounted) return null
 
-  return (
-    <div className="modal-backdrop-blur" onClick={onClose} aria-modal="true" role="dialog">
+  return createPortal(
+    <div
+      className="modal-backdrop-blur"
+      onClick={onClose}
+      aria-modal="true"
+      role="dialog"
+      dir="rtl"
+    >
       <div
         className="modal-dialog-card"
-        style={{ maxWidth }}
+        style={{ maxWidth, width: '100%' }}
         onClick={(e) => e.stopPropagation()}
-        dir="rtl"
       >
         {/* Modal Header */}
         <div className="modal-dialog-header">
@@ -62,8 +74,9 @@ export default function Modal({
             className="modal-dialog-close-btn"
             onClick={onClose}
             aria-label="إغلاق النافذة"
+            type="button"
           >
-            <X size={17} />
+            <X size={18} />
           </button>
         </div>
 
@@ -73,6 +86,7 @@ export default function Modal({
         {/* Optional Modal Footer */}
         {footer && <div className="modal-dialog-footer">{footer}</div>}
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

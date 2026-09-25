@@ -1753,8 +1753,8 @@ textarea.input {
 .modal-backdrop-blur {
   position: fixed;
   inset: 0;
-  z-index: 9999;
-  background-color: rgba(15, 23, 42, 0.7);
+  z-index: 99999;
+  background-color: rgba(15, 23, 42, 0.65);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   display: flex;
@@ -1768,14 +1768,17 @@ textarea.input {
 .modal-dialog-card {
   position: relative;
   width: 100%;
+  min-width: min(100%, 340px);
   background: var(--color-card, #ffffff);
   border-radius: 1.5rem;
   border: 1px solid var(--border-color, #e2e8f0);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
-  max-height: calc(100vh - 2.5rem);
+  max-height: calc(100vh - 3rem);
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  margin: auto;
+  flex-shrink: 0;
   animation: modalSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 

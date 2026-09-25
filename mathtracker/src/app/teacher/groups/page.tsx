@@ -7,6 +7,7 @@ import {
   ClipboardList, BookOpen, Clock, Building, Star,
   ArrowRight, Check, X, AlertTriangle, Sparkles
 } from 'lucide-react'
+import Modal from '@/components/ui/Modal'
 
 export interface GroupItem {
   id: string
@@ -313,191 +314,189 @@ export default function GroupsPage() {
 
       {/* ── Modal mGroup (Add/Edit Group) ── */}
       {isModalOpen && (
-        <div className="modal-backdrop">
-          <div className="modal-box max-w-lg">
-            <div className="modal-head">
-              <h3>{editingGroup ? 'تعديل الفوج التربوي' : 'إنشاء فوج تربوي جديد'}</h3>
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          title={editingGroup ? 'تعديل الفوج التربوي' : 'إنشاء فوج تربوي جديد'}
+          subtitle="تحديد المستوى والشعبة والحجم الساعي والقاعة"
+          icon={<Users size={20} />}
+          maxWidth="540px"
+          footer={
+            <div className="flex items-center justify-end gap-2.5 w-full">
               <button
+                type="button"
                 onClick={() => setIsModalOpen(false)}
-                className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
-                aria-label="إغلاق"
+                className="btn-ghost py-2 px-4 text-xs font-bold"
               >
-                <X size={16} />
+                إلغاء
+              </button>
+              <button
+                type="submit"
+                form="group-form"
+                className="btn-primary py-2 px-5 text-xs font-bold shadow-sm"
+              >
+                {editingGroup ? 'حفظ التعديلات' : 'إنشاء الفوج'}
               </button>
             </div>
-
-            <form onSubmit={handleFormSubmit} className="modal-body space-y-4">
-              {/* Group Name & Level */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="label">اسم الفوج *</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="مثال: 1م1 أو 3ع ت 1"
-                    className="input"
-                    value={formData.name}
-                    onChange={e => setFormData({ ...formData, name: e.target.value })}
-                  />
-                </div>
-
-                <div>
-                  <label className="label">المستوى التعليمي *</label>
-                  <select
-                    className="select"
-                    value={formData.level}
-                    onChange={e => handleLevelChange(e.target.value)}
-                  >
-                    <optgroup label="التعليم المتوسط">
-                      <option value="1AM">1 متوسط (1AM)</option>
-                      <option value="2AM">2 متوسط (2AM)</option>
-                      <option value="3AM">3 متوسط (3AM)</option>
-                      <option value="4AM">4 متوسط (4AM) - شهادة BEM</option>
-                    </optgroup>
-                    <optgroup label="التعليم الثانوي">
-                      <option value="1AS">1 ثانوي (1AS)</option>
-                      <option value="2AS">2 ثانوي (2AS)</option>
-                      <option value="3AS">3 ثانوي (3AS) - بكالوريا BAC</option>
-                    </optgroup>
-                  </select>
-                </div>
-              </div>
-
-              {/* Stream */}
+          }
+        >
+          <form id="group-form" onSubmit={handleFormSubmit} className="space-y-4">
+            {/* Group Name & Level */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="label">الشعبة / التخصص</label>
-                <select
-                  className="select"
-                  value={formData.stream}
-                  onChange={e => setFormData({ ...formData, stream: e.target.value })}
-                >
-                  {(STREAMS_BY_LEVEL[formData.level] || ['التعليم العام']).map(stream => (
-                    <option key={stream} value={stream}>{stream}</option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Coefficient & Room & Hours */}
-              <div className="grid grid-cols-3 gap-3">
-                <div>
-                  <label className="label">المعامل</label>
-                  <input
-                    type="number"
-                    min={1}
-                    max={9}
-                    className="input nums text-center"
-                    value={formData.coefficient}
-                    onChange={e => setFormData({ ...formData, coefficient: Number(e.target.value) })}
-                  />
-                </div>
-                <div>
-                  <label className="label">ساعات/أسبوع</label>
-                  <input
-                    type="number"
-                    min={1}
-                    max={12}
-                    className="input nums text-center"
-                    value={formData.weeklyHours}
-                    onChange={e => setFormData({ ...formData, weeklyHours: Number(e.target.value) })}
-                  />
-                </div>
-                <div>
-                  <label className="label">القاعة</label>
-                  <input
-                    type="text"
-                    placeholder="مثال: 04"
-                    className="input"
-                    value={formData.room}
-                    onChange={e => setFormData({ ...formData, room: e.target.value })}
-                  />
-                </div>
-              </div>
-
-              {/* Color Selector (7 colors matching Sanad) */}
-              <div>
-                <label className="label">لون التمييز للفوج</label>
-                <div className="flex items-center gap-3 pt-1">
-                  {(['brand', 'emerald', 'sky', 'amber', 'rose', 'violet', 'teal'] as const).map(c => {
-                    const isSelected = formData.color === c
-                    const bgClass = COLOR_CLASSES[c].bar
-                    return (
-                      <button
-                        type="button"
-                        key={c}
-                        onClick={() => setFormData({ ...formData, color: c })}
-                        className={`w-7 h-7 rounded-full transition-transform ${bgClass} ${
-                          isSelected ? 'scale-125 ring-2 ring-offset-2 ring-slate-700' : 'hover:scale-110 opacity-80'
-                        }`}
-                      />
-                    )
-                  })}
-                </div>
-              </div>
-
-              {/* Notes */}
-              <div>
-                <label className="label">ملاحظات إضافية</label>
-                <textarea
-                  rows={2}
+                <label className="label">اسم الفوج *</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="مثال: 1م1 أو 3ع ت 1"
                   className="input"
-                  placeholder="ملاحظات حول الفوج، أوقات الاستدراك..."
-                  value={formData.notes}
-                  onChange={e => setFormData({ ...formData, notes: e.target.value })}
+                  value={formData.name}
+                  onChange={e => setFormData({ ...formData, name: e.target.value })}
                 />
               </div>
 
-              <div className="modal-footer -mx-5 -mb-5 mt-6">
-                <button
-                  type="button"
-                  onClick={() => setIsModalOpen(false)}
-                  className="btn-ghost"
+              <div>
+                <label className="label">المستوى التعليمي *</label>
+                <select
+                  className="select"
+                  value={formData.level}
+                  onChange={e => handleLevelChange(e.target.value)}
                 >
-                  إلغاء
-                </button>
-                <button
-                  type="submit"
-                  className="btn-primary"
-                >
-                  {editingGroup ? 'حفظ التعديلات' : 'إنشاء الفوج'}
-                </button>
+                  <optgroup label="التعليم المتوسط">
+                    <option value="1AM">1 متوسط (1AM)</option>
+                    <option value="2AM">2 متوسط (2AM)</option>
+                    <option value="3AM">3 متوسط (3AM)</option>
+                    <option value="4AM">4 متوسط (4AM) - شهادة BEM</option>
+                  </optgroup>
+                  <optgroup label="التعليم الثانوي">
+                    <option value="1AS">1 ثانوي (1AS)</option>
+                    <option value="2AS">2 ثانوي (2AS)</option>
+                    <option value="3AS">3 ثانوي (3AS) - بكالوريا BAC</option>
+                  </optgroup>
+                </select>
               </div>
-            </form>
-          </div>
-        </div>
+            </div>
+
+            {/* Stream */}
+            <div>
+              <label className="label">الشعبة / التخصص</label>
+              <select
+                className="select"
+                value={formData.stream}
+                onChange={e => setFormData({ ...formData, stream: e.target.value })}
+              >
+                {(STREAMS_BY_LEVEL[formData.level] || ['التعليم العام']).map(stream => (
+                  <option key={stream} value={stream}>{stream}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Coefficient & Room & Hours */}
+            <div className="grid grid-cols-3 gap-3">
+              <div>
+                <label className="label">المعامل</label>
+                <input
+                  type="number"
+                  min={1}
+                  max={9}
+                  className="input nums text-center"
+                  value={formData.coefficient}
+                  onChange={e => setFormData({ ...formData, coefficient: Number(e.target.value) })}
+                />
+              </div>
+              <div>
+                <label className="label">ساعات/أسبوع</label>
+                <input
+                  type="number"
+                  min={1}
+                  max={12}
+                  className="input nums text-center"
+                  value={formData.weeklyHours}
+                  onChange={e => setFormData({ ...formData, weeklyHours: Number(e.target.value) })}
+                />
+              </div>
+              <div>
+                <label className="label">القاعة</label>
+                <input
+                  type="text"
+                  placeholder="مثال: 04"
+                  className="input"
+                  value={formData.room}
+                  onChange={e => setFormData({ ...formData, room: e.target.value })}
+                />
+              </div>
+            </div>
+
+            {/* Color Selector (7 colors matching Sanad) */}
+            <div>
+              <label className="label">لون التمييز للفوج</label>
+              <div className="flex items-center gap-3 pt-1">
+                {(['brand', 'emerald', 'sky', 'amber', 'rose', 'violet', 'teal'] as const).map(c => {
+                  const isSelected = formData.color === c
+                  const bgClass = COLOR_CLASSES[c].bar
+                  return (
+                    <button
+                      type="button"
+                      key={c}
+                      onClick={() => setFormData({ ...formData, color: c })}
+                      className={`w-7 h-7 rounded-full transition-transform ${bgClass} ${
+                        isSelected ? 'scale-125 ring-2 ring-offset-2 ring-slate-700' : 'hover:scale-110 opacity-80'
+                      }`}
+                    />
+                  )
+                })}
+              </div>
+            </div>
+
+            {/* Notes */}
+            <div>
+              <label className="label">ملاحظات إضافية</label>
+              <textarea
+                rows={2}
+                className="input"
+                placeholder="ملاحظات حول الفوج، أوقات الاستدراك..."
+                value={formData.notes}
+                onChange={e => setFormData({ ...formData, notes: e.target.value })}
+              />
+            </div>
+          </form>
+        </Modal>
       )}
 
       {/* ── Delete Confirmation Modal ── */}
       {deleteConfirmId && (
-        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto animate-fade-in" onClick={() => setDeleteConfirmId(null)}>
-          <div
-            className="bg-white dark:bg-slate-900 max-w-md w-full rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xl p-6 sm:p-7 text-center my-auto"
-            onClick={e => e.stopPropagation()}
-          >
-            <div className="w-14 h-14 rounded-2xl bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 mx-auto flex items-center justify-center mb-4 border border-rose-100 dark:border-rose-900/40">
-              <AlertTriangle size={26} />
-            </div>
-            <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2">تأكيد حذف الفوج</h3>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-6 leading-relaxed">
-              سيتم حذف الفوج وكل تلاميذه وعلاماته وسجل غيابه نهائيًا. هل أنت متأكد من رغبتك في الحذف؟
-            </p>
-            <div className="flex items-center justify-center gap-2.5">
+        <Modal
+          isOpen={!!deleteConfirmId}
+          onClose={() => setDeleteConfirmId(null)}
+          title="تأكيد حذف الفوج التربوي"
+          subtitle="إجراء نهائي لا يمكن التراجع عنه"
+          icon={<AlertTriangle size={20} className="text-rose-500" />}
+          maxWidth="440px"
+          footer={
+            <div className="flex items-center justify-center gap-3 w-full">
               <button
                 type="button"
                 onClick={() => setDeleteConfirmId(null)}
-                className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="btn-ghost py-2 px-5 text-xs font-bold"
               >
                 تراجع
               </button>
               <button
                 type="button"
                 onClick={() => handleDeleteGroup(deleteConfirmId)}
-                className="px-5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-xs transition-colors"
+                className="btn-danger py-2 px-5 text-xs font-bold shadow-sm"
               >
                 نعم، احذف الفوج
               </button>
             </div>
+          }
+        >
+          <div className="text-center py-2 space-y-3">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              سيتم حذف الفوج وكل تلاميذه وعلاماته وسجل غيابه نهائيًا. هل أنت متأكد من رغبتك في الحذف؟
+            </p>
           </div>
-        </div>
+        </Modal>
       )}
     </main>
   )
