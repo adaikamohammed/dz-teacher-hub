@@ -116,51 +116,44 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
 
       {/* ── Main Content Area: Takes remaining width (calc(100% - 16rem)) ── */}
       <div className="flex-1 min-w-0 flex flex-col min-h-screen">
-        {/* Top Header Bar matching Sanad (Image 1) */}
-        <header className="no-print sticky top-0 z-20 bg-white/90 dark:bg-[#0f1117]/90 backdrop-blur-md border-b border-slate-200/70 dark:border-slate-800 transition-colors">
-          <div className="max-w-7xl mx-auto w-full h-16 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        {/* Top Header Bar matching Sanad (100% exact) */}
+        <header className="no-print sticky top-0 z-20 bg-white/90 dark:bg-[#0f1117]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 transition-colors">
+          <div className="h-16 px-4 sm:px-6 flex items-center gap-3 w-full">
             {/* Right: Toggle Button + Page Title */}
-            <div className="flex items-center gap-3">
-              <button
-                className="text-slate-500 hover:text-slate-800 dark:text-slate-300 p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
-                onClick={toggleSidebar}
-                title={isSidebarOpen ? 'إخفاء القائمة الجانبية' : 'إظهار القائمة الجانبية'}
+            <button
+              className="text-slate-600 hover:text-slate-900 dark:text-slate-300 p-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+              onClick={toggleSidebar}
+              title={isSidebarOpen ? 'إخفاء القائمة الجانبية' : 'إظهار القائمة الجانبية'}
+            >
+              <Menu size={20} />
+            </button>
+            <h1 className="text-lg font-bold text-slate-900 dark:text-white truncate">
+              {pageTitle}
+            </h1>
+
+            {/* Left: Term selector + Date badge */}
+            <div className="ms-auto flex items-center gap-2">
+              <select
+                value={selectedTerm}
+                onChange={e => setSelectedTerm(e.target.value)}
+                className="select py-1.5 text-xs w-36 font-semibold"
               >
-                <Menu size={22} />
-              </button>
-              <h1 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white">
-                {pageTitle}
-              </h1>
-            </div>
+                <option value="الفصل الأول">الفصل الأول</option>
+                <option value="الفصل الثاني">الفصل الثاني</option>
+                <option value="الفصل الثالث">الفصل الثالث</option>
+              </select>
 
-            {/* Left: Date pill + Term selector matching Image 1 */}
-            <div className="flex items-center gap-3">
-              {/* Date pill */}
-              <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 text-xs font-bold text-slate-600 dark:text-slate-300 shadow-2xs">
-                <Clock size={13} className="text-[#076653] dark:text-emerald-400" />
+              <span className="hidden md:inline-flex badge-slate text-xs font-semibold py-1.5 px-3">
+                <Clock size={14} className="text-[#076653] dark:text-emerald-400 ms-1" />
                 <span>{todayFormatted}</span>
-              </div>
-
-              {/* Term dropdown pill */}
-              <div className="relative">
-                <select
-                  value={selectedTerm}
-                  onChange={e => setSelectedTerm(e.target.value)}
-                  className="appearance-none pr-3.5 pl-8 py-1.5 rounded-full border border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 text-xs font-bold text-slate-700 dark:text-slate-200 outline-none cursor-pointer hover:border-[#076653] transition-colors shadow-2xs"
-                >
-                  <option value="الفصل الأول">الفصل الأول</option>
-                  <option value="الفصل الثاني">الفصل الثاني</option>
-                  <option value="الفصل الثالث">الفصل الثالث</option>
-                </select>
-                <ChevronDown size={13} className="text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-              </div>
+              </span>
             </div>
           </div>
         </header>
 
-        {/* Top Trial Banner matching Image 3 */}
+        {/* Top Trial Banner matching Image 3 & Image 2 (full max-w-[1600px] alignment) */}
         {activeTab !== 'subscribe' && (
-          <div className="no-print max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 mt-4">
+          <div className="no-print max-w-[1600px] mx-auto w-full px-4 sm:px-6 mt-4">
             <div className="flex flex-wrap items-center gap-2 rounded-xl px-4 py-3 text-sm ring-1 ring-inset bg-[#ecfaf5] dark:bg-[#076653]/15 text-[#0a5445] dark:text-emerald-300 ring-[#a8e5d2] dark:ring-[#076653]/40">
               <svg className="w-5 h-5 shrink-0 text-[#076653] dark:text-emerald-400" fill="none" viewBox="0 0 24 24" strokeWidth="1.6" stroke="currentColor" aria-hidden="true" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/>
