@@ -296,11 +296,11 @@ export default function TimetablePage() {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="table-fixed border-collapse text-sm w-full" style={{ minWidth: isOnlyMyHours ? '40rem' : '83.5rem' }}>
+          <table className="table-fixed border-collapse text-sm w-full" style={{ minWidth: isOnlyMyHours ? '100%' : '83.5rem' }}>
             <colgroup>
-              <col style={{ width: '7rem' }} />
+              <col style={{ width: isOnlyMyHours ? '9rem' : '7rem' }} />
               {displayedPeriods.map(p => (
-                <col key={p.hour} style={{ width: '8.5rem' }} />
+                <col key={p.hour} style={{ width: isOnlyMyHours ? 'auto' : '8.5rem' }} />
               ))}
             </colgroup>
 
