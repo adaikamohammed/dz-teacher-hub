@@ -55,11 +55,11 @@ export default function Sidebar({
 
   const sidebarClass = [
     'fixed inset-y-0 end-0 z-40 w-64 bg-white dark:bg-slate-900',
-    'border-s border-slate-200 dark:border-slate-800',
+    'border-s border-slate-200/80 dark:border-slate-800',
     'flex flex-col',
     'transition-transform duration-200 ease-in-out',
     isMobileOpen ? 'translate-x-0' : 'translate-x-full',
-    'lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 lg:flex-shrink-0'
+    'lg:sticky lg:top-0 lg:h-screen lg:max-h-screen lg:translate-x-0 lg:flex-shrink-0'
   ].join(' ')
 
   return (
@@ -104,7 +104,7 @@ export default function Sidebar({
         </div>
 
         {/* ── Navigation Links (13 items) ── */}
-        <nav className="flex-1 overflow-y-auto px-3 py-3 space-y-1" style={{ scrollbarWidth: 'none' }}>
+        <nav className="flex-1 overflow-y-auto min-h-0 px-3 py-3 space-y-1" style={{ scrollbarWidth: 'none' }}>
           {NAV_ITEMS.map(({ id, label, icon: Icon }) => {
             const isActive = activeTab === id
             return (

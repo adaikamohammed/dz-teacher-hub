@@ -114,21 +114,21 @@ export default function SettingsPage() {
   }
 
   return (
-    <main className="flex-1 p-5 sm:p-8 lg:p-10 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
-      {/* Streamlined Action Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+    <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 animate-fade-in" dir="rtl">
+      {/* ── Compact Single-line Page Action Bar ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
-          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
+          <h2 className="text-lg sm:text-xl font-bold text-slate-800 dark:text-slate-100">
             الإعدادات والرزنامة الرسمية
           </h2>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+          <p className="text-xs text-slate-400 font-medium mt-0.5">
             الرزنامة الرسمية 2026/2027، فترات الفصول، خصم الغياب، والنسخ الاحتياطي
           </p>
         </div>
 
         {savedSuccess && (
-          <span className="text-xs sm:text-sm font-bold text-emerald-600 flex items-center gap-1.5 animate-fade-in bg-emerald-50 dark:bg-emerald-950/40 px-3.5 py-1.5 rounded-xl border border-emerald-200 dark:border-emerald-800">
-            <Check size={16} /> تم الحفظ بنجاح
+          <span className="text-xs font-bold text-emerald-600 flex items-center gap-1.5 animate-fade-in bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1 rounded-xl border border-emerald-200 dark:border-emerald-800">
+            <Check size={14} /> تم الحفظ بنجاح
           </span>
         )}
       </div>

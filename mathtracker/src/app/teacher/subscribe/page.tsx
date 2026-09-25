@@ -10,7 +10,7 @@ export default function SubscribePage() {
   const [selectedPeriod, setSelectedPeriod] = useState<'year' | 'term'>('year')
 
   return (
-    <main className="flex-1 p-5 sm:p-8 lg:p-10 max-w-[1400px] w-full mx-auto animate-fade-in" dir="rtl">
+    <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in" dir="rtl">
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto mb-12">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100 dark:bg-amber-950/50 text-amber-800 dark:text-amber-300 text-xs font-bold mb-4 border border-amber-200 dark:border-amber-800/50">

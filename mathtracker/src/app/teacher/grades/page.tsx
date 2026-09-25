@@ -183,39 +183,30 @@ function GradesContent() {
   }, [students])
 
   return (
-    <main className="flex-1 p-5 sm:p-8 lg:p-10 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
-      {/* Sub-header matching Sanad Screenshot */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-        <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-[#076653]/25 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0 shadow-sm border border-emerald-100 dark:border-emerald-800/50">
-            <Award size={24} />
-          </div>
-          <div>
-            <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
-              التقويم والعلامات
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-0.5">
-              حساب آلي لنقاط التقويم المستمر، الفروض، والاختبارات وفق المنشور الوزاري 272
-            </p>
-          </div>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-3 self-start sm:self-auto">
+    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 animate-fade-in" dir="rtl">
+      {/* ── Compact Single-line Page Action Bar ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        <div className="flex flex-wrap items-center gap-3">
           <select
             value={selectedGroupId}
             onChange={e => setSelectedGroupId(e.target.value)}
-            className="select w-auto text-xs sm:text-sm font-bold py-2 px-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm hover:border-[#076653] transition-colors"
+            className="select w-auto text-xs font-bold py-1.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-2xs hover:border-[#076653] transition-colors"
           >
             {groups.map(g => (
-              <option key={g.id} value={g.id}>الفوج: {g.name}</option>
+              <option key={g.id} value={g.id}>كشف علامات الفوج: {g.name}</option>
             ))}
           </select>
+          <span className="text-xs text-slate-400 font-medium hidden sm:inline">
+            حساب آلي لنقاط التقويم المستمر والاختبارات وفق المنشور 272
+          </span>
+        </div>
 
+        <div className="flex items-center gap-2.5 self-start sm:self-auto no-print">
           <button
             onClick={() => window.print()}
-            className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold px-4 py-2 rounded-2xl flex items-center gap-2 shadow-sm text-xs sm:text-sm hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-[#076653] transition-colors no-print"
+            className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-200 font-bold px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 shadow-2xs text-xs hover:border-[#076653] transition-colors"
           >
-            <Printer size={16} />
+            <Printer size={14} />
             <span>طباعة الكشف</span>
           </button>
         </div>

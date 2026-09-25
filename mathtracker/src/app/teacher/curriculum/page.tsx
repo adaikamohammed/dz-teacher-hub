@@ -80,43 +80,38 @@ export default function CurriculumPage() {
   )
 
   return (
-    <main className="flex-1 p-5 sm:p-8 lg:p-10 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
-      {/* Sub-header matching Sanad Screenshot */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-        <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-[#076653]/25 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0 shadow-sm border border-emerald-100 dark:border-emerald-800/50">
-            <Library size={24} />
-          </div>
-          <div>
-            <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
-              البرامج التعليمية الرسمية
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-0.5">
-              132 تدرجًا رسميًّا معتمدًا من المفتشية العامة للبيداغوجيا مع تفصيل الكفاءات والمحتويات
-            </p>
-          </div>
+    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 animate-fade-in" dir="rtl">
+      {/* ── Compact Single-line Page Action Bar ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        <div>
+          <h2 className="text-lg sm:text-xl font-bold text-slate-800 dark:text-slate-100">
+            البرامج والتدرجات الرسمية
+          </h2>
+          <p className="text-xs text-slate-400 font-medium mt-0.5">
+            132 تدرجًا رسميًّا معتمدًا من المفتشية العامة للبيداغوجيا مع تفصيل الكفاءات
+          </p>
         </div>
 
         {/* Filters */}
-        <div className="flex flex-wrap items-center gap-3 self-start sm:self-auto">
+        <div className="flex flex-wrap items-center gap-2.5 self-start sm:self-auto">
           <select
             value={selectedGrade}
             onChange={e => setSelectedGrade(e.target.value)}
-            className="select w-auto text-xs sm:text-sm font-bold py-2 px-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm hover:border-[#076653] transition-colors"
+            className="select w-auto text-xs font-bold py-1.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-2xs hover:border-[#076653] transition-colors"
           >
-            <option value="1am">السنة الأولى متوسط (1AM)</option>
-            <option value="2am">السنة الثانية متوسط (2AM)</option>
-            <option value="3am">السنة الثالثة متوسط (3AM)</option>
-            <option value="4am">السنة الرابعة متوسط (4AM)</option>
-            <option value="1as">السنة الأولى ثانوي (1AS)</option>
-            <option value="2as">السنة الثانية ثانوي (2AS)</option>
-            <option value="3as">السنة الثالثة ثانوي (3AS)</option>
+            <option value="1am">1 متوسط (1AM)</option>
+            <option value="2am">2 متوسط (2AM)</option>
+            <option value="3am">3 متوسط (3AM)</option>
+            <option value="4am">4 متوسط (4AM)</option>
+            <option value="1as">1 ثانوي (1AS)</option>
+            <option value="2as">2 ثانوي (2AS)</option>
+            <option value="3as">3 ثانوي (3AS)</option>
           </select>
 
           <select
             value={selectedSubject}
             onChange={e => setSelectedSubject(e.target.value)}
-            className="select w-auto text-xs sm:text-sm font-bold py-2 px-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm hover:border-[#076653] transition-colors"
+            className="select w-auto text-xs font-bold py-1.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-2xs hover:border-[#076653] transition-colors"
           >
             <option value="math">الرياضيات</option>
             <option value="arabic">اللغة العربية</option>

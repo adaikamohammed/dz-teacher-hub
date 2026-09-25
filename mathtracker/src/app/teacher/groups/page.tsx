@@ -196,28 +196,23 @@ export default function GroupsPage() {
   }
 
   return (
-    <main className="flex-1 p-5 sm:p-8 lg:p-10 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
-      {/* Sub-header matching Sanad Screenshot */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-        <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 rounded-2xl bg-[#e6f4f1] dark:bg-[#076653]/20 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0 shadow-sm">
-            <Users size={24} />
-          </div>
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-              الأفواج التربوية
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-0.5">
-              إدارة الأقسام، الحجم الساعي، وتوزيع الحصص للفصل الدراسي الحالي
-            </p>
-          </div>
+    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 animate-fade-in" dir="rtl">
+      {/* ── Compact Single-line Page Action Bar matching Sanad ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        <div>
+          <h2 className="text-lg sm:text-xl font-bold text-slate-800 dark:text-slate-100">
+            الأفواج التربوية المسجلة ({groups.length})
+          </h2>
+          <p className="text-xs text-slate-400 font-medium mt-0.5">
+            إدارة الأقسام، الحجم الساعي، وتوزيع الحصص للفصل الدراسي الحالي
+          </p>
         </div>
 
         <button
           onClick={handleOpenAdd}
-          className="bg-[#076653] hover:bg-[#065444] text-white font-bold px-5 py-2.5 rounded-xl flex items-center justify-center gap-2 shadow-md shadow-[#076653]/20 text-sm transition-all cursor-pointer self-start sm:self-auto"
+          className="bg-[#076653] hover:bg-[#065444] text-white font-bold px-4 py-2 rounded-xl flex items-center justify-center gap-1.5 shadow-xs text-xs sm:text-sm transition-colors cursor-pointer self-start sm:self-auto"
         >
-          <Plus size={18} />
+          <Plus size={16} />
           <span>فوج جديد</span>
         </button>
       </div>

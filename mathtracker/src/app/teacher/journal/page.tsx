@@ -29,16 +29,16 @@ export interface JournalSession {
 }
 
 const ACTIVITY_CONFIG: Record<ActivityType, { label: string; badge: string }> = {
-  theory:     { label: 'نظري', badge: 'bg-[#076653]/10 text-[#076653] border-[#076653]/20' },
-  practice:   { label: 'تطبيق', badge: 'bg-teal-50 text-teal-700 border-teal-200' },
-  devoir:     { label: 'فرض', badge: 'bg-amber-50 text-amber-700 border-amber-200' },
-  exam:       { label: 'اختبار', badge: 'bg-rose-50 text-rose-700 border-rose-200' },
-  correction: { label: 'تصحيح', badge: 'bg-sky-50 text-sky-700 border-sky-200' },
-  other:      { label: 'نشاط آخر', badge: 'bg-slate-100 text-slate-600 border-slate-200' },
+  theory:     { label: 'نظري', badge: 'bg-[#076653]/10 text-[#076653] dark:text-emerald-300 border-[#076653]/20' },
+  practice:   { label: 'تطبيق', badge: 'bg-teal-50 dark:bg-teal-950/40 text-teal-700 dark:text-teal-300 border-teal-200 dark:border-teal-800' },
+  devoir:     { label: 'فرض', badge: 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800' },
+  exam:       { label: 'اختبار', badge: 'bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-800' },
+  correction: { label: 'تصحيح', badge: 'bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300 border-sky-200 dark:border-sky-800' },
+  other:      { label: 'نشاط آخر', badge: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700' },
 }
 
 const STATUS_SPINE: Record<SessionStatus, { color: string; label: string; icon: any }> = {
-  planned:  { color: 'bg-slate-300 dark:bg-slate-700', label: 'مبرمجة', icon: Clock },
+  planned:  { color: 'bg-amber-400', label: 'مبرمجة', icon: Clock },
   done:     { color: 'bg-emerald-500', label: 'منجزة', icon: CheckCircle2 },
   canceled: { color: 'bg-rose-500', label: 'ملغاة', icon: XCircle },
 }
@@ -50,7 +50,6 @@ const CURRICULUM_CHIPS = [
   'خواص متوازي الأضلاع',
   'القسمة الإقليدية والقسمة العشرية',
   'قراءة وتفسير جدول إحصائي',
-  'إنشاء مماثل شكل هندسي',
 ]
 
 const DEFAULT_SESSIONS: JournalSession[] = [
@@ -99,21 +98,12 @@ const DEFAULT_SESSIONS: JournalSession[] = [
     homework: 'تمرين تطبيقي رقم 12 صفحة 25',
     remarks: '',
   },
-  {
-    id: 's_27133',
-    groupId: 'grp_1552',
-    groupName: '1م1',
-    date: '2026-09-27',
-    dayName: 'الأحد',
-    timeStart: '08:00',
-    timeEnd: '09:00',
-    activity: 'devoir',
-    status: 'planned',
-    unitTitle: 'التقويم الأول للفصل الأول',
-    subtopics: 'الفرض المحروس الأول: الأعداد العشرية والحساب الهندسي',
-    homework: '',
-    remarks: 'إحضار الأدوات الهندسية والآلة الحاسبة',
-  },
+]
+
+const GROUPS_LIST = [
+  { id: 'grp_1552', name: '1م1' },
+  { id: 'grp_1553', name: '2م3' },
+  { id: 'grp_1554', name: '3ع ت 1' },
 ]
 
 function JournalContent() {
@@ -121,7 +111,6 @@ function JournalContent() {
   const [selectedGroupId, setSelectedGroupId] = useState('grp_1552')
   const [sessions, setSessions] = useState<JournalSession[]>([])
   const [expandedSessionId, setExpandedSessionId] = useState<string | null>('s_27132')
-  const [viewFilter, setViewFilter] = useState<'month' | 'all' | 'done'>('month')
   const [isExtraModalOpen, setIsExtraModalOpen] = useState(false)
 
   // Extra session modal state
@@ -169,7 +158,7 @@ function JournalContent() {
     const newSession: JournalSession = {
       id: `s_extra_${Date.now()}`,
       groupId: selectedGroupId,
-      groupName: '1م1',
+      groupName: GROUPS_LIST.find(g => g.id === selectedGroupId)?.name || '1م1',
       date: extraDate,
       dayName: 'الاثنين',
       timeStart: extraStart,
@@ -187,121 +176,136 @@ function JournalContent() {
   }
 
   return (
-    <main className="flex-1 p-5 sm:p-8 lg:p-10 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
-      {/* Sub-header matching Sanad Screenshot */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-        <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-[#076653]/25 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0 shadow-sm border border-emerald-100 dark:border-emerald-800/50">
-            <BookOpen size={24} />
-          </div>
-          <div>
-            <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
-              الدفتر اليومي
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-0.5">
-              سجل وتوثيق الحصص المنجزة، الوحدات التعلمية، والواجبات المنزلية
-            </p>
-          </div>
+    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 animate-fade-in" dir="rtl">
+      {/* ── Compact Single-line Page Action Bar ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        {/* Right: Group Tabs */}
+        <div className="flex items-center gap-1.5 p-1 bg-slate-100 dark:bg-slate-800 rounded-xl w-fit">
+          {GROUPS_LIST.map(g => (
+            <button
+              key={g.id}
+              onClick={() => setSelectedGroupId(g.id)}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                selectedGroupId === g.id
+                  ? 'bg-white dark:bg-slate-900 text-[#076653] dark:text-emerald-400 shadow-xs'
+                  : 'text-slate-500 hover:text-slate-800 dark:text-slate-300'
+              }`}
+            >
+              {g.name}
+            </button>
+          ))}
         </div>
 
-        <div className="flex flex-wrap items-center gap-3 self-start sm:self-auto">
+        {/* Left: Action Buttons */}
+        <div className="flex items-center gap-2.5 self-start sm:self-auto no-print">
           <button
             onClick={() => setIsExtraModalOpen(true)}
-            className="gold-btn py-2 px-5 text-xs sm:text-sm flex items-center gap-2 shadow-md"
+            className="px-3.5 py-2 rounded-xl bg-[#076653] hover:bg-[#065444] text-white font-bold text-xs flex items-center gap-1.5 shadow-xs transition-colors"
           >
-            <Plus size={16} />
+            <Plus size={15} />
             <span>حصة استثنائية</span>
           </button>
 
           <button
             onClick={() => window.print()}
-            className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold px-4 py-2 rounded-2xl flex items-center gap-2 shadow-sm text-xs sm:text-sm hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-[#076653] transition-colors no-print"
+            className="px-3.5 py-2 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:border-[#076653] font-bold text-xs flex items-center gap-1.5 transition-colors shadow-xs"
           >
-            <Printer size={16} />
+            <Printer size={15} />
             <span>طباعة الدفتر</span>
           </button>
         </div>
       </div>
 
-      {/* Sessions List */}
-      <div className="space-y-5">
+      {/* ── Structured Session Cards (No Sprawl) ── */}
+      <div className="space-y-4">
         {sessions.map(session => {
           const actCfg = ACTIVITY_CONFIG[session.activity] || ACTIVITY_CONFIG.theory
           const statusCfg = STATUS_SPINE[session.status] || STATUS_SPINE.planned
-          const StatusIcon = statusCfg.icon
           const isExpanded = expandedSessionId === session.id
 
           return (
             <div
               key={session.id}
-              className="lux-card overflow-hidden transition-all duration-200 hover:shadow-lg"
+              className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/70 dark:border-slate-800 overflow-hidden shadow-xs hover:border-slate-300 dark:hover:border-slate-700 transition-all"
             >
-              <div className="flex">
-                {/* Colored Spine matching Sanad status */}
-                <div className={`w-2.5 shrink-0 ${statusCfg.color}`} />
+              {/* Card Header Bar */}
+              <div
+                onClick={() => setExpandedSessionId(isExpanded ? null : session.id)}
+                className="p-4 sm:p-5 flex items-center justify-between gap-3 cursor-pointer select-none bg-slate-50/40 dark:bg-slate-800/20 hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors"
+              >
+                {/* Right: Date, Time, Group, Activity */}
+                <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+                  <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: session.status === 'done' ? '#10b981' : session.status === 'planned' ? '#f59e0b' : '#f43f5e' }} />
 
-                <div className="flex-1 p-4 sm:p-5">
-                  {/* Session Header */}
-                  <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-100 dark:border-slate-800">
-                    <div className="flex items-center gap-2.5">
-                      <span className="font-extrabold text-slate-800 dark:text-white text-base">
-                        {session.dayName} {session.date}
-                      </span>
-                      <span className="text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2 py-0.5 rounded-lg nums flex items-center gap-1 font-medium">
-                        <Clock size={12} />
-                        {session.timeStart} - {session.timeEnd}
-                      </span>
-                      {session.isExtra && (
-                        <span className="badge badge-amber text-[10px]">استثنائية</span>
-                      )}
-                    </div>
+                  <span className="font-extrabold text-slate-800 dark:text-white text-sm sm:text-base">
+                    {session.dayName} {session.date}
+                  </span>
 
-                    <div className="flex items-center gap-2">
-                      {/* Activity Badge */}
-                      <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full border ${actCfg.badge}`}>
-                        {actCfg.label}
-                      </span>
+                  <span className="text-xs bg-white dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700 text-slate-600 dark:text-slate-300 px-2 py-0.5 rounded-lg nums font-medium flex items-center gap-1">
+                    <Clock size={11} className="text-slate-400" />
+                    {session.timeStart} - {session.timeEnd}
+                  </span>
 
-                      {/* Status Selector */}
-                      <select
-                        value={session.status}
-                        onChange={e => updateSessionField(session.id, 'status', e.target.value as SessionStatus)}
-                        className="select py-1 px-2 text-xs font-semibold w-auto"
-                      >
-                        <option value="planned">مبرمجة ⏳</option>
-                        <option value="done">منجزة ✓</option>
-                        <option value="canceled">ملغاة ✕</option>
-                      </select>
+                  <span className={`text-[11px] font-bold px-2 py-0.5 rounded-md border ${actCfg.badge}`}>
+                    {actCfg.label}
+                  </span>
 
-                      <button
-                        onClick={() => setExpandedSessionId(isExpanded ? null : session.id)}
-                        className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
-                      >
-                        {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-                      </button>
-                    </div>
+                  {session.isExtra && (
+                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200">
+                      استثنائية
+                    </span>
+                  )}
+                </div>
+
+                {/* Left: Status & Chevron */}
+                <div className="flex items-center gap-2.5 shrink-0" onClick={e => e.stopPropagation()}>
+                  <select
+                    value={session.status}
+                    onChange={e => updateSessionField(session.id, 'status', e.target.value as SessionStatus)}
+                    className="select py-1 px-2.5 text-xs font-semibold rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 w-auto"
+                  >
+                    <option value="planned">مبرمجة ⏳</option>
+                    <option value="done">منجزة ✓</option>
+                    <option value="canceled">ملغاة ✕</option>
+                  </select>
+
+                  <button
+                    type="button"
+                    onClick={() => setExpandedSessionId(isExpanded ? null : session.id)}
+                    className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                  >
+                    {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                  </button>
+                </div>
+              </div>
+
+              {/* Collapsed Brief View */}
+              {!isExpanded && (
+                <div className="px-4 sm:px-5 pb-4 pt-1 flex items-center justify-between text-xs text-slate-600 dark:text-slate-300">
+                  <div className="font-semibold flex items-center gap-2 truncate">
+                    <span className="text-[#076653] font-bold">الوحدة:</span>
+                    <span>{session.unitTitle || 'وحدة تعلمية غير محددة'}</span>
                   </div>
+                  {session.homework && (
+                    <span className="text-slate-400 hidden sm:inline truncate max-w-xs">
+                      الواجب: {session.homework}
+                    </span>
+                  )}
+                </div>
+              )}
 
-                  {/* Summary / Recap View */}
-                  <div className="mt-3">
-                    <div className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-[#076653]" />
-                      <span>{session.unitTitle || 'وحدة تعلمية غير محددة'}</span>
-                    </div>
-                    {session.subtopics && (
-                      <p className="text-xs text-slate-600 dark:text-slate-300 mt-1 line-clamp-2">
-                        {session.subtopics}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Expanded Form for Editing (Auto-save) */}
-                  {isExpanded && (
-                    <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 space-y-4 animate-fade-in">
-                      {/* Activity Type Selector */}
+              {/* ── Expanded Structured 2-Column Form ── */}
+              {isExpanded && (
+                <div className="p-4 sm:p-5 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 animate-fade-in">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+                    {/* Right Column (7 cols): Unit, Activity & Lesson Content */}
+                    <div className="lg:col-span-7 space-y-3.5">
+                      {/* Activity Selector Pills */}
                       <div>
-                        <label className="label">نوع النشاط التربوي</label>
-                        <div className="flex flex-wrap gap-2">
+                        <label className="text-xs font-bold text-slate-600 dark:text-slate-300 block mb-1.5">
+                          نوع النشاط البيداغوجي
+                        </label>
+                        <div className="flex flex-wrap gap-1.5">
                           {(Object.keys(ACTIVITY_CONFIG) as ActivityType[]).map(actKey => {
                             const isSelected = session.activity === actKey
                             const cfg = ACTIVITY_CONFIG[actKey]
@@ -310,9 +314,9 @@ function JournalContent() {
                                 type="button"
                                 key={actKey}
                                 onClick={() => updateSessionField(session.id, 'activity', actKey)}
-                                className={`text-xs font-bold px-3 py-1.5 rounded-xl border transition-all ${
+                                className={`text-xs font-semibold px-2.5 py-1 rounded-lg border transition-all ${
                                   isSelected
-                                    ? 'bg-[#076653] text-white border-[#076653] shadow-sm'
+                                    ? 'bg-[#076653] text-white border-[#076653] shadow-xs'
                                     : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50'
                                 }`}
                               >
@@ -325,33 +329,37 @@ function JournalContent() {
 
                       {/* Unit Title */}
                       <div>
-                        <label className="label">الوحدة التعلمية / الميدان</label>
+                        <label className="text-xs font-bold text-slate-600 dark:text-slate-300 block mb-1">
+                          الوحدة التعلمية / الميدان
+                        </label>
                         <input
                           type="text"
                           value={session.unitTitle}
                           onChange={e => updateSessionField(session.id, 'unitTitle', e.target.value)}
-                          className="input text-sm"
+                          className="w-full text-xs font-semibold px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 outline-none focus:border-[#076653]"
                           placeholder="مثال: الأعداد الطبيعية والأعداد العشرية"
                         />
                       </div>
 
-                      {/* Subtopics with Interactive Chips */}
+                      {/* Lesson Content & Chips */}
                       <div>
-                        <div className="flex items-center justify-between mb-1.5">
-                          <label className="label mb-0">ما أُنجز من محتويات وعناصر الدرس</label>
-                          <span className="text-[11px] text-slate-400">انقر على وسوم المنهاج لإضافتها</span>
+                        <div className="flex items-center justify-between mb-1">
+                          <label className="text-xs font-bold text-slate-600 dark:text-slate-300">
+                            ما أُنجز من محتويات وعناصر الدرس
+                          </label>
+                          <span className="text-[10px] text-slate-400">انقر لإضافة وسوم المنهاج</span>
                         </div>
 
-                        {/* Chips */}
-                        <div className="flex flex-wrap gap-1.5 mb-2">
+                        {/* Interactive Chips Container */}
+                        <div className="flex flex-wrap gap-1 mb-2 p-2 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
                           {CURRICULUM_CHIPS.map((chip, idx) => (
                             <button
                               key={idx}
                               type="button"
                               onClick={() => addChipToSubtopics(session.id, chip)}
-                              className="text-[11px] bg-[#076653]/5 hover:bg-[#076653]/15 text-[#076653] dark:text-emerald-400 border border-[#076653]/20 rounded-full px-2.5 py-1 transition-colors flex items-center gap-1"
+                              className="text-[11px] bg-white dark:bg-slate-800 hover:bg-emerald-50 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-md px-2 py-0.5 transition-colors flex items-center gap-1 shadow-2xs"
                             >
-                              <Plus size={10} />
+                              <Plus size={10} className="text-[#076653]" />
                               <span>{chip}</span>
                             </button>
                           ))}
@@ -361,103 +369,132 @@ function JournalContent() {
                           rows={2}
                           value={session.subtopics}
                           onChange={e => updateSessionField(session.id, 'subtopics', e.target.value)}
-                          className="input text-xs"
+                          className="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 outline-none focus:border-[#076653]"
                           placeholder="العناصر التفصيلية المنجزة، التمارين المعالجة في القسم..."
                         />
                       </div>
+                    </div>
 
-                      {/* Homework & Remarks */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div>
-                          <label className="label">الواجبات والتطبيقات المنزلية</label>
-                          <textarea
-                            rows={2}
-                            value={session.homework}
-                            onChange={e => updateSessionField(session.id, 'homework', e.target.value)}
-                            className="input text-xs"
-                            placeholder="رقم التمرين والصفحة..."
-                          />
-                        </div>
-                        <div>
-                          <label className="label">ملاحظات تربوية خاصة بالحصة</label>
-                          <textarea
-                            rows={2}
-                            value={session.remarks}
-                            onChange={e => updateSessionField(session.id, 'remarks', e.target.value)}
-                            className="input text-xs"
-                            placeholder="توجيهات، عناصر بحاجة لمعالجة بيداغوجية..."
-                          />
-                        </div>
+                    {/* Left Column (5 cols): Homework & Remarks */}
+                    <div className="lg:col-span-5 space-y-3.5">
+                      <div>
+                        <label className="text-xs font-bold text-slate-600 dark:text-slate-300 block mb-1">
+                          الواجبات والتطبيقات المنزلية
+                        </label>
+                        <textarea
+                          rows={2}
+                          value={session.homework}
+                          onChange={e => updateSessionField(session.id, 'homework', e.target.value)}
+                          className="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 outline-none focus:border-[#076653]"
+                          placeholder="رقم التمرين والصفحة..."
+                        />
+                      </div>
+
+                      <div>
+                        <label className="text-xs font-bold text-slate-600 dark:text-slate-300 block mb-1">
+                          ملاحظات تربوية خاصة بالحصة
+                        </label>
+                        <textarea
+                          rows={2}
+                          value={session.remarks}
+                          onChange={e => updateSessionField(session.id, 'remarks', e.target.value)}
+                          className="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 outline-none focus:border-[#076653]"
+                          placeholder="توجيهات، عناصر بحاجة لمعالجة بيداغوجية..."
+                        />
+                      </div>
+
+                      <div className="pt-2 flex items-center justify-between">
+                        <span className="text-[11px] text-emerald-600 font-semibold flex items-center gap-1">
+                          <Check size={13} />
+                          يتم الحفظ التلقائي لكل تعديل
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => setExpandedSessionId(null)}
+                          className="text-xs font-bold px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors"
+                        >
+                          إغلاق
+                        </button>
                       </div>
                     </div>
-                  )}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           )
         })}
       </div>
 
-      {/* ── Modal mExtra (Add Extra Session) ── */}
+      {/* ── Modal (Add Extra Session) ── */}
       {isExtraModalOpen && (
-        <div className="modal-backdrop">
-          <div className="lux-card max-w-md w-full p-6 sm:p-8 rounded-3xl shadow-2xl border border-white/60 dark:border-slate-700/60 animate-nudge">
-            <div className="flex items-center justify-between pb-3.5 border-b border-slate-100 dark:border-slate-800 mb-5">
-              <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white">إضافة حصة استثنائية / استدراك</h3>
-              <button onClick={() => setIsExtraModalOpen(false)} className="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-                <X size={18} />
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-900 max-w-md w-full p-5 sm:p-6 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 animate-fade-in">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-4">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">إضافة حصة استثنائية / استدراك</h3>
+              <button
+                onClick={() => setIsExtraModalOpen(false)}
+                className="w-7 h-7 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              >
+                <X size={16} />
               </button>
             </div>
 
-            <form onSubmit={handleAddExtraSession} className="space-y-4">
+            <form onSubmit={handleAddExtraSession} className="space-y-3.5">
               <div>
-                <label className="label">عنوان الحصة *</label>
+                <label className="text-xs font-bold text-slate-600 dark:text-slate-300 block mb-1">عنوان الحصة *</label>
                 <input
                   type="text"
                   required
                   value={extraTitle}
                   onChange={e => setExtraTitle(e.target.value)}
-                  className="input"
+                  className="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 outline-none focus:border-[#076653]"
                   placeholder="مثال: حصة استدراك، حصة دعم قبل الفرض"
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                 <div className="sm:col-span-1">
-                  <label className="label">التاريخ *</label>
+                  <label className="text-xs font-bold text-slate-600 dark:text-slate-300 block mb-1">التاريخ *</label>
                   <input
                     type="date"
                     required
                     value={extraDate}
                     onChange={e => setExtraDate(e.target.value)}
-                    className="input"
+                    className="w-full text-xs px-2.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 outline-none"
                   />
                 </div>
                 <div>
-                  <label className="label">من الساعة</label>
+                  <label className="text-xs font-bold text-slate-600 dark:text-slate-300 block mb-1">من الساعة</label>
                   <input
                     type="time"
                     value={extraStart}
                     onChange={e => setExtraStart(e.target.value)}
-                    className="input nums text-center"
+                    className="w-full text-xs px-2 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 outline-none nums text-center"
                   />
                 </div>
                 <div>
-                  <label className="label">إلى الساعة</label>
+                  <label className="text-xs font-bold text-slate-600 dark:text-slate-300 block mb-1">إلى الساعة</label>
                   <input
                     type="time"
                     value={extraEnd}
                     onChange={e => setExtraEnd(e.target.value)}
-                    className="input nums text-center"
+                    className="w-full text-xs px-2 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 outline-none nums text-center"
                   />
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-5 mt-4 border-t border-slate-100 dark:border-slate-800">
-                <button type="button" onClick={() => setIsExtraModalOpen(false)} className="btn-ghost">
+              <div className="pt-3 flex items-center justify-end gap-2 border-t border-slate-100 dark:border-slate-800">
+                <button
+                  type="button"
+                  onClick={() => setIsExtraModalOpen(false)}
+                  className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                >
                   إلغاء
                 </button>
-                <button type="submit" className="btn-primary">
+                <button
+                  type="submit"
+                  className="px-4 py-2 rounded-xl bg-[#076653] hover:bg-[#065444] text-white text-xs font-bold shadow-xs transition-colors"
+                >
                   إضافة الحصة
                 </button>
               </div>
@@ -471,7 +508,7 @@ function JournalContent() {
 
 export default function JournalPage() {
   return (
-    <Suspense fallback={<div className="p-8 text-center text-xs text-slate-400">جاري تحميل الدفتر اليومي...</div>}>
+    <Suspense fallback={<div className="p-8 text-center text-slate-400 font-bold">جاري تحميل الدفتر اليومي...</div>}>
       <JournalContent />
     </Suspense>
   )

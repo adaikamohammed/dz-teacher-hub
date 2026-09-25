@@ -44,9 +44,9 @@ export default function DashboardPage() {
   ]
 
   return (
-    <main className="flex-1 p-5 sm:p-8 lg:p-10 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
+    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 animate-fade-in" dir="rtl">
       {/* ── 1. Trial Banner matching Sanad & Quran Schools ── */}
-      <div className="mb-8 p-4 sm:p-5 rounded-2xl border border-emerald-200/80 dark:border-emerald-800/40 bg-gradient-to-r from-emerald-50/80 via-white to-emerald-50/40 dark:from-emerald-950/30 dark:via-slate-900 dark:to-emerald-950/20 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="mb-6 p-4 sm:p-5 rounded-2xl border border-emerald-200/80 dark:border-emerald-800/40 bg-gradient-to-r from-emerald-50/80 via-white to-emerald-50/40 dark:from-emerald-950/30 dark:via-slate-900 dark:to-emerald-950/20 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-3 text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200">
           <div className="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-900/40 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0">
             <Sparkles size={18} />
@@ -64,17 +64,17 @@ export default function DashboardPage() {
       </div>
 
       {/* ── 2. Greeting Header with High Visual Presence ── */}
-      <div className="mb-8">
-        <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+      <div className="mb-6">
+        <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
           صباح الخير، {userName}
         </h2>
-        <p className="text-xs sm:text-sm text-slate-400 mt-1 font-medium">
+        <p className="text-xs text-slate-400 mt-0.5 font-medium">
           {today} · السنة الدراسية 2026/2027 · الفصل الأول
         </p>
       </div>
 
-      {/* ── 3. Three Stat Cards (Spacious, Airy, rounded-3xl) ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+      {/* ── 3. Three Stat Cards (Spacious, Airy, rounded-2xl) ── */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 mb-6">
         {/* Card 1: Groups (Rightmost) */}
         <div
           onClick={() => router.push('/teacher/groups')}

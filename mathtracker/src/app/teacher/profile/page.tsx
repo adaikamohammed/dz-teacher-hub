@@ -83,26 +83,29 @@ export default function ProfilePage() {
   }
 
   return (
-    <main className="flex-1 p-5 sm:p-8 lg:p-10 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
-      {/* Streamlined Action Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+    <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 animate-fade-in" dir="rtl">
+      {/* ── Compact Single-line Page Action Bar ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
-          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
+          <h2 className="text-lg sm:text-xl font-bold text-slate-800 dark:text-slate-100">
             الملف المهني والإداري
           </h2>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+          <p className="text-xs text-slate-400 font-medium mt-0.5">
             البيانات الإدارية، الحالة المدنية، نقطة التفتيش والنقطة الإدارية
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5 self-start sm:self-auto no-print">
           {saveSuccess && (
-            <span className="text-xs sm:text-sm font-bold text-emerald-600 flex items-center gap-1.5 animate-fade-in bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1.5 rounded-xl border border-emerald-200 dark:border-emerald-800">
-              <Check size={16} /> تم الحفظ بنجاح
+            <span className="text-xs font-bold text-emerald-600 flex items-center gap-1.5 animate-fade-in bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1 rounded-xl border border-emerald-200 dark:border-emerald-800">
+              <Check size={14} /> تم الحفظ بنجاح
             </span>
           )}
-          <button onClick={() => window.print()} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold px-4 py-2 rounded-2xl flex items-center gap-2 shadow-sm text-xs sm:text-sm hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-[#076653] transition-colors no-print">
-            <Printer size={16} />
+          <button
+            onClick={() => window.print()}
+            className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-200 font-bold px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 shadow-2xs text-xs hover:border-[#076653] transition-colors"
+          >
+            <Printer size={14} />
             <span>طباعة الملف</span>
           </button>
         </div>

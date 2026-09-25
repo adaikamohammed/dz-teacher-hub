@@ -36,63 +36,54 @@ export default function PlannerPage() {
   const filteredWeeks = weeks.filter(w => w.term === selectedTerm)
 
   return (
-    <main className="flex-1 p-5 sm:p-8 lg:p-10 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
-      {/* Sub-header matching Sanad Screenshot */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-        <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-[#076653]/25 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0 shadow-sm border border-emerald-100 dark:border-emerald-800/50">
-            <Table2 size={24} />
-          </div>
-          <div>
-            <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
-              التوزيع والمنهاج السنوي
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-0.5">
-              توزيع الموارد المعرفية والكفاءات على أسابيع وأشهر السنة الدراسية 2026/2027
-            </p>
-          </div>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-3 self-start sm:self-auto">
+    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 animate-fade-in" dir="rtl">
+      {/* ── Compact Single-line Page Action Bar ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        <div className="flex flex-wrap items-center gap-3">
           {/* Term selector tabs matching Sanad Screenshot */}
-          <div className="flex items-center p-1 bg-slate-100 dark:bg-slate-800/80 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 text-xs font-bold">
+          <div className="flex items-center p-0.5 bg-slate-100 dark:bg-slate-800 rounded-xl text-xs font-bold">
             <button
               onClick={() => setSelectedTerm(1)}
-              className={`transition-all px-3.5 py-1.5 rounded-xl ${
+              className={`transition-all px-3 py-1.5 rounded-lg ${
                 selectedTerm === 1
-                  ? 'bg-white dark:bg-slate-900 text-[#076653] dark:text-emerald-400 shadow-sm font-extrabold'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                  ? 'bg-white dark:bg-slate-700 text-[#076653] dark:text-emerald-400 shadow-2xs font-extrabold'
+                  : 'text-slate-500 hover:text-slate-800 dark:text-slate-300'
               }`}
             >
               الفصل الأول
             </button>
             <button
               onClick={() => setSelectedTerm(2)}
-              className={`transition-all px-3.5 py-1.5 rounded-xl ${
+              className={`transition-all px-3 py-1.5 rounded-lg ${
                 selectedTerm === 2
-                  ? 'bg-white dark:bg-slate-900 text-[#076653] dark:text-emerald-400 shadow-sm font-extrabold'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                  ? 'bg-white dark:bg-slate-700 text-[#076653] dark:text-emerald-400 shadow-2xs font-extrabold'
+                  : 'text-slate-500 hover:text-slate-800 dark:text-slate-300'
               }`}
             >
               الفصل الثاني
             </button>
             <button
               onClick={() => setSelectedTerm(3)}
-              className={`transition-all px-3.5 py-1.5 rounded-xl ${
+              className={`transition-all px-3 py-1.5 rounded-lg ${
                 selectedTerm === 3
-                  ? 'bg-white dark:bg-slate-900 text-[#076653] dark:text-emerald-400 shadow-sm font-extrabold'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                  ? 'bg-white dark:bg-slate-700 text-[#076653] dark:text-emerald-400 shadow-2xs font-extrabold'
+                  : 'text-slate-500 hover:text-slate-800 dark:text-slate-300'
               }`}
             >
               الفصل الثالث
             </button>
           </div>
+          <span className="text-xs text-slate-400 font-medium hidden sm:inline">
+            توزيع الموارد المعرفية والكفاءات على أسابيع السنة الدراسية
+          </span>
+        </div>
 
+        <div className="flex items-center gap-2.5 self-start sm:self-auto no-print">
           <button
             onClick={() => window.print()}
-            className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold px-4 py-2 rounded-2xl flex items-center gap-2 shadow-sm text-xs sm:text-sm hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-[#076653] transition-colors no-print"
+            className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-200 font-bold px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 shadow-2xs text-xs hover:border-[#076653] transition-colors"
           >
-            <Printer size={16} />
+            <Printer size={14} />
             <span>طباعة التوزيع</span>
           </button>
         </div>

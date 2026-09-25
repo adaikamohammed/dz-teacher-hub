@@ -101,8 +101,8 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
       {/* Main Content Area */}
       <div className="flex-1 min-w-0 flex flex-col">
         {/* Top Header Bar matching Sanad (Image 1) */}
-        <header className="no-print sticky top-0 z-20 bg-white/80 dark:bg-[#0f1117]/80 backdrop-blur-md border-b border-slate-100/80 dark:border-slate-800/80 transition-colors">
-          <div className="h-16 px-4 sm:px-8 flex items-center justify-between">
+        <header className="no-print sticky top-0 z-20 bg-white/90 dark:bg-[#0f1117]/90 backdrop-blur-md border-b border-slate-200/70 dark:border-slate-800 transition-colors">
+          <div className="max-w-7xl mx-auto w-full h-16 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
             {/* Right: Hamburger for mobile + Page Title */}
             <div className="flex items-center gap-3.5">
               <button

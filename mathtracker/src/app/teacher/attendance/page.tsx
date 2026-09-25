@@ -148,29 +148,15 @@ function AttendanceContent() {
   }
 
   return (
-    <main className="flex-1 p-5 sm:p-8 lg:p-10 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
-      {/* Sub-header matching Sanad Screenshot */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-        <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 rounded-2xl bg-[#e6f4f1] dark:bg-[#076653]/20 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0 shadow-sm">
-            <ClipboardList size={24} />
-          </div>
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-              الحضور والغياب
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-0.5">
-              متابعة مواظبة التلاميذ وتسجيل الغيابات والتأخرات لكل حصة دراسية
-            </p>
-          </div>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-3 self-start sm:self-auto">
+    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 animate-fade-in" dir="rtl">
+      {/* ── Compact Single-line Page Action Bar ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        <div className="flex flex-wrap items-center gap-2.5">
           {/* Group Selector */}
           <select
             value={selectedGroupId}
             onChange={e => setSelectedGroupId(e.target.value)}
-            className="select w-auto text-xs font-bold py-2 px-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm"
+            className="select w-auto text-xs font-bold py-1.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-2xs"
           >
             {groups.map(g => (
               <option key={g.id} value={g.id}>الفوج: {g.name}</option>
@@ -178,38 +164,40 @@ function AttendanceContent() {
           </select>
 
           {/* View Mode Toggle */}
-          <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl text-xs font-semibold">
+          <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl text-xs font-semibold">
             <button
               onClick={() => setViewMode('week')}
-              className={`px-3.5 py-1.5 rounded-lg transition-colors ${
-                viewMode === 'week' ? 'bg-white dark:bg-slate-700 text-[#076653] shadow-sm font-bold' : 'text-slate-500'
+              className={`px-3 py-1 rounded-lg transition-colors ${
+                viewMode === 'week' ? 'bg-white dark:bg-slate-700 text-[#076653] dark:text-emerald-400 shadow-2xs font-bold' : 'text-slate-500'
               }`}
             >
               أسبوعي
             </button>
             <button
               onClick={() => setViewMode('month')}
-              className={`px-3.5 py-1.5 rounded-lg transition-colors ${
-                viewMode === 'month' ? 'bg-white dark:bg-slate-700 text-[#076653] shadow-sm font-bold' : 'text-slate-500'
+              className={`px-3 py-1 rounded-lg transition-colors ${
+                viewMode === 'month' ? 'bg-white dark:bg-slate-700 text-[#076653] dark:text-emerald-400 shadow-2xs font-bold' : 'text-slate-500'
               }`}
             >
               شهري
             </button>
             <button
               onClick={() => setViewMode('all')}
-              className={`px-3.5 py-1.5 rounded-lg transition-colors ${
-                viewMode === 'all' ? 'bg-white dark:bg-slate-700 text-[#076653] shadow-sm font-bold' : 'text-slate-500'
+              className={`px-3 py-1 rounded-lg transition-colors ${
+                viewMode === 'all' ? 'bg-white dark:bg-slate-700 text-[#076653] dark:text-emerald-400 shadow-2xs font-bold' : 'text-slate-500'
               }`}
             >
               كل الفصل
             </button>
           </div>
+        </div>
 
+        <div className="flex items-center gap-2.5 self-start sm:self-auto no-print">
           <button
             onClick={() => window.print()}
-            className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 shadow-sm text-xs hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors no-print"
+            className="bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 shadow-2xs text-xs hover:border-[#076653] transition-colors"
           >
-            <Printer size={15} />
+            <Printer size={14} />
             <span>طباعة</span>
           </button>
         </div>
