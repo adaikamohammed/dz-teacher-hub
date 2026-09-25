@@ -35,7 +35,7 @@ export default function SetupModal({ isOpen, onClose, onNavigateTab }: SetupModa
       isOpen={isOpen}
       onClose={onClose}
       title="خطوات تجهيز حسابك"
-      maxWidth="580px"
+      maxWidth="620px"
       footer={
         <div className="flex items-center justify-between w-full">
           <button
@@ -132,7 +132,7 @@ export default function SetupModal({ isOpen, onClose, onNavigateTab }: SetupModa
         </div>
 
         {/* PWA Install Hint matching Sanad */}
-        <div className="mt-4 rounded-xl bg-slate-900 text-white p-3.5 flex items-center gap-3 shadow-md">
+        <div className="mt-5 mb-2 rounded-xl bg-slate-900 text-white p-4 flex items-center gap-3.5 shadow-md">
           <span className="w-9 h-9 rounded-xl bg-white/10 grid place-items-center shrink-0">
             <Download size={18} />
           </span>

@@ -68,14 +68,14 @@ export default function Modal({
           onClick={(e) => e.stopPropagation()}
         >
           {/* Card Head matching Sanad */}
-          <div className="card-head shrink-0 px-5 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-white dark:bg-slate-900">
+          <div className="card-head shrink-0 px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-white dark:bg-slate-900">
             <h3 className="card-title text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
               {icon && <span className="text-[#076653] dark:text-emerald-400 shrink-0">{icon}</span>}
               <span>{title}</span>
             </h3>
             <button
               type="button"
-              className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+              className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
               onClick={onClose}
               aria-label="إغلاق"
             >
@@ -83,8 +83,8 @@ export default function Modal({
             </button>
           </div>
 
-          {/* Card Body matching Sanad */}
-          <div className="min-h-0 flex-1 overflow-y-auto card-body p-5">
+          {/* Card Body with sleek scrollbar and generous breathing room */}
+          <div className="min-h-0 flex-1 overflow-y-auto card-body px-6 py-5 pb-8 sidebar-scroll overscroll-contain">
             {subtitle && (
               <p className="text-xs text-slate-500 dark:text-slate-400 mb-3.5 leading-relaxed">
                 {subtitle}
@@ -95,7 +95,7 @@ export default function Modal({
 
           {/* Optional Card Footer matching Sanad */}
           {footer && (
-            <div className="shrink-0 border-t border-slate-100 dark:border-slate-800 px-5 py-3.5 bg-slate-50/80 dark:bg-slate-800/40 flex items-center justify-between gap-3">
+            <div className="shrink-0 border-t border-slate-100 dark:border-slate-800 px-6 py-3.5 bg-white dark:bg-slate-900 flex items-center justify-between gap-3 rounded-b-2xl">
               {footer}
             </div>
           )}
