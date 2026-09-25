@@ -272,21 +272,23 @@ export default function TimetablePage() {
   }
 
   return (
-    <main className="flex-1 p-4 sm:p-6 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
+    <main className="flex-1 px-4 sm:px-8 py-6 max-w-[1600px] w-full mx-auto animate-fade-in space-y-6" dir="rtl">
       {/* ── Page Header Bar (matching Sanad Al-Ustadh) ── */}
-      <div className="flex flex-wrap items-end justify-between gap-3 mb-5">
+      <div className="flex flex-wrap items-center justify-between gap-4 pb-1">
         <div className="min-w-0">
-          <h2 className="text-xl font-extrabold text-slate-900 dark:text-white">جدول التوقيت الأسبوعي</h2>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            2026/2027 · {teachingHours} ساعة تدريس أسبوعيًا + {otherHours} سا أنشطة
+          <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">جدول التوقيت الأسبوعي</h2>
+          <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-1.5 flex items-center gap-2">
+            <span>2026/2027</span>
+            <span className="text-slate-300 dark:text-slate-700">·</span>
+            <span>{teachingHours} ساعة تدريس أسبوعيًا + {otherHours} سا أنشطة</span>
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 no-print w-full sm:w-auto [&>*]:flex-1 sm:[&>*]:flex-none">
+        <div className="flex flex-wrap items-center gap-3 no-print w-full sm:w-auto [&>*]:flex-1 sm:[&>*]:flex-none">
           <button
             type="button"
             onClick={() => window.print()}
-            className="btn-ghost no-print"
+            className="btn-ghost px-4 py-2 text-sm font-bold flex items-center gap-2 shadow-xs"
           >
             <Printer size={16} />
             <span>طباعة</span>
@@ -295,7 +297,7 @@ export default function TimetablePage() {
           <button
             type="button"
             onClick={() => handleOpenAdd(0, 8)}
-            className="btn-primary"
+            className="btn-primary px-4 py-2 text-sm font-bold flex items-center gap-2 shadow-xs"
           >
             <Plus size={16} />
             <span>إضافة حصة</span>
@@ -305,29 +307,29 @@ export default function TimetablePage() {
 
       {/* Generation Alert Feedback */}
       {generationNotice && (
-        <div className="mb-5 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-[#076653] dark:text-emerald-300 p-4 rounded-xl text-sm font-semibold flex items-center gap-3 animate-fade-in shadow-xs">
+        <div className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-[#076653] dark:text-emerald-300 p-4 rounded-xl text-sm font-semibold flex items-center gap-3 animate-fade-in shadow-xs">
           <Check size={20} className="shrink-0 text-[#076653] dark:text-emerald-400" />
           <span>{generationNotice}</span>
         </div>
       )}
 
       {/* ── Desktop Weekly Grid Card (hidden lg:block) ── */}
-      <div className="card overflow-hidden mb-5 hidden lg:block">
-        <div className="card-head">
-          <h3 className="card-title">
+      <div className="card overflow-hidden shadow-xs border border-slate-200/80 dark:border-slate-800 hidden lg:block">
+        <div className="card-head px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+          <h3 className="card-title text-base font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
             <Calendar size={18} className="text-[#076653] dark:text-emerald-400 shrink-0" />
             <span>الشبكة الأسبوعية</span>
           </h3>
 
-          <div className="card-tools no-print flex items-center gap-3">
-            <span className="hidden xl:inline text-[11px] text-slate-400">
+          <div className="card-tools no-print flex items-center gap-4">
+            <span className="text-xs font-medium text-slate-400">
               انقر على أي خانة فارغة لإضافة حصة
             </span>
 
             <button
               type="button"
               onClick={() => setIsOnlyMyHours(!isOnlyMyHours)}
-              className="btn-ghost btn-xs text-slate-600 dark:text-slate-300"
+              className="btn-ghost btn-xs text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1.5 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               title="إخفاء الساعات الفارغة وإظهار ساعات حصصك وحدها"
             >
               <SlidersHorizontal size={14} />
@@ -337,11 +339,11 @@ export default function TimetablePage() {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="table-fixed border-collapse text-sm w-full" style={{ minWidth: isOnlyMyHours ? '100%' : '83.5rem' }}>
+          <table className="table-fixed border-collapse text-sm w-full" style={{ minWidth: isOnlyMyHours ? '100%' : '86rem' }}>
             <colgroup>
-              <col style={{ width: isOnlyMyHours ? '9rem' : '7rem' }} />
+              <col style={{ width: isOnlyMyHours ? '10rem' : '7.5rem' }} />
               {displayedPeriods.map(p => (
-                <col key={p.hour} style={{ width: isOnlyMyHours ? 'auto' : '8.5rem' }} />
+                <col key={p.hour} style={{ width: isOnlyMyHours ? 'auto' : '8.8rem' }} />
               ))}
             </colgroup>
 
@@ -349,7 +351,7 @@ export default function TimetablePage() {
               <tr>
                 <th
                   rowSpan={2}
-                  className="sticky start-0 z-20 bg-white dark:bg-slate-900 border-b border-e border-slate-200 dark:border-slate-800 px-3 py-2 text-xs font-bold text-slate-500 dark:text-slate-400 shadow-[-6px_0_10px_-8px_rgba(15,23,42,.25)]"
+                  className="sticky start-0 z-20 bg-white dark:bg-slate-900 border-b border-e border-slate-200 dark:border-slate-800 px-4 py-3 text-xs font-bold text-slate-600 dark:text-slate-400 shadow-[-6px_0_12px_-8px_rgba(15,23,42,.15)] text-center align-middle"
                 >
                   اليوم / التوقيت
                 </th>
@@ -357,7 +359,7 @@ export default function TimetablePage() {
                 {morningPeriods.length > 0 && (
                   <th
                     colSpan={morningPeriods.length}
-                    className="bg-amber-50/70 dark:bg-amber-950/20 border-b border-s border-amber-100 dark:border-amber-900/40 px-2 py-1.5 text-[11px] font-bold text-amber-700 dark:text-amber-400 text-center"
+                    className="bg-amber-50/80 dark:bg-amber-950/30 border-b border-s border-amber-200/60 dark:border-amber-900/40 px-3 py-2 text-xs font-extrabold text-amber-800 dark:text-amber-300 text-center tracking-wide"
                   >
                     الفترة الصباحية
                   </th>
@@ -366,7 +368,7 @@ export default function TimetablePage() {
                 {afternoonPeriods.length > 0 && (
                   <th
                     colSpan={afternoonPeriods.length}
-                    className="bg-sky-50/70 dark:bg-sky-950/20 border-b border-s border-sky-100 dark:border-sky-900/40 px-2 py-1.5 text-[11px] font-bold text-sky-700 dark:text-sky-400 text-center"
+                    className="bg-sky-50/80 dark:bg-sky-950/30 border-b border-s border-sky-200/60 dark:border-sky-900/40 px-3 py-2 text-xs font-extrabold text-sky-800 dark:text-sky-300 text-center tracking-wide"
                   >
                     الفترة المسائية
                   </th>
@@ -383,13 +385,15 @@ export default function TimetablePage() {
                         isTransitionToAfternoon
                           ? 'border-s-2 border-s-slate-300 dark:border-s-slate-600'
                           : 'border-s-slate-100 dark:border-s-slate-800'
-                      } px-1 py-2 text-center`}
+                      } px-2 py-2 text-center align-middle`}
                     >
-                      <div className="text-xs font-extrabold text-slate-700 dark:text-slate-200 nums">
-                        {period.start}
-                      </div>
-                      <div className="text-[10px] text-slate-400 dark:text-slate-500 nums">
-                        {period.end}
+                      <div className="flex flex-col items-center justify-center py-0.5 select-none">
+                        <span className="text-xs font-extrabold text-slate-700 dark:text-slate-200 nums leading-snug">
+                          {period.start}
+                        </span>
+                        <span className="text-[11px] font-medium text-slate-400 dark:text-slate-500 nums leading-snug mt-0.5">
+                          {period.end}
+                        </span>
                       </div>
                     </th>
                   )
@@ -401,8 +405,8 @@ export default function TimetablePage() {
               {DAYS.map(day => (
                 <tr key={day.index}>
                   {/* Sticky Day Column */}
-                  <td className="sticky start-0 z-10 bg-white dark:bg-slate-900 border-b border-e border-slate-200 dark:border-slate-800 px-3 py-3 font-bold text-center shadow-[-6px_0_10px_-8px_rgba(15,23,42,.25)]">
-                    <div className="text-slate-700 dark:text-slate-200">{day.name}</div>
+                  <td className="sticky start-0 z-10 bg-white dark:bg-slate-900 border-b border-e border-slate-200 dark:border-slate-800 px-4 py-3.5 font-bold text-sm text-center shadow-[-6px_0_12px_-8px_rgba(15,23,42,.15)]">
+                    <div className="text-slate-700 dark:text-slate-200 font-bold">{day.name}</div>
                   </td>
 
                   {/* Hours Cells */}
@@ -419,23 +423,23 @@ export default function TimetablePage() {
                           isTransitionToAfternoon
                             ? 'border-s-2 border-s-slate-300 dark:border-s-slate-600'
                             : 'border-s-slate-100 dark:border-s-slate-800/80'
-                        } p-1.5 h-20 align-middle`}
+                        } p-2 h-22 align-middle`}
                       >
                         {slot ? (
                           <div
-                            className={`group relative h-full rounded-xl px-3 py-2 flex flex-col justify-center text-center transition-all ${
+                            className={`group relative h-full rounded-xl px-3.5 py-2 flex flex-col justify-center text-center transition-all shadow-xs ${
                               slot.kind === 'lesson'
                                 ? 'bg-[#ecfaf5] dark:bg-[#076653]/15 text-[#076653] dark:text-emerald-300 ring-[#a8e5d2] dark:ring-[#076653]/40 ring-1 ring-inset'
                                 : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 ring-slate-200 dark:ring-slate-700 ring-1 ring-inset'
                             }`}
                           >
-                            <div className="font-extrabold text-sm truncate">
+                            <div className="font-extrabold text-sm truncate tracking-tight">
                               {slot.groupName}
                             </div>
-                            <div className="text-[11px] opacity-75 nums">
+                            <div className="text-[11px] font-medium opacity-75 nums mt-0.5">
                               {slot.startTime}–{slot.endTime}
                             </div>
-                            <div className="text-[10px] opacity-60">
+                            <div className="text-[10px] font-medium opacity-60 mt-0.5">
                               {slot.room}
                             </div>
 
@@ -444,7 +448,7 @@ export default function TimetablePage() {
                               <button
                                 type="button"
                                 onClick={e => handleOpenEdit(slot, e)}
-                                className="p-1 rounded-lg bg-white/90 hover:bg-white dark:bg-slate-900/90 dark:hover:bg-slate-900 text-slate-500 hover:text-[#076653] shadow-xs transition cursor-pointer"
+                                className="p-1 rounded-lg bg-white/95 hover:bg-white dark:bg-slate-900/95 dark:hover:bg-slate-900 text-slate-500 hover:text-[#076653] shadow-xs transition cursor-pointer"
                                 title="تعديل"
                               >
                                 <Edit2 size={13} />
@@ -452,7 +456,7 @@ export default function TimetablePage() {
                               <button
                                 type="button"
                                 onClick={e => handleDeleteSlot(slot.id, e)}
-                                className="p-1 rounded-lg bg-white/90 hover:bg-white dark:bg-slate-900/90 dark:hover:bg-slate-900 text-slate-300 hover:text-rose-600 shadow-xs transition cursor-pointer"
+                                className="p-1 rounded-lg bg-white/95 hover:bg-white dark:bg-slate-900/95 dark:hover:bg-slate-900 text-slate-300 hover:text-rose-600 shadow-xs transition cursor-pointer"
                                 title="حذف"
                               >
                                 <Trash2 size={13} />
@@ -479,17 +483,18 @@ export default function TimetablePage() {
         </div>
 
         {/* Legend (دليل الألوان) */}
-        <div className="flex flex-wrap items-center gap-3 px-5 py-3 border-t border-slate-100 dark:border-slate-800 text-xs">
-          <span className="inline-flex items-center gap-1.5 text-slate-600 dark:text-slate-300">
-            <span className="w-3 h-3 rounded bg-[#076653]" />
+        <div className="flex flex-wrap items-center gap-4 px-6 py-3.5 border-t border-slate-100 dark:border-slate-800 text-xs font-medium">
+          <span className="inline-flex items-center gap-2 text-slate-600 dark:text-slate-300">
+            <span className="w-3 h-3 rounded-full bg-[#076653]" />
             <span>1م1</span>
           </span>
-          <span className="inline-flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
-            <span className="w-3 h-3 rounded bg-slate-300 dark:bg-slate-600" />
+          <span className="inline-flex items-center gap-2 text-slate-500 dark:text-slate-400">
+            <span className="w-3 h-3 rounded-full bg-slate-300 dark:bg-slate-600" />
             <span>استقبال / تنسيق</span>
           </span>
         </div>
       </div>
+
 
       {/* ── Mobile List View (lg:hidden) ── */}
       <div className="lg:hidden space-y-3 mb-5">
