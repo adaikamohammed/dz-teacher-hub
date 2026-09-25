@@ -69,6 +69,19 @@ const SAMPLE_CURRICULUM_UNITS: CurriculumUnit[] = [
   },
 ]
 
+function getDomainBadge(domain: string) {
+  if (domain === 'أنشطة عددية') {
+    return <span className="badge badge-amber">{domain}</span>
+  }
+  if (domain === 'أنشطة هندسية') {
+    return <span className="badge badge-blue">{domain}</span>
+  }
+  if (domain === 'تنظيم معطيات وتناسبية') {
+    return <span className="badge badge-slate">{domain}</span>
+  }
+  return <span className="badge badge-brand">{domain}</span>
+}
+
 export default function CurriculumPage() {
   const [selectedSubject, setSelectedSubject] = useState('math')
   const [selectedGrade, setSelectedGrade] = useState('1am')
@@ -92,47 +105,49 @@ export default function CurriculumPage() {
           </p>
         </div>
 
-        {/* Filters */}
-        <div className="flex flex-wrap items-center gap-2.5 self-start sm:self-auto">
-          <select
-            value={selectedGrade}
-            onChange={e => setSelectedGrade(e.target.value)}
-            className="select w-auto text-xs font-bold py-1.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-2xs hover:border-[#076653] transition-colors"
-          >
-            <option value="1am">1 متوسط (1AM)</option>
-            <option value="2am">2 متوسط (2AM)</option>
-            <option value="3am">3 متوسط (3AM)</option>
-            <option value="4am">4 متوسط (4AM)</option>
-            <option value="1as">1 ثانوي (1AS)</option>
-            <option value="2as">2 ثانوي (2AS)</option>
-            <option value="3as">3 ثانوي (3AS)</option>
-          </select>
+        {/* Filters wrapped in section-card */}
+        <div className="section-card p-3">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <select
+              value={selectedGrade}
+              onChange={e => setSelectedGrade(e.target.value)}
+              className="select w-auto text-xs font-bold py-1.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-2xs hover:border-[#076653] transition-colors"
+            >
+              <option value="1am">1 متوسط (1AM)</option>
+              <option value="2am">2 متوسط (2AM)</option>
+              <option value="3am">3 متوسط (3AM)</option>
+              <option value="4am">4 متوسط (4AM)</option>
+              <option value="1as">1 ثانوي (1AS)</option>
+              <option value="2as">2 ثانوي (2AS)</option>
+              <option value="3as">3 ثانوي (3AS)</option>
+            </select>
 
-          <select
-            value={selectedSubject}
-            onChange={e => setSelectedSubject(e.target.value)}
-            className="select w-auto text-xs font-bold py-1.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-2xs hover:border-[#076653] transition-colors"
-          >
-            <option value="math">الرياضيات</option>
-            <option value="arabic">اللغة العربية</option>
-            <option value="physics">العلوم الفيزيائية</option>
-            <option value="science">علوم الطبيعة والحياة</option>
-            <option value="french">اللغة الفرنسية</option>
-            <option value="english">اللغة الإنجليزية</option>
-          </select>
+            <select
+              value={selectedSubject}
+              onChange={e => setSelectedSubject(e.target.value)}
+              className="select w-auto text-xs font-bold py-1.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-2xs hover:border-[#076653] transition-colors"
+            >
+              <option value="math">الرياضيات</option>
+              <option value="arabic">اللغة العربية</option>
+              <option value="physics">العلوم الفيزيائية</option>
+              <option value="science">علوم الطبيعة والحياة</option>
+              <option value="french">اللغة الفرنسية</option>
+              <option value="english">اللغة الإنجليزية</option>
+            </select>
+
+            {/* Search Input inside the card */}
+            <div className="relative flex-1 min-w-[200px]">
+              <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-slate-400" />
+              <input
+                type="text"
+                placeholder="ابحث في عناصر المنهاج..."
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                className="input ps-9 py-1.5 rounded-xl text-xs font-medium w-full"
+              />
+            </div>
+          </div>
         </div>
-      </div>
-
-      {/* Search Input */}
-      <div className="mb-8 relative">
-        <Search size={20} className="absolute start-4 top-1/2 -translate-y-1/2 text-slate-400" />
-        <input
-          type="text"
-          placeholder="ابحث في عناصر المنهاج والكفاءات والمحتويات..."
-          value={searchQuery}
-          onChange={e => setSearchQuery(e.target.value)}
-          className="input ps-12 py-3 rounded-2xl text-sm font-medium"
-        />
       </div>
 
       {/* Curriculum Units Breakdown */}
@@ -141,7 +156,7 @@ export default function CurriculumPage() {
           const isExpanded = expandedUnitId === unit.id
 
           return (
-            <div key={unit.id} className="lux-card overflow-hidden hover:shadow-lg transition-all">
+            <div key={unit.id} className="section-card overflow-hidden hover:shadow-lg transition-all">
               <div
                 onClick={() => setExpandedUnitId(isExpanded ? null : unit.id)}
                 className="p-4 sm:p-5 flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"
@@ -151,9 +166,9 @@ export default function CurriculumPage() {
                     <BookOpen size={20} />
                   </div>
                   <div className="min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span className="badge badge-brand text-[10px]">{unit.domain}</span>
-                      <span className="text-xs text-slate-400 nums">الحجم المقترح: {unit.hours} ساعة</span>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      {getDomainBadge(unit.domain)}
+                      <span className="badge badge-slate text-xs">{unit.hours} ساعة</span>
                     </div>
                     <h2 className="text-base font-bold text-slate-900 dark:text-white mt-1 truncate">
                       {unit.title}
@@ -174,14 +189,11 @@ export default function CurriculumPage() {
                       <CheckCircle2 size={16} />
                       <span>الكفاءات الختامية المستهدفة (Objectifs d'apprentissage)</span>
                     </h3>
-                    <ul className="space-y-1.5 pr-2">
+                    <div className="flex flex-wrap gap-2">
                       {unit.competencies.map((comp, idx) => (
-                        <li key={idx} className="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#076653] mt-1.5 shrink-0" />
-                          <span>{comp}</span>
-                        </li>
+                        <span key={idx} className="topic-chip">{comp}</span>
                       ))}
-                    </ul>
+                    </div>
                   </div>
 
                   {/* Knowledge Contents */}
@@ -190,17 +202,22 @@ export default function CurriculumPage() {
                       <Layers size={16} />
                       <span>الموارد المعرفية وعناصر الدرس المفصلة</span>
                     </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <ul className="space-y-1.5">
                       {unit.contents.map((item, idx) => (
-                        <div
-                          key={idx}
-                          className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2"
-                        >
-                          <span className="w-1.5 h-1.5 rounded-full bg-slate-400 shrink-0" />
-                          <span>{item}</span>
-                        </div>
+                        <li key={idx} className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300">
+                          <span className="text-[#076653] mt-0.5 shrink-0">●</span>
+                          {item}
+                        </li>
                       ))}
+                    </ul>
+                  </div>
+
+                  {/* Progress Bar */}
+                  <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800">
+                    <div className="flex justify-between text-[10px] text-slate-400 mb-1">
+                      <span>نسبة الإنجاز</span><span className="nums">65%</span>
                     </div>
+                    <div className="progress-slim"><div className="progress-slim-bar bg-[#076653]" style={{ width: '65%' }} /></div>
                   </div>
                 </div>
               )}

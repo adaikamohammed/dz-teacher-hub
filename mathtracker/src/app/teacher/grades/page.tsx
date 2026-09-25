@@ -212,51 +212,51 @@ function GradesContent() {
         </div>
       </div>
 
-      {/* 4 Stat Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
-        <div className="lux-card p-5 sm:p-6 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-100/80 dark:border-emerald-800/40">
+      {/* 4 KPI Cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-6">
+        <div className="kpi-card">
+          <div>
+            <div className="kpi-value nums">{stats.avg}</div>
+            <div className="kpi-label">معدل القسم · الفصل 1</div>
+          </div>
+          <div className="kpi-icon bg-emerald-50 dark:bg-emerald-950/60 text-[#076653] dark:text-emerald-400 border border-emerald-100/80 dark:border-emerald-800/40">
             <TrendingUp size={22} />
           </div>
-          <div>
-            <div className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white nums">{stats.avg}</div>
-            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-0.5">معدل القسم · الفصل 1</div>
-          </div>
         </div>
 
-        <div className="lux-card p-5 sm:p-6 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-[#065a48] dark:text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-100/80 dark:border-emerald-800/40">
+        <div className="kpi-card">
+          <div>
+            <div className="kpi-value nums">{stats.passPct}%</div>
+            <div className="kpi-label">نسبة النجاح (≥ 10)</div>
+          </div>
+          <div className="kpi-icon bg-emerald-50 dark:bg-emerald-950/60 text-[#065a48] dark:text-emerald-400 border border-emerald-100/80 dark:border-emerald-800/40">
             <Users size={22} />
           </div>
-          <div>
-            <div className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white nums">{stats.passPct}%</div>
-            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-0.5">نسبة النجاح (≥ 10)</div>
-          </div>
         </div>
 
-        <div className="lux-card p-5 sm:p-6 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-100/80 dark:border-emerald-800/40">
+        <div className="kpi-card">
+          <div>
+            <div className="kpi-value text-emerald-600 dark:text-emerald-400 nums">{stats.max}</div>
+            <div className="kpi-label">أعلى معدل بالفوج</div>
+          </div>
+          <div className="kpi-icon bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-100/80 dark:border-emerald-800/40">
             <Award size={22} />
           </div>
-          <div>
-            <div className="text-2xl sm:text-3xl font-black text-emerald-600 dark:text-emerald-400 nums">{stats.max}</div>
-            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-0.5">أعلى معدل بالفوج</div>
-          </div>
         </div>
 
-        <div className="lux-card p-5 sm:p-6 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0 border border-rose-100 dark:border-rose-900/40">
-            <AlertCircle size={22} />
-          </div>
+        <div className="kpi-card">
           <div>
-            <div className="text-2xl sm:text-3xl font-black text-rose-600 dark:text-rose-400 nums">{stats.min}</div>
-            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-0.5">أدنى معدل بالفوج</div>
+            <div className="kpi-value text-rose-600 dark:text-rose-400 nums">{stats.min}</div>
+            <div className="kpi-label">أدنى معدل بالفوج</div>
+          </div>
+          <div className="kpi-icon bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border border-rose-100 dark:border-rose-900/40">
+            <AlertCircle size={22} />
           </div>
         </div>
       </div>
 
       {/* Grades Table */}
-      <div className="lux-card overflow-hidden">
+      <div className="section-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-right border-collapse text-sm">
             <thead>

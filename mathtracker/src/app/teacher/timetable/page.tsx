@@ -156,19 +156,17 @@ export default function TimetablePage() {
       )}
 
       {/* Timetable Grid */}
-      <div className="lux-card p-5 sm:p-7 overflow-x-auto">
+      <div className="section-card overflow-x-auto">
         <table className="w-full text-center border-collapse min-w-[750px]">
           <thead>
-            <tr>
-              <th className="p-3.5 border border-slate-200/60 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-800/60 text-xs font-bold text-slate-700 dark:text-slate-200 w-28 rounded-tr-2xl">
+            <tr className="bg-slate-50 dark:bg-slate-800/50">
+              <th className="p-3.5 border-b-2 border-r border-slate-200/60 dark:border-slate-800 text-xs font-bold text-slate-600 dark:text-slate-300 w-28">
                 الحصة / اليوم
               </th>
               {DAYS.map((d, dIdx) => (
                 <th
                   key={dIdx}
-                  className={`p-3.5 border border-slate-200/60 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-800/60 text-xs font-bold text-slate-700 dark:text-slate-200 ${
-                    dIdx === DAYS.length - 1 ? 'rounded-tl-2xl' : ''
-                  }`}
+                  className="p-3.5 border-b-2 border-r last:border-r-0 border-slate-200/60 dark:border-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200"
                 >
                   {d}
                 </th>
@@ -178,9 +176,9 @@ export default function TimetablePage() {
 
           <tbody>
             {PERIODS.slice(0, 5).map((period, pIdx) => (
-              <tr key={pIdx}>
+              <tr key={pIdx} className="border-b border-slate-100 dark:border-slate-800 last:border-b-0">
                 {/* Time Period Column */}
-                <td className="p-3.5 border border-slate-200/60 dark:border-slate-800 bg-slate-50/40 dark:bg-slate-800/30 text-xs font-black text-slate-600 dark:text-slate-300 nums whitespace-nowrap">
+                <td className="p-3 border-r border-slate-200/60 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-800/30 text-xs font-black text-slate-600 dark:text-slate-300 nums whitespace-nowrap">
                   {period.label}
                 </td>
 
@@ -192,10 +190,10 @@ export default function TimetablePage() {
                     <td
                       key={dIdx}
                       onClick={() => handleCellClick(dIdx, pIdx)}
-                      className="p-2 border border-slate-200/60 dark:border-slate-800 h-22 align-middle transition-colors cursor-pointer group hover:bg-emerald-50/30 dark:hover:bg-slate-800/30"
+                      className="p-2 border-r last:border-r-0 border-slate-100 dark:border-slate-800 h-24 align-middle transition-colors cursor-pointer group hover:bg-emerald-50/30 dark:hover:bg-slate-800/30"
                     >
                       {slot ? (
-                        <div className={`w-full h-18 rounded-2xl p-2.5 flex flex-col items-center justify-center shadow-md cursor-pointer hover:scale-[1.02] transition-all text-white ${slot.color}`}>
+                        <div className={`w-full h-20 rounded-2xl p-2.5 flex flex-col items-center justify-center shadow-md cursor-pointer hover:scale-[1.02] transition-all text-white ${slot.color}`}>
                           <div className="font-black text-sm text-white text-center leading-tight">
                             {slot.groupName}
                           </div>
@@ -205,7 +203,7 @@ export default function TimetablePage() {
                           </div>
                         </div>
                       ) : (
-                        <div className="w-full h-18 rounded-2xl border-2 border-dashed border-slate-200/80 dark:border-slate-700/80 flex items-center justify-center text-slate-300 dark:text-slate-600 group-hover:border-[#076653] group-hover:text-[#076653] group-hover:bg-[#076653]/5 transition-all">
+                        <div className="w-full h-20 rounded-2xl border-2 border-dashed border-slate-200/80 dark:border-slate-700/80 flex items-center justify-center text-slate-300 dark:text-slate-600 group-hover:border-[#076653] group-hover:text-[#076653] group-hover:bg-[#076653]/5 transition-all">
                           <Plus size={18} />
                         </div>
                       )}
@@ -216,6 +214,22 @@ export default function TimetablePage() {
             ))}
           </tbody>
         </table>
+
+        {/* Legend */}
+        {slots.length > 0 && (
+          <div className="px-5 py-3 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center gap-3">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">الأفواج:</span>
+            {[...new Set(slots.map(s => s.groupName))].map(name => {
+              const slot = slots.find(s => s.groupName === name)
+              return slot ? (
+                <div key={name} className="flex items-center gap-1.5">
+                  <div className={`w-3 h-3 rounded-sm ${slot.color}`} />
+                  <span className="text-xs font-bold text-slate-600 dark:text-slate-300">{name}</span>
+                </div>
+              ) : null
+            })}
+          </div>
+        )}
       </div>
 
       {/* ── Modal (Assign Slot) ── */}

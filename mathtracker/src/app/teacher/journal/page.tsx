@@ -180,18 +180,14 @@ function JournalContent() {
       {/* ── Compact Single-line Page Action Bar ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         {/* Right: Group Tabs */}
-        <div className="flex items-center gap-1.5 p-1 bg-slate-100 dark:bg-slate-800 rounded-xl w-fit">
+        <div className="filter-tabs">
           {GROUPS_LIST.map(g => (
             <button
               key={g.id}
               onClick={() => setSelectedGroupId(g.id)}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                selectedGroupId === g.id
-                  ? 'bg-white dark:bg-slate-900 text-[#076653] dark:text-emerald-400 shadow-xs'
-                  : 'text-slate-500 hover:text-slate-800 dark:text-slate-300'
-              }`}
+              className={`filter-tab ${selectedGroupId === g.id ? 'active' : ''}`}
             >
-              {g.name}
+              الفوج {g.name}
             </button>
           ))}
         </div>
@@ -213,6 +209,45 @@ function JournalContent() {
             <Printer size={15} />
             <span>طباعة الدفتر</span>
           </button>
+        </div>
+      </div>
+
+      {/* ── KPI Stats for Group ── */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        <div className="kpi-card">
+          <div>
+            <div className="kpi-value nums text-[#076653] dark:text-emerald-400">
+              {sessions.filter(s => s.status === 'done').length}
+            </div>
+            <div className="kpi-label">حصص منجزة مسجلة في الدفتر</div>
+          </div>
+          <div className="kpi-icon bg-emerald-50 dark:bg-emerald-950/40 text-[#076653] dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/40">
+            <CheckCircle2 size={22} />
+          </div>
+        </div>
+
+        <div className="kpi-card">
+          <div>
+            <div className="kpi-value nums text-amber-600">
+              {sessions.filter(s => s.status === 'planned').length}
+            </div>
+            <div className="kpi-label">حصص مبرمجة قادمة</div>
+          </div>
+          <div className="kpi-icon bg-amber-50 dark:bg-amber-950/40 text-amber-600 border border-amber-100 dark:border-amber-900/40">
+            <Clock size={22} />
+          </div>
+        </div>
+
+        <div className="kpi-card">
+          <div>
+            <div className="kpi-value nums text-blue-600">
+              {sessions.length > 0 ? Math.round((sessions.filter(s => s.status === 'done').length / sessions.length) * 100) : 0}%
+            </div>
+            <div className="kpi-label">نسبة تنفيذ البرنامج المسجل</div>
+          </div>
+          <div className="kpi-icon bg-blue-50 dark:bg-blue-950/40 text-blue-600 border border-blue-100 dark:border-blue-900/40">
+            <BookOpen size={22} />
+          </div>
         </div>
       </div>
 

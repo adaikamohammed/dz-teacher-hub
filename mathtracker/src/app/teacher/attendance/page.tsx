@@ -203,6 +203,37 @@ function AttendanceContent() {
         </div>
       </div>
 
+      {/* KPI Stats */}
+      <div className="grid grid-cols-3 gap-3 sm:gap-4 mb-5">
+        <div className="kpi-card">
+          <div>
+            <div className="kpi-value text-rose-600">0</div>
+            <div className="kpi-label">إجمالي الغيابات هذا الفصل</div>
+          </div>
+          <div className="kpi-icon bg-rose-50 dark:bg-rose-950/40 text-rose-500 border border-rose-100 dark:border-rose-900/40">
+            <span className="text-lg font-black">غ</span>
+          </div>
+        </div>
+        <div className="kpi-card">
+          <div>
+            <div className="kpi-value text-amber-600">0</div>
+            <div className="kpi-label">حالات تأخر هذا الفصل</div>
+          </div>
+          <div className="kpi-icon bg-amber-50 dark:bg-amber-950/40 text-amber-500 border border-amber-100 dark:border-amber-900/40">
+            <span className="text-lg font-black">ت</span>
+          </div>
+        </div>
+        <div className="kpi-card">
+          <div>
+            <div className="kpi-value text-sky-600">0</div>
+            <div className="kpi-label">تلاميذ بعذر مقبول</div>
+          </div>
+          <div className="kpi-icon bg-sky-50 dark:bg-sky-950/40 text-sky-500 border border-sky-100 dark:border-sky-900/40">
+            <span className="text-lg font-black">ع</span>
+          </div>
+        </div>
+      </div>
+
       {/* Legend & Ministry Circular Note */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50 dark:bg-slate-800/40 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 mb-6 text-xs">
         {/* State Legend */}
@@ -226,8 +257,9 @@ function AttendanceContent() {
       </div>
 
       {/* Main Attendance Table */}
-      <div className="lux-card overflow-hidden">
+      <div className="section-card overflow-hidden">
         <div className="overflow-x-auto">
+
           <table className="w-full text-right border-collapse text-sm">
             <thead>
               <tr className="bg-slate-100/80 dark:bg-slate-800/80 border-b border-slate-200/80 dark:border-slate-700">

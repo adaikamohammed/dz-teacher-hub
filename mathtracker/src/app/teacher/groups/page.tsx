@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import {
   Users, Plus, Edit2, Trash2, Calendar, Award,
-  ClipboardList, BookOpen, Clock, Building,
+  ClipboardList, BookOpen, Clock, Building, Star,
   ArrowRight, Check, X, AlertTriangle, Sparkles
 } from 'lucide-react'
 
@@ -233,130 +233,66 @@ export default function GroupsPage() {
           </button>
         </div>
       ) : (
-        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-          {groups.map(group => {
-            const colorCfg = COLOR_CLASSES[group.color] || COLOR_CLASSES.brand
-            const progressPct = group.totalSessions > 0
-              ? Math.min(100, Math.round((group.completedSessions / group.totalSessions) * 100))
-              : 0
-
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+          {groups.map(g => {
             return (
-              <div
-                key={group.id}
-                className="lux-card p-6 sm:p-7 flex flex-col justify-between hover:scale-[1.01] transition-all"
-              >
-                {/* Top Accent Rounded Pill Bar */}
-                <div className={`h-2 w-full rounded-full mb-4 ${colorCfg.bar}`} />
-
-                <div>
-                  {/* Card Title & Room */}
-                  <div className="flex items-center justify-between gap-3 mb-1">
-                    <div className="flex items-center gap-2">
-                      <span className={`text-[11px] font-bold px-2 py-0.5 rounded-md ${colorCfg.badge}`}>
-                        {group.level}
-                      </span>
-                      <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-                        {group.name}
-                      </h3>
+              <div key={g.id} className="group-card">
+                {/* Colored top bar */}
+                <div className={`group-card-top-bar ${COLOR_CLASSES[g.color].bar}`} />
+                <div className="group-card-body">
+                  {/* Avatar + info + edit/delete */}
+                  <div className="flex items-start gap-3 mb-3">
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center font-black text-sm text-white shrink-0 ${COLOR_CLASSES[g.color].bar}`}>
+                      {g.name}
                     </div>
-
-                    {group.room && (
-                      <span className="text-xs text-slate-400 dark:text-slate-500 flex items-center gap-1 font-medium">
-                        <Building size={13} />
-                        <span>{group.room}</span>
-                      </span>
-                    )}
-                  </div>
-
-                  <p className="text-xs text-slate-400 dark:text-slate-500 mb-4 font-medium">
-                    {group.stream}
-                  </p>
-
-                  {/* 3 Metric Columns */}
-                  <div className="grid grid-cols-3 gap-2 my-3 text-center border-y border-slate-100 dark:border-slate-800 py-3">
-                    <div>
-                      <div className="text-[11px] text-slate-400 font-medium">التلاميذ</div>
-                      <div className="text-base font-bold text-slate-800 dark:text-slate-100 nums mt-0.5">
-                        {group.studentsCount}
-                      </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-black text-slate-900 dark:text-white text-base">{g.name}</h3>
+                      <p className="text-xs text-slate-400 mt-0.5">{g.level} · {g.stream}</p>
                     </div>
-                    <div>
-                      <div className="text-[11px] text-slate-400 font-medium">ساعة/أسبوع</div>
-                      <div className="text-base font-bold text-slate-800 dark:text-slate-100 nums mt-0.5">
-                        سا {group.weeklyHours}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-[11px] text-slate-400 font-medium">المعامل</div>
-                      <div className="text-base font-bold text-slate-800 dark:text-slate-100 nums mt-0.5">
-                        {group.coefficient}
-                      </div>
+                    {/* Edit / Delete buttons */}
+                    <div className="flex items-center gap-1 shrink-0">
+                      <button
+                        onClick={() => handleOpenEdit(g)}
+                        title="تعديل الفوج"
+                        className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                      >
+                        <Edit2 size={14} />
+                      </button>
+                      <button
+                        onClick={() => setDeleteConfirmId(g.id)}
+                        title="حذف الفوج"
+                        className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors"
+                      >
+                        <Trash2 size={14} />
+                      </button>
                     </div>
                   </div>
-
-                  {/* Progress of sessions */}
-                  <div className="mb-4">
-                    <div className="flex items-center justify-between text-xs mb-1.5 font-medium">
-                      <span className="text-slate-500 dark:text-slate-400">حصص الفصل الأول</span>
-                      <span className="nums text-slate-700 dark:text-slate-300 font-bold">
-                        {group.completedSessions}/{group.totalSessions} ({progressPct}%)
-                      </span>
-                    </div>
-                    <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
-                      <div
-                        className={`h-full rounded-full transition-all duration-500 ${colorCfg.bar}`}
-                        style={{ width: `${progressPct}%` }}
-                      />
-                    </div>
+                  {/* Stats row */}
+                  <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mb-3">
+                    <span className="flex items-center gap-1"><Users size={12} /> {g.studentsCount} تلميذ</span>
+                    <span className="flex items-center gap-1"><Clock size={12} /> {g.weeklyHours}س/أسبوع</span>
+                    <span className="flex items-center gap-1"><Building size={12} /> {g.room}</span>
                   </div>
-
-                  {/* Quick Action Navigation Buttons */}
-                  <div className="grid grid-cols-3 gap-2 mt-4">
-                    <button
-                      onClick={() => router.push(`/teacher/attendance?group=${group.id}`)}
-                      className="bg-slate-50 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700/60 border border-slate-100 dark:border-slate-700/80 text-slate-700 dark:text-slate-200 text-xs font-semibold py-2 px-2.5 rounded-xl flex items-center justify-center gap-1.5 transition-colors"
-                    >
-                      <ClipboardList size={14} className="text-[#076653] dark:text-emerald-400" />
-                      <span>الغياب</span>
-                    </button>
-                    <button
-                      onClick={() => router.push(`/teacher/grades?group=${group.id}`)}
-                      className="bg-slate-50 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700/60 border border-slate-100 dark:border-slate-700/80 text-slate-700 dark:text-slate-200 text-xs font-semibold py-2 px-2.5 rounded-xl flex items-center justify-center gap-1.5 transition-colors"
-                    >
-                      <Award size={14} className="text-amber-500" />
-                      <span>النقاط</span>
-                    </button>
-                    <button
-                      onClick={() => router.push(`/teacher/journal?group=${group.id}`)}
-                      className="bg-slate-50 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700/60 border border-slate-100 dark:border-slate-700/80 text-slate-700 dark:text-slate-200 text-xs font-semibold py-2 px-2.5 rounded-xl flex items-center justify-center gap-1.5 transition-colors"
-                    >
-                      <BookOpen size={14} className="text-sky-500" />
-                      <span>الدفتر</span>
-                    </button>
+                  {/* Progress bar */}
+                  <div className="mb-1 flex items-center justify-between text-[10px] text-slate-400">
+                    <span>الحصص المنجزة</span>
+                    <span className="nums">{g.completedSessions}/{g.totalSessions}</span>
+                  </div>
+                  <div className="progress-slim">
+                    <div className={`progress-slim-bar ${COLOR_CLASSES[g.color].bar}`} style={{ width: `${Math.round((g.completedSessions / g.totalSessions) * 100)}%` }} />
                   </div>
                 </div>
-
-                {/* Card Footer Actions */}
-                <div className="pt-3 mt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
-                  <span className="text-slate-400 dark:text-slate-500 truncate max-w-[170px]">
-                    {group.notes || 'لا توجد ملاحظات'}
-                  </span>
-                  <div className="flex items-center gap-1">
-                    <button
-                      onClick={() => handleOpenEdit(group)}
-                      title="تعديل الفوج"
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                    >
-                      <Edit2 size={14} />
-                    </button>
-                    <button
-                      onClick={() => setDeleteConfirmId(group.id)}
-                      title="حذف الفوج"
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors"
-                    >
-                      <Trash2 size={14} />
-                    </button>
-                  </div>
+                {/* Footer actions */}
+                <div className="group-card-footer">
+                  <button onClick={() => router.push('/teacher/attendance?group=' + g.id)} className="group-card-action-btn">
+                    <ClipboardList size={13} /> حضور
+                  </button>
+                  <button onClick={() => router.push('/teacher/grades?group=' + g.id)} className="group-card-action-btn">
+                    <Star size={13} /> علامات
+                  </button>
+                  <button onClick={() => router.push('/teacher/journal?group=' + g.id)} className="group-card-action-btn">
+                    <BookOpen size={13} /> دفتر
+                  </button>
                 </div>
               </div>
             )

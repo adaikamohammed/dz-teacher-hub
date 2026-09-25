@@ -1,10 +1,11 @@
-'use client'
+﻿'use client'
 
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import {
   Users, GraduationCap, BarChart3, Clock,
-  AlertTriangle, Sparkles, CalendarDays, CheckCircle2
+  AlertTriangle, Sparkles, CheckCircle2,
+  ClipboardList, Star, BookOpen, ArrowLeft
 } from 'lucide-react'
 
 const DAYS_AR = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت']
@@ -20,7 +21,7 @@ export default function DashboardPage() {
   const [userName, setUserName] = useState('محمد')
   const today = getTodayAr()
   const dayIndex = new Date().getDay()
-  const isWeekend = dayIndex === 5 || dayIndex === 6 // Friday or Saturday
+  const isWeekend = dayIndex === 5 || dayIndex === 6
 
   useEffect(() => {
     const stored = localStorage.getItem('mt_teacher_profile')
@@ -36,146 +37,129 @@ export default function DashboardPage() {
     }
   }, [])
 
-  // Pending sessions matching Image 1
   const pendingSessions = [
-    { group: '1م1', date: '20/09' },
-    { group: '1م1', date: '13/09' },
-    { group: '1م1', date: '06/09' },
+    { group: '1م1', date: '20/09', subject: 'الرياضيات', room: 'القاعة 04' },
+    { group: '1م1', date: '13/09', subject: 'الرياضيات', room: 'القاعة 04' },
+    { group: '1م1', date: '06/09', subject: 'الرياضيات', room: 'القاعة 04' },
+  ]
+
+  const quickActions = [
+    { icon: ClipboardList, label: 'سجل الحضور', colorClass: 'bg-sky-50 dark:bg-sky-950/30 text-sky-600 dark:text-sky-400', route: '/teacher/attendance' },
+    { icon: Star, label: 'أدخل علامة', colorClass: 'bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400', route: '/teacher/grades' },
+    { icon: BookOpen, label: 'الدفتر اليومي', colorClass: 'bg-violet-50 dark:bg-violet-950/30 text-violet-600 dark:text-violet-400', route: '/teacher/journal' },
+    { icon: BarChart3, label: 'النتائج', colorClass: 'bg-rose-50 dark:bg-rose-950/30 text-rose-600 dark:text-rose-400', route: '/teacher/results' },
   ]
 
   return (
     <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 animate-fade-in" dir="rtl">
-      {/* ── 1. Trial Banner matching Sanad & Quran Schools ── */}
+
+      {/* Trial Banner */}
       <div className="mb-6 p-4 sm:p-5 rounded-2xl border border-emerald-200/80 dark:border-emerald-800/40 bg-gradient-to-r from-emerald-50/80 via-white to-emerald-50/40 dark:from-emerald-950/30 dark:via-slate-900 dark:to-emerald-950/20 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-3 text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200">
           <div className="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-900/40 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0">
             <Sparkles size={18} />
           </div>
           <span>
-            تبقّى <strong className="text-[#076653] dark:text-emerald-400 font-black">7 أيام</strong> من التجربة — بعدها يبقى حسابك مجانيا بفوج واحد، ولا تُحذف بياناتك أبداً.
+            تبقّى <strong className="text-[#076653] dark:text-emerald-400 font-black">7 أيام</strong> من التجربة
           </span>
         </div>
-        <button
-          onClick={() => router.push('/teacher/subscribe')}
-          className="gold-btn px-5 py-2 text-xs cursor-pointer self-end sm:self-auto shrink-0"
-        >
+        <button onClick={() => router.push('/teacher/subscribe')} className="gold-btn px-5 py-2 text-xs cursor-pointer self-end sm:self-auto shrink-0">
           اشترك الآن
         </button>
       </div>
 
-      {/* ── 2. Greeting Header with High Visual Presence ── */}
+      {/* Greeting */}
       <div className="mb-6">
         <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
-          صباح الخير، {userName}
+          صباح الخير، {userName} 👋
         </h2>
-        <p className="text-xs text-slate-400 mt-0.5 font-medium">
+        <p className="text-xs text-slate-400 mt-1 font-medium">
           {today} · السنة الدراسية 2026/2027 · الفصل الأول
         </p>
       </div>
 
-      {/* ── 3. Three Stat Cards (Spacious, Airy, rounded-2xl) ── */}
+      {/* KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 mb-6">
-        {/* Card 1: Groups (Rightmost) */}
-        <div
-          onClick={() => router.push('/teacher/groups')}
-          className="lux-card p-6 cursor-pointer flex items-center justify-between hover:scale-[1.01] transition-all"
-        >
+        <div onClick={() => router.push('/teacher/groups')} className="kpi-card cursor-pointer">
           <div>
-            <div className="text-3xl font-black text-slate-900 dark:text-white nums">1</div>
-            <div className="text-xs font-bold text-slate-400 mt-1">أفواج تربوية نشطة</div>
+            <div className="kpi-value">3</div>
+            <div className="kpi-label">أفواج تربوية نشطة</div>
           </div>
-          <div className="w-14 h-14 rounded-2xl bg-[#e6f4ee] dark:bg-[#076653]/20 text-[#076653] dark:text-emerald-400 flex items-center justify-center shadow-sm">
-            <Users size={26} />
+          <div className="kpi-icon bg-emerald-50 dark:bg-emerald-950/40 text-[#076653] dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/40">
+            <Users size={22} />
           </div>
         </div>
-
-        {/* Card 2: Students (Center) */}
-        <div
-          onClick={() => router.push('/teacher/grades')}
-          className="lux-card p-6 cursor-pointer flex items-center justify-between hover:scale-[1.01] transition-all"
-        >
+        <div onClick={() => router.push('/teacher/grades')} className="kpi-card cursor-pointer">
           <div>
-            <div className="text-3xl font-black text-slate-900 dark:text-white nums">2</div>
-            <div className="text-xs font-bold text-slate-400 mt-1">تلاميذ مسجلين</div>
+            <div className="kpi-value">96</div>
+            <div className="kpi-label">إجمالي التلاميذ المسجلين</div>
           </div>
-          <div className="w-14 h-14 rounded-2xl bg-[#e0f2fe] dark:bg-sky-950/40 text-[#0284c7] dark:text-sky-400 flex items-center justify-center shadow-sm">
-            <GraduationCap size={26} />
+          <div className="kpi-icon bg-sky-50 dark:bg-sky-950/40 text-sky-600 dark:text-sky-400 border border-sky-100 dark:border-sky-900/40">
+            <GraduationCap size={22} />
           </div>
         </div>
-
-        {/* Card 3: Term Average (Leftmost) */}
-        <div
-          onClick={() => router.push('/teacher/results')}
-          className="lux-card p-6 cursor-pointer flex items-center justify-between hover:scale-[1.01] transition-all"
-        >
+        <div onClick={() => router.push('/teacher/results')} className="kpi-card cursor-pointer">
           <div>
-            <div className="text-3xl font-black text-slate-900 dark:text-white nums">—</div>
-            <div className="text-xs font-bold text-slate-400 mt-1">المعدل العام · الفصل الأول</div>
+            <div className="kpi-value">14.38</div>
+            <div className="kpi-label">المعدل العام · الفصل الأول</div>
           </div>
-          <div className="w-14 h-14 rounded-2xl bg-[#fef3c7] dark:bg-amber-950/40 text-[#d97706] dark:text-amber-400 flex items-center justify-center shadow-sm">
-            <BarChart3 size={26} />
+          <div className="kpi-icon bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border border-amber-100 dark:border-amber-900/40">
+            <BarChart3 size={22} />
           </div>
         </div>
       </div>
 
-      {/* ── 4. Main Two-Column Content with Clean Breathing Room ── */}
-      <div className="grid gap-6 lg:grid-cols-3">
-        {/* Main Column (Right, ~65% width) - Today's Schedule */}
-        <div className="lux-card lg:col-span-2 flex flex-col p-6 sm:p-7">
-          <div className="flex items-center justify-between pb-5 mb-5 border-b border-slate-100 dark:border-slate-800">
-            <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-[#076653] dark:text-emerald-400 flex items-center justify-center">
-                <Clock size={18} />
+      {/* Quick Actions */}
+      <div className="mb-6">
+        <p className="text-[10px] font-bold text-slate-400 mb-3 uppercase tracking-widest">إجراءات سريعة</p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {quickActions.map((action) => (
+            <button key={action.route} onClick={() => router.push(action.route)} className="quick-action-btn">
+              <div className={`quick-action-icon ${action.colorClass}`}>
+                <action.icon size={20} />
               </div>
-              <span>برنامج اليوم — {DAYS_AR[dayIndex]}</span>
-            </h3>
-            <button
-              onClick={() => router.push('/teacher/timetable')}
-              className="px-3.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-bold text-slate-600 dark:text-slate-300 transition-colors"
-            >
+              <span>{action.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Main Two-Column Layout */}
+      <div className="grid gap-5 lg:grid-cols-3">
+        {/* Today's Schedule */}
+        <div className="section-card lg:col-span-2">
+          <div className="section-card-header">
+            <div className="section-card-title">
+              <div className="w-7 h-7 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-[#076653] dark:text-emerald-400 flex items-center justify-center">
+                <Clock size={15} />
+              </div>
+              برنامج اليوم — {DAYS_AR[dayIndex]}
+            </div>
+            <button onClick={() => router.push('/teacher/timetable')} className="action-chip">
               الجدول الكامل
+              <ArrowLeft size={11} />
             </button>
           </div>
-
-          <div className="flex-1 flex flex-col justify-center min-h-[220px]">
+          <div className="section-card-body">
             {isWeekend ? (
-              /* Empty state matching Image 1 exactly */
-              <div className="text-center py-10">
-                <div className="w-14 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-400 mx-auto flex items-center justify-center mb-3.5 shadow-sm">
-                  <Sparkles size={24} className="text-amber-400" />
-                </div>
-                <p className="text-base font-bold text-slate-700 dark:text-slate-200">
-                  لا توجد حصص اليوم. يوم مريح!
-                </p>
-                <p className="text-xs text-slate-400 mt-1">
-                  عطلة نهاية الأسبوع — استمتع بوقتك وتجديد نشاطك البيداغوجي.
-                </p>
+              <div className="empty-state">
+                <div className="empty-state-icon"><Sparkles size={22} className="text-amber-400" /></div>
+                <p className="empty-state-title">لا توجد حصص اليوم. يوم مريح!</p>
+                <p className="empty-state-desc">عطلة نهاية الأسبوع — استمتع بوقتك وتجديد نشاطك البيداغوجي.</p>
               </div>
             ) : (
-              /* Weekday Schedule */
-              <div className="space-y-3.5">
+              <div className="space-y-3">
                 <div className="flex items-center justify-between p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800">
                   <div className="flex items-center gap-3.5">
-                    <div className="w-11 h-11 rounded-2xl bg-[#076653] text-white flex items-center justify-center font-black text-xs shadow-sm">
-                      1م1
-                    </div>
+                    <div className="w-11 h-11 rounded-2xl bg-[#076653] text-white flex items-center justify-center font-black text-sm shadow-sm shrink-0">1م1</div>
                     <div>
-                      <h4 className="text-sm font-bold text-slate-900 dark:text-white">
-                        الرياضيات: الأعداد الطبيعية والأعداد العشرية
-                      </h4>
-                      <p className="text-[11px] text-slate-400">القاعة 04 · حصة نظرية</p>
+                      <h4 className="text-sm font-bold text-slate-900 dark:text-white">الرياضيات: الأعداد الطبيعية والأعداد العشرية</h4>
+                      <p className="text-[11px] text-slate-400 mt-0.5">القاعة 04 · حصة نظرية</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-slate-700 dark:text-slate-300 nums">
-                      08:00 - 09:00
-                    </span>
-                    <button
-                      onClick={() => router.push('/teacher/journal')}
-                      className="btn-soft btn-xs text-[11px]"
-                    >
-                      تدوين الدفتر
-                    </button>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <span className="text-xs font-bold text-slate-600 dark:text-slate-300 nums hidden sm:block">08:00 - 09:00</span>
+                    <button onClick={() => router.push('/teacher/journal')} className="btn-soft btn-xs">تدوين</button>
                   </div>
                 </div>
               </div>
@@ -183,53 +167,53 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Side Column (Left, ~35% width) - Alerts */}
-        <div className="space-y-6">
-          {/* Card 1: Pending Sessions */}
-          <div className="lux-card p-6">
-            <div className="flex items-center gap-2.5 pb-4 mb-4 border-b border-slate-100 dark:border-slate-800 text-amber-600 dark:text-amber-400">
-              <div className="w-8 h-8 rounded-xl bg-amber-50 dark:bg-amber-950/40 flex items-center justify-center">
-                <AlertTriangle size={18} />
+        {/* Alert Cards */}
+        <div className="space-y-5">
+          <div className="section-card">
+            <div className="section-card-header">
+              <div className="section-card-title" style={{ color: '#d97706' }}>
+                <div className="w-7 h-7 rounded-lg bg-amber-50 dark:bg-amber-950/40 flex items-center justify-center text-amber-600 dark:text-amber-400">
+                  <AlertTriangle size={14} />
+                </div>
+                تنتظر التسجيل
               </div>
-              <h3 className="text-sm font-bold">حصص تنتظر التسجيل في الدفتر</h3>
+              <span className="badge badge-amber">{pendingSessions.length}</span>
             </div>
-            <div className="space-y-2">
+            <div>
               {pendingSessions.map((s, i) => (
-                <div
-                  key={i}
-                  onClick={() => router.push('/teacher/journal')}
-                  className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 hover:bg-emerald-50/50 dark:hover:bg-slate-800/80 cursor-pointer transition-colors text-xs"
-                >
-                  <span className="nums font-bold text-slate-500 dark:text-slate-400">
-                    {s.date}
-                  </span>
-                  <div className="flex items-center gap-2.5">
-                    <span className="font-bold text-slate-800 dark:text-slate-200 nums">{s.group}</span>
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#076653] shadow-sm" />
+                <div key={i} onClick={() => router.push('/teacher/journal')} className="flex items-center justify-between px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/40 cursor-pointer transition-colors border-b border-slate-50 dark:border-slate-800/60 last:border-b-0">
+                  <div>
+                    <p className="text-xs font-bold text-slate-700 dark:text-slate-200">{s.subject}</p>
+                    <p className="text-[10px] text-slate-400 mt-0.5">{s.room}</p>
+                  </div>
+                  <div>
+                    <span className="text-xs font-black text-slate-500 dark:text-slate-400 nums block">{s.date}</span>
+                    <span className="text-[10px] font-bold text-[#076653] dark:text-emerald-400">{s.group}</span>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Card 2: Most Absent */}
-          <div className="lux-card p-6">
-            <div className="flex items-center gap-2.5 pb-4 mb-4 border-b border-slate-100 dark:border-slate-800 text-rose-500 dark:text-rose-400">
-              <div className="w-8 h-8 rounded-xl bg-rose-50 dark:bg-rose-950/40 flex items-center justify-center">
-                <Users size={18} />
+          <div className="section-card">
+            <div className="section-card-header">
+              <div className="section-card-title text-emerald-600 dark:text-emerald-400">
+                <div className="w-7 h-7 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+                  <CheckCircle2 size={14} />
+                </div>
+                مواظبة التلاميذ
               </div>
-              <h3 className="text-sm font-bold">الأكثر غيابًا هذا الفصل</h3>
             </div>
-            <div className="text-center py-6">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/30 text-[#076653] dark:text-emerald-400 flex items-center justify-center mx-auto mb-2">
-                <CheckCircle2 size={22} />
+            <div className="section-card-body text-center">
+              <div className="w-11 h-11 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 text-[#076653] dark:text-emerald-400 flex items-center justify-center mx-auto mb-2.5">
+                <CheckCircle2 size={20} />
               </div>
-              <p className="text-xs font-bold text-slate-700 dark:text-slate-300">
-                نسبة مواظبة ممتازة!
-              </p>
-              <p className="text-[11px] text-slate-400 mt-0.5">
-                لا توجد حالات غياب متكررة تستوجب التنبيه
-              </p>
+              <p className="text-xs font-bold text-slate-700 dark:text-slate-300">نسبة مواظبة ممتازة!</p>
+              <p className="text-[11px] text-slate-400 mt-0.5 mb-3">لا توجد حالات غياب متكررة</p>
+              <button onClick={() => router.push('/teacher/attendance')} className="action-chip w-full justify-center">
+                <ClipboardList size={12} />
+                عرض سجل الحضور
+              </button>
             </div>
           </div>
         </div>

@@ -29,6 +29,22 @@ const ANNUAL_PLAN: PlannerWeek[] = [
   { weekNum: 10, month: 'ديسمبر', term: 1, domain: 'تقويم فصلي', title: 'اختبارات الفصل الدراسي الأول والمعالجة البيداغوجية الشاملة', hours: 4, status: 'upcoming' },
 ]
 
+function getDomainBadge(domain: string) {
+  if (domain === 'تقويم تشخيصي' || domain === 'تقويم فصلي') {
+    return <span className="badge badge-rose">تقويم</span>
+  }
+  if (domain === 'أنشطة عددية') {
+    return <span className="badge badge-amber">عددي</span>
+  }
+  if (domain === 'أنشطة هندسية') {
+    return <span className="badge badge-blue">هندسي</span>
+  }
+  if (domain === 'تنظيم معطيات') {
+    return <span className="badge badge-slate">إحصاء</span>
+  }
+  return <span className="badge badge-brand">{domain}</span>
+}
+
 export default function PlannerPage() {
   const [selectedTerm, setSelectedTerm] = useState<number>(1)
   const [weeks, setWeeks] = useState<PlannerWeek[]>(ANNUAL_PLAN)
@@ -89,12 +105,34 @@ export default function PlannerPage() {
         </div>
       </div>
 
+      {/* KPI Cards */}
+      <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="kpi-card">
+          <div>
+            <div className="kpi-value nums">2/10</div>
+            <div className="kpi-label">أسابيع منجزة من الفصل الأول</div>
+          </div>
+          <div className="kpi-icon bg-emerald-50 dark:bg-emerald-950/40 text-[#076653] border border-emerald-100 dark:border-emerald-900/40">
+            <CheckCircle2 size={22} />
+          </div>
+        </div>
+        <div className="kpi-card">
+          <div>
+            <div className="kpi-value nums">8/40</div>
+            <div className="kpi-label">ساعات منجزة من إجمالي الفصل</div>
+          </div>
+          <div className="kpi-icon bg-sky-50 dark:bg-sky-950/40 text-sky-600 border border-sky-100 dark:border-sky-900/40">
+            <Clock size={22} />
+          </div>
+        </div>
+      </div>
+
       {/* Distribution Table Card */}
-      <div className="lux-card overflow-hidden">
+      <div className="section-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-right border-collapse text-sm">
             <thead>
-              <tr className="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200/80 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 font-bold">
+              <tr className="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200/80 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 font-bold">
                 <th className="py-4 px-4 w-24 text-center">الأسبوع</th>
                 <th className="py-4 px-4 w-28">الشهر</th>
                 <th className="py-4 px-4 w-36 text-center">الميدان</th>
@@ -106,7 +144,14 @@ export default function PlannerPage() {
 
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
               {filteredWeeks.map(item => (
-                <tr key={item.weekNum} className="hover:bg-slate-50/70 dark:hover:bg-slate-800/40 transition-colors">
+                <tr
+                  key={item.weekNum}
+                  className={`hover:bg-slate-50/70 dark:hover:bg-slate-800/40 transition-colors ${
+                    item.status === 'current'
+                      ? 'bg-[#076653]/5 dark:bg-emerald-950/20 border-r-4 border-[#076653]'
+                      : ''
+                  } ${item.status === 'done' ? 'opacity-70' : ''}`}
+                >
                   <td className="py-4 px-4 text-center font-bold nums text-slate-500 text-xs">
                     أسبوع {item.weekNum}
                   </td>
@@ -114,9 +159,7 @@ export default function PlannerPage() {
                     {item.month}
                   </td>
                   <td className="py-4 px-4 text-center">
-                    <span className="px-3 py-1 rounded-full text-xs font-bold border border-emerald-300/80 bg-emerald-50/80 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-800 inline-block shadow-xs">
-                      {item.domain}
-                    </span>
+                    {getDomainBadge(item.domain)}
                   </td>
                   <td className="py-4 px-5 font-bold text-slate-800 dark:text-slate-100 text-sm leading-relaxed">
                     {item.title}
@@ -147,6 +190,17 @@ export default function PlannerPage() {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Progress Bar Footer */}
+        <div className="p-4 border-t border-slate-100 dark:border-slate-800">
+          <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
+            <span>تقدم التوزيع السنوي الكلي</span>
+            <span className="nums font-bold">20%</span>
+          </div>
+          <div className="progress-slim">
+            <div className="progress-slim-bar bg-[#076653]" style={{ width: '20%' }} />
+          </div>
         </div>
       </div>
     </main>

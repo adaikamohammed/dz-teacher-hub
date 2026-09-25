@@ -44,6 +44,13 @@ const DEFAULT_MESSAGES: MessageItem[] = [
 
 export default function MessagesPage() {
   const [messages, setMessages] = useState<MessageItem[]>(DEFAULT_MESSAGES)
+  const [activeFilter, setActiveFilter] = useState<'all' | 'unread' | 'update'>('all')
+
+  const filtered = messages.filter(m =>
+    activeFilter === 'all' ||
+    (activeFilter === 'unread' && !m.read) ||
+    (activeFilter === 'update' && m.type === 'update')
+  )
 
   const handleMarkAsRead = (id: string) => {
     setMessages(prev => prev.map(m => m.id === id ? { ...m, read: true } : m))
@@ -75,36 +82,41 @@ export default function MessagesPage() {
         </button>
       </div>
 
-      {/* Messages List */}
-      <div className="space-y-4">
-        {messages.map(msg => (
-          <div
-            key={msg.id}
-            onClick={() => handleMarkAsRead(msg.id)}
-            className={`lux-card p-5 sm:p-6 transition-all cursor-pointer ${
-              !msg.read
-                ? 'border-s-4 border-s-[#076653] bg-gradient-to-l from-[#076653]/10 to-transparent'
-                : 'opacity-85 hover:opacity-100'
-            }`}
-          >
-            <div className="flex items-start justify-between gap-3 mb-2.5">
-              <div className="flex items-center gap-2.5">
-                {!msg.read && (
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#076653] shrink-0 animate-pulse" />
-                )}
-                <h3 className="text-base font-black text-slate-900 dark:text-white">
-                  {msg.title}
-                </h3>
-              </div>
-              <span className="text-xs text-slate-400 nums flex items-center gap-1.5 shrink-0 font-medium">
-                <Clock size={13} />
-                {msg.date}
-              </span>
-            </div>
+      {/* Filter Tabs */}
+      <div className="flex items-center justify-between mb-4">
+        <div className="filter-tabs">
+          <button className={`filter-tab ${activeFilter === 'all' ? 'active' : ''}`} onClick={() => setActiveFilter('all')}>الكل</button>
+          <button className={`filter-tab ${activeFilter === 'unread' ? 'active' : ''}`} onClick={() => setActiveFilter('unread')}>غير مقروء ({messages.filter(m => !m.read).length})</button>
+          <button className={`filter-tab ${activeFilter === 'update' ? 'active' : ''}`} onClick={() => setActiveFilter('update')}>تحديثات</button>
+        </div>
+      </div>
 
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed pr-5">
-              {msg.content}
-            </p>
+      {/* Messages List */}
+      <div className="space-y-3">
+        {filtered.map(msg => (
+          <div key={msg.id} className={`message-card ${!msg.read ? 'unread' : ''}`}>
+            {/* Icon */}
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+              msg.type === 'system' ? 'bg-slate-100 dark:bg-slate-800 text-slate-500' :
+              msg.type === 'update' ? 'bg-[#076653]/10 text-[#076653]' :
+              'bg-amber-50 text-amber-600'
+            }`}>
+              {msg.type === 'system' ? <Info size={18} /> : msg.type === 'update' ? <Sparkles size={18} /> : <Bell size={18} />}
+            </div>
+            {/* Content */}
+            <div className="flex-1 min-w-0">
+              <div className="flex items-start justify-between gap-2">
+                <h4 className="text-sm font-bold text-slate-900 dark:text-white leading-snug">{msg.title}</h4>
+                {!msg.read && <div className="unread-dot shrink-0 mt-1" />}
+              </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{msg.content}</p>
+              <div className="flex items-center justify-between mt-2">
+                <span className="text-[10px] text-slate-400 nums">{msg.date}</span>
+                {!msg.read && (
+                  <button onClick={(e) => { e.stopPropagation(); handleMarkAsRead(msg.id) }} className="text-[10px] font-bold text-[#076653] dark:text-emerald-400 hover:underline">تحديد كمقروء</button>
+                )}
+              </div>
+            </div>
           </div>
         ))}
       </div>
