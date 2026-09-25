@@ -197,12 +197,12 @@ export default function GroupsPage() {
   }
 
   return (
-    <main className="flex-1 p-4 sm:p-6 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
+    <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fade-in" dir="rtl">
       {/* ── Page Header Bar (matching Image 3) ── */}
-      <div className="flex flex-wrap items-end justify-between gap-3 mb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="min-w-0">
-          <h2 className="text-xl font-extrabold text-slate-900 dark:text-white">الأفواج التربوية</h2>
-          <p className="text-sm text-slate-500 mt-1">السنة الدراسية 2026/2027 — الفصل الأول</p>
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">الأفواج التربوية</h2>
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">السنة الدراسية 2026/2027 — الفصل الأول</p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2 no-print w-full sm:w-auto [&>*]:flex-1 sm:[&>*]:flex-none">

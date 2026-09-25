@@ -655,8 +655,31 @@ textarea.input {
 .modal-body, .modal-dialog-body {
   flex: 1;
   overflow-y: auto;
-  padding: 1.5rem;
+  padding: 1.5rem 1.5rem 2rem;
   overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(203, 213, 225, 0.6) transparent;
+}
+.modal-body::-webkit-scrollbar,
+.modal-dialog-body::-webkit-scrollbar {
+  width: 4px;
+}
+.modal-body::-webkit-scrollbar-track,
+.modal-dialog-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+.modal-body::-webkit-scrollbar-thumb,
+.modal-dialog-body::-webkit-scrollbar-thumb {
+  background: rgba(203, 213, 225, 0.6);
+  border-radius: 9999px;
+}
+[data-theme="dark"] .modal-body,
+[data-theme="dark"] .modal-dialog-body {
+  scrollbar-color: rgba(51, 65, 85, 0.6) transparent;
+}
+[data-theme="dark"] .modal-body::-webkit-scrollbar-thumb,
+[data-theme="dark"] .modal-dialog-body::-webkit-scrollbar-thumb {
+  background: rgba(51, 65, 85, 0.6);
 }
 
 .modal-footer, .modal-dialog-footer {
@@ -764,7 +787,7 @@ textarea.input {
   background: var(--color-muted);
 }
 .data-table thead th {
-  padding: 0.625rem 0.875rem;
+  padding: 0.875rem 1rem;
   text-align: right;
   font-size: 0.75rem;
   font-weight: 600;
@@ -775,7 +798,7 @@ textarea.input {
 .data-table tbody tr:hover { background: var(--color-brand-50); }
 [data-theme="dark"] .data-table tbody tr:hover { background: rgba(21,168,112,.06); }
 .data-table tbody td {
-  padding: 0.625rem 0.875rem;
+  padding: 0.875rem 1rem;
   border-bottom: 1px solid var(--color-border);
   vertical-align: middle;
 }

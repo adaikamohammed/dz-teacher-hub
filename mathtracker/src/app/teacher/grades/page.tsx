@@ -184,7 +184,7 @@ function GradesContent() {
   }, [students])
 
   return (
-    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in" dir="rtl">
+    <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fade-in" dir="rtl">
       {/* ── Page Action Bar ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex flex-wrap items-center gap-3">
@@ -258,7 +258,7 @@ function GradesContent() {
 
       {/* Grades Table */}
       <div className="section-card overflow-hidden">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto sidebar-scroll">
           <table className="w-full text-right border-collapse text-sm">
             <thead>
               <tr className="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200/80 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300">

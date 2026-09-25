@@ -250,20 +250,20 @@ function JournalMain() {
   const totalCount = sessions.length || 4
 
   return (
-    <main className="flex-1 p-4 sm:p-6 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
+    <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-5 animate-fade-in" dir="rtl">
       {/* ── Page Section Header (matching Image 2) ── */}
-      <div className="flex flex-wrap items-end justify-between gap-3 mb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="min-w-0">
-          <h2 className="text-xl font-extrabold text-slate-900 dark:text-white">الدفتر اليومي — 1م1</h2>
-          <p className="text-sm text-slate-500 mt-1">
-            الفصل الأول · أُنجزت {doneCount} من {totalCount} حصة · الرياضيات — السنة الأولى متوسط
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">الدفتر اليومي — <span className="nums">1</span>م<span className="nums">1</span></h2>
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">
+            الفصل الأول · أُنجزت <span className="nums">{doneCount}</span> من <span className="nums">{totalCount}</span> حصة · الرياضيات — السنة الأولى متوسط
           </p>
         </div>
       </div>
 
       {/* ── Group Pill Card (matching Image 2) ── */}
-      <div className="card mb-4 overflow-hidden">
-        <div className="flex flex-wrap items-center gap-3 px-4 py-3 bg-brand-50 border-b ring-brand-200 ring-1 ring-inset">
+      <div className="card overflow-hidden">
+        <div className="flex flex-wrap items-center gap-3 px-5 py-4 bg-brand-50 border-b ring-brand-200 ring-1 ring-inset">
           <span className="w-10 h-10 rounded-xl bg-brand-600 text-white grid place-items-center shrink-0">
             <Users size={20} />
           </span>

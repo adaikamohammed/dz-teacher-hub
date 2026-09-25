@@ -148,22 +148,22 @@ function AttendanceContent() {
   }
 
   return (
-    <main className="flex-1 p-4 sm:p-6 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
+    <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-5 animate-fade-in" dir="rtl">
       {/* ── Page Header Bar (matching Image 4) ── */}
-      <div className="flex flex-wrap items-end justify-between gap-3 mb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="min-w-0">
-          <h2 className="text-xl font-extrabold text-slate-900 dark:text-white">
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
             الحضور والغياب — {groups.find(g => g.id === selectedGroupId)?.name || '1م1'}
           </h2>
-          <p className="text-sm text-slate-500 mt-1">
-            الفصل الأول (من 01 سبتمبر 2026 إلى 15 ديسمبر 2026) · 15 حصة
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">
+            الفصل الأول (من 01 سبتمبر 2026 إلى 15 ديسمبر 2026) · <span className="nums">15</span> حصة
           </p>
         </div>
       </div>
 
       {/* ── Group Pill Card (matching Image 4) ── */}
-      <div className="card mb-4 overflow-hidden">
-        <div className="flex flex-wrap items-center gap-3 px-4 py-3 bg-[#ecfaf5] dark:bg-[#076653]/15 border-b border-[#a8e5d2] dark:border-[#076653]/30 ring-1 ring-inset ring-[#a8e5d2] dark:ring-[#076653]/40">
+      <div className="card overflow-hidden">
+        <div className="flex flex-wrap items-center gap-3 px-5 py-4 bg-[#ecfaf5] dark:bg-[#076653]/15 border-b border-[#a8e5d2] dark:border-[#076653]/30 ring-1 ring-inset ring-[#a8e5d2] dark:ring-[#076653]/40">
           <span className="w-10 h-10 rounded-xl bg-[#076653] text-white grid place-items-center shrink-0">
             <Users size={20} />
           </span>
@@ -183,7 +183,7 @@ function AttendanceContent() {
       </div>
 
       {/* ── Tools & Legend Card (matching Image 4) ── */}
-      <div className="card p-3 mb-4 flex flex-wrap items-center gap-2 no-print">
+      <div className="card p-4 flex flex-wrap items-center gap-3 no-print">
         <div className="flex flex-wrap items-center gap-1.5 text-xs w-full lg:w-auto">
           <span className="text-slate-500">الدلالة:</span>
           <span className="badge-slate">✓ حاضر</span>

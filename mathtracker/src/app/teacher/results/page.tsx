@@ -40,7 +40,7 @@ export default function ResultsPage() {
   }
 
   return (
-    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in" dir="rtl">
+    <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fade-in" dir="rtl">
       {/* ── Page Action Bar ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>

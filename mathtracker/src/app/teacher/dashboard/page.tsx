@@ -51,22 +51,7 @@ export default function DashboardPage() {
   ]
 
   return (
-    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in" dir="rtl">
-
-      {/* Trial Banner */}
-      <div className="p-4 sm:p-6 rounded-2xl border border-emerald-200/80 dark:border-emerald-800/40 bg-gradient-to-r from-emerald-50/80 via-white to-emerald-50/40 dark:from-emerald-950/30 dark:via-slate-900 dark:to-emerald-950/20 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-3.5 text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200">
-          <div className="w-9 h-9 rounded-xl bg-emerald-100 dark:bg-emerald-900/40 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0 shadow-2xs">
-            <Sparkles size={19} />
-          </div>
-          <span className="leading-relaxed">
-            تبقّى <strong className="text-[#076653] dark:text-emerald-400 font-black">7 أيام</strong> من التجربة المجانية — لا تُحذف بياناتك أبداً بعد انتهاء المدة.
-          </span>
-        </div>
-        <button onClick={() => router.push('/teacher/subscribe')} className="gold-btn px-6 py-2.5 text-xs sm:text-sm cursor-pointer self-stretch sm:self-auto shrink-0 shadow-sm">
-          اشترك الآن
-        </button>
-      </div>
+    <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fade-in" dir="rtl">
 
       {/* Greeting */}
       <div>
@@ -74,7 +59,7 @@ export default function DashboardPage() {
           صباح الخير، {userName} 👋
         </h2>
         <p className="text-xs sm:text-sm text-slate-400 mt-1 font-semibold">
-          {today} · السنة الدراسية 2026/2027 · الفصل الأول
+          {today} · السنة الدراسية <span className="nums">2026/2027</span> · الفصل الأول
         </p>
       </div>
 
