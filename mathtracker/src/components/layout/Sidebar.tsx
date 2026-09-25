@@ -17,6 +17,8 @@ export interface SidebarProps {
   theme: 'light' | 'dark'
   toggleTheme: () => void
   onLogout: () => void
+  isOpen?: boolean
+  onClose?: () => void
   isMobileOpen?: boolean
   onCloseMobile?: () => void
   setupProgress?: number
@@ -43,33 +45,36 @@ export default function Sidebar({
   subjectName = 'أستاذ التعليم الثانوي',
   schoolYear = '2026/2027',
   theme, toggleTheme, onLogout,
-  isMobileOpen = false, onCloseMobile,
+  isOpen, onClose,
+  isMobileOpen, onCloseMobile,
   setupProgress = 88,
   setupNextStep = 'اعتمد الرزنامة الرسمية'
 }: SidebarProps) {
   const initial = userName ? userName.charAt(0) : 'م'
+  const isVisible = isOpen !== undefined ? isOpen : (isMobileOpen ?? true)
+  const handleClose = onClose || onCloseMobile
 
   const sidebarClass = [
-    'fixed inset-y-0 start-0 z-40 w-64 bg-white dark:bg-slate-900',
+    'fixed inset-y-0 start-0 z-30 w-64 bg-white dark:bg-slate-900',
     'border-e border-slate-200/80 dark:border-slate-800',
     'flex flex-col h-screen max-h-screen',
-    'transition-transform duration-200 ease-in-out',
-    isMobileOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'
+    'transition-transform duration-300 ease-in-out',
+    isVisible ? 'translate-x-0' : 'translate-x-full'
   ].join(' ')
 
   return (
     <>
       {/* Mobile overlay */}
-      {isMobileOpen && (
+      {isVisible && (
         <div
-          className="fixed inset-0 bg-slate-900/40 z-30 lg:hidden backdrop-blur-sm"
-          onClick={onCloseMobile}
+          className="fixed inset-0 bg-slate-900/40 z-20 md:hidden backdrop-blur-sm"
+          onClick={handleClose}
         />
       )}
 
       <aside className={sidebarClass} dir="rtl">
-        {/* ── Brand Header matching Sanad (Image 1) ── */}
-        <div className="flex items-center justify-between px-5 h-16 border-b border-slate-100 dark:border-slate-800 flex-shrink-0">
+        {/* ── Brand Header matching Sanad ── */}
+        <div className="flex items-center justify-between px-4 h-16 border-b border-slate-100 dark:border-slate-800 flex-shrink-0">
           <a
             href="#"
             onClick={(e) => { e.preventDefault(); setActiveTab('dashboard') }}
@@ -89,12 +94,13 @@ export default function Sidebar({
             </div>
           </a>
 
-          {/* Mobile close */}
+          {/* Close / Collapse button */}
           <button
-            className="lg:hidden text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
-            onClick={onCloseMobile}
+            className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+            onClick={handleClose}
+            title="إغلاق الشريط الجانبي"
           >
-            <X size={20} />
+            <X size={19} />
           </button>
         </div>
 

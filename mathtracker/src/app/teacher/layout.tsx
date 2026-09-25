@@ -32,7 +32,7 @@ function getFormattedDateAr() {
 export default function TeacherLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const pathname = usePathname()
-  const [isMobileOpen, setIsMobileOpen] = useState(false)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
   const [theme, setTheme] = useState<'light' | 'dark'>('light')
   const [userName, setUserName] = useState('محمد')
   const [subjectName, setSubjectName] = useState('أستاذ التعليم الثانوي')
@@ -40,6 +40,9 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
   const todayFormatted = getFormattedDateAr()
 
   useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+      setIsSidebarOpen(false)
+    }
     const savedTheme = localStorage.getItem('mt_theme') as 'light' | 'dark' | null
     if (savedTheme) {
       setTheme(savedTheme)
@@ -75,7 +78,13 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
 
   const handleSetTab = (tab: string) => {
     router.push(`/teacher/${tab}`)
-    setIsMobileOpen(false)
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+      setIsSidebarOpen(false)
+    }
+  }
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(prev => !prev)
   }
 
   const pageTitle = PAGE_TITLES[activeTab] || 'لوحة القيادة'
@@ -92,22 +101,29 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
         theme={theme}
         toggleTheme={toggleTheme}
         onLogout={handleLogout}
-        isMobileOpen={isMobileOpen}
-        onCloseMobile={() => setIsMobileOpen(false)}
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
         setupProgress={88}
         setupNextStep="اعتمد الرزنامة الرسمية"
       />
 
       {/* Main Content Area */}
-      <div className="lg:ms-64 min-w-0 flex flex-col min-h-screen">
+      <div
+        className={`
+          flex-1 min-w-0 flex flex-col min-h-screen
+          transition-all duration-300 ease-in-out
+          ${isSidebarOpen ? 'md:mr-64' : 'mr-0'}
+        `}
+      >
         {/* Top Header Bar matching Sanad (Image 1) */}
         <header className="no-print sticky top-0 z-20 bg-white/90 dark:bg-[#0f1117]/90 backdrop-blur-md border-b border-slate-200/70 dark:border-slate-800 transition-colors">
           <div className="max-w-7xl mx-auto w-full h-16 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-            {/* Right: Hamburger for mobile + Page Title */}
-            <div className="flex items-center gap-3.5">
+            {/* Right: Toggle Button + Page Title */}
+            <div className="flex items-center gap-3">
               <button
-                className="lg:hidden text-slate-500 hover:text-slate-800 dark:text-slate-300 p-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                onClick={() => setIsMobileOpen(true)}
+                className="text-slate-500 hover:text-slate-800 dark:text-slate-300 p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                onClick={toggleSidebar}
+                title={isSidebarOpen ? 'إخفاء القائمة الجانبية' : 'إظهار القائمة الجانبية'}
               >
                 <Menu size={22} />
               </button>
