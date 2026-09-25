@@ -1,13 +1,14 @@
 'use client'
 
 import React, { useEffect } from 'react'
+import { X } from 'lucide-react'
 
 interface ModalProps {
   isOpen: boolean
   onClose: () => void
   title: string
   subtitle?: string
-  icon?: string
+  icon?: string | React.ReactNode
   children: React.ReactNode
   footer?: React.ReactNode
   maxWidth?: string
@@ -21,7 +22,7 @@ export default function Modal({
   icon,
   children,
   footer,
-  maxWidth = '460px',
+  maxWidth = '540px',
 }: ModalProps) {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -61,7 +62,7 @@ export default function Modal({
             onClick={onClose}
             aria-label="إغلاق النافذة"
           >
-            ✕
+            <X size={17} />
           </button>
         </div>
 

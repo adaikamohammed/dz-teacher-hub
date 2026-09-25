@@ -372,9 +372,10 @@ export default function GroupsPage() {
               <h3>{editingGroup ? 'تعديل الفوج التربوي' : 'إنشاء فوج تربوي جديد'}</h3>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600"
+                className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
+                aria-label="إغلاق"
               >
-                <X size={18} />
+                <X size={16} />
               </button>
             </div>
 
@@ -520,25 +521,30 @@ export default function GroupsPage() {
 
       {/* ── Delete Confirmation Modal ── */}
       {deleteConfirmId && (
-        <div className="modal-backdrop">
-          <div className="modal-box max-w-sm text-center p-6">
-            <div className="w-12 h-12 rounded-full bg-rose-100 text-rose-600 mx-auto flex items-center justify-center mb-3">
-              <AlertTriangle size={24} />
+        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto animate-fade-in" onClick={() => setDeleteConfirmId(null)}>
+          <div
+            className="bg-white dark:bg-slate-900 max-w-md w-full rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xl p-6 sm:p-7 text-center my-auto"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="w-14 h-14 rounded-2xl bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 mx-auto flex items-center justify-center mb-4 border border-rose-100 dark:border-rose-900/40">
+              <AlertTriangle size={26} />
             </div>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-2">تأكيد حذف الفوج</h3>
-            <p className="text-sm text-slate-500 mb-6">
-              سيتم حذف الفوج وكل تلاميذه وعلاماته وسجل غيابه نهائيًا. هل أنت متأكد من المتابعة؟
+            <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2">تأكيد حذف الفوج</h3>
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-6 leading-relaxed">
+              سيتم حذف الفوج وكل تلاميذه وعلاماته وسجل غيابه نهائيًا. هل أنت متأكد من رغبتك في الحذف؟
             </p>
-            <div className="flex items-center justify-center gap-2">
+            <div className="flex items-center justify-center gap-2.5">
               <button
+                type="button"
                 onClick={() => setDeleteConfirmId(null)}
-                className="btn-ghost text-sm"
+                className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               >
                 تراجع
               </button>
               <button
+                type="button"
                 onClick={() => handleDeleteGroup(deleteConfirmId)}
-                className="btn-danger text-sm"
+                className="px-5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-xs transition-colors"
               >
                 نعم، احذف الفوج
               </button>

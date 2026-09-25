@@ -435,58 +435,154 @@ textarea.input { resize: vertical; min-height: 80px; }
 .sanad-sidebar.open { transform: translateX(0); }
 
 /* ════════════════════════════════════
-   MODAL SYSTEM
+   MODAL SYSTEM (Standardized Sanad Style)
    ════════════════════════════════════ */
-.modal-backdrop {
+.modal-backdrop, .modal-backdrop-blur {
   position: fixed;
   inset: 0;
-  background: rgba(15,23,42,0.4);
-  backdrop-filter: blur(4px);
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(6px);
   z-index: 50;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.75rem;
+  padding: 1rem;
+  overflow-y: auto;
+  animation: fadeIn 0.15s ease-out forwards;
 }
-.modal-box {
-  background: var(--color-card);
-  border-radius: 1.5rem;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+
+.modal-box, .modal-dialog-card {
+  background: #ffffff;
+  border-radius: 1.25rem; /* rounded-2xl */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(226, 232, 240, 0.9);
   width: 100%;
-  max-width: 32rem;
+  max-width: 32rem; /* 512px */
   max-height: 90vh;
   display: flex;
   flex-direction: column;
-  animation: fadeInUp 0.2s ease;
+  overflow: hidden;
+  margin: auto;
+  animation: fadeIn 0.2s ease-out forwards;
 }
-.modal-head {
+
+[data-theme="dark"] .modal-box,
+[data-theme="dark"] .modal-dialog-card {
+  background: #11141c;
+  border-color: rgba(30, 41, 59, 0.9);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.modal-head, .modal-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1.125rem 1.5rem;
+  border-bottom: 1px solid rgba(241, 245, 249, 1);
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .modal-head,
+[data-theme="dark"] .modal-dialog-header {
+  border-bottom-color: rgba(30, 41, 59, 0.8);
+}
+
+.modal-head h3, .modal-dialog-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+[data-theme="dark"] .modal-head h3,
+[data-theme="dark"] .modal-dialog-title {
+  color: #f8fafc;
+}
+
+.modal-dialog-subtitle {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #64748b;
+  margin-top: 0.125rem;
+}
+
+.modal-title-group {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 1rem 1.25rem;
-  border-bottom: 1px solid var(--color-border);
+  min-width: 0;
+}
+
+.modal-header-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.75rem;
+  background: rgba(7, 102, 83, 0.08);
+  color: #076653;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
 }
-.modal-head h3 {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--color-foreground);
-  flex: 1;
+
+[data-theme="dark"] .modal-header-icon {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
 }
-.modal-body {
+
+.modal-dialog-close-btn {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.75rem;
+  background: #f1f5f9;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.modal-dialog-close-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+[data-theme="dark"] .modal-dialog-close-btn {
+  background: #1e293b;
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .modal-dialog-close-btn:hover {
+  background: #334155;
+  color: #f8fafc;
+}
+
+.modal-body, .modal-dialog-body {
   flex: 1;
   overflow-y: auto;
-  padding: 1.25rem;
+  padding: 1.5rem;
   overscroll-behavior: contain;
 }
-.modal-footer {
+
+.modal-footer, .modal-dialog-footer {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 0.5rem;
-  padding: 0.75rem 1.25rem;
-  border-top: 1px solid var(--color-border);
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid rgba(241, 245, 249, 1);
+  background: rgba(248, 250, 252, 0.6);
   flex-shrink: 0;
+}
+
+[data-theme="dark"] .modal-footer,
+[data-theme="dark"] .modal-dialog-footer {
+  border-top-color: rgba(30, 41, 59, 0.8);
+  background: rgba(15, 17, 23, 0.4);
 }
 
 /* ════════════════════════════════════
@@ -542,7 +638,7 @@ textarea.input { resize: vertical; min-height: 80px; }
 
 .animate-fade-in { animation: fadeIn 0.25s ease forwards; }
 .animate-fade-in-up { animation: fadeInUp 0.3s ease forwards; }
-.animate-nudge { animation: nudge 1.5s ease-in-out infinite; }
+.animate-nudge { animation: none !important; }
 
 /* ════════════════════════════════════
    GROUP COLOR BARS (for cards)
