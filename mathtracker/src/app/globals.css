@@ -222,6 +222,34 @@ input, select, textarea, button { font-family: inherit; }
   color: #ffffff !important;
 }
 
+/* Sleek custom scrollbar for sidebar */
+.sidebar-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(203, 213, 225, 0.6) transparent;
+}
+.sidebar-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: rgba(203, 213, 225, 0.6);
+  border-radius: 9999px;
+}
+.sidebar-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.9);
+}
+[data-theme="dark"] .sidebar-scroll {
+  scrollbar-color: rgba(51, 65, 85, 0.6) transparent;
+}
+[data-theme="dark"] .sidebar-scroll::-webkit-scrollbar-thumb {
+  background: rgba(51, 65, 85, 0.6);
+}
+[data-theme="dark"] .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(71, 85, 105, 0.9);
+}
+
 /* ════════════════════════════════════
    BUTTONS — أزرار مريحة وسهلة النقر
    ════════════════════════════════════ */

@@ -115,7 +115,7 @@ export default function Sidebar({
         </div>
 
         {/* ── Navigation Links (13 items) ── */}
-        <nav className="flex-1 overflow-y-auto min-h-0 px-3 py-3.5 space-y-1.5" style={{ scrollbarWidth: 'none' }}>
+        <nav className="flex-1 overflow-y-auto min-h-0 px-3 py-3 space-y-1 sidebar-scroll">
           {NAV_ITEMS.map(({ id, label, icon: Icon }) => {
             const isActive = activeTab === id
             return (
