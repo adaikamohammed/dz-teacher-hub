@@ -40,7 +40,7 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
   const todayFormatted = getFormattedDateAr()
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+    if (typeof window !== 'undefined' && window.innerWidth < 640) {
       setIsSidebarOpen(false)
     }
     const savedTheme = localStorage.getItem('mt_theme') as 'light' | 'dark' | null
@@ -78,7 +78,7 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
 
   const handleSetTab = (tab: string) => {
     router.push(`/teacher/${tab}`)
-    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
       setIsSidebarOpen(false)
     }
   }
@@ -90,8 +90,15 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
   const pageTitle = PAGE_TITLES[activeTab] || 'لوحة القيادة'
 
   return (
-    <div className="min-h-screen bg-[#fafbfc] dark:bg-[#0f1117]" dir="rtl">
-      {/* Sidebar matching Sanad */}
+    <div className="min-h-screen bg-[#fafbfc] dark:bg-[#0f1117] flex" dir="rtl">
+      {/* ── Fixed Sidebar Spacer: Physically reserves 16rem in the document flow so main content has reduced size and NEVER overlaps ── */}
+      <div
+        className="hidden md:block shrink-0 transition-all duration-300 ease-in-out overflow-hidden"
+        style={{ width: isSidebarOpen ? '16rem' : '0rem' }}
+        aria-hidden="true"
+      />
+
+      {/* ── Actual Sidebar (Fixed in place, stays rock-solid on right) ── */}
       <Sidebar
         activeTab={activeTab}
         setActiveTab={handleSetTab}
@@ -107,14 +114,8 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
         setupNextStep="اعتمد الرزنامة الرسمية"
       />
 
-      {/* Main Content Area */}
-      <div
-        className={`
-          flex-1 min-w-0 flex flex-col min-h-screen
-          transition-all duration-300 ease-in-out
-          ${isSidebarOpen ? 'md:mr-64' : 'mr-0'}
-        `}
-      >
+      {/* ── Main Content Area: Takes remaining width (calc(100% - 16rem)) ── */}
+      <div className="flex-1 min-w-0 flex flex-col min-h-screen">
         {/* Top Header Bar matching Sanad (Image 1) */}
         <header className="no-print sticky top-0 z-20 bg-white/90 dark:bg-[#0f1117]/90 backdrop-blur-md border-b border-slate-200/70 dark:border-slate-800 transition-colors">
           <div className="max-w-7xl mx-auto w-full h-16 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
