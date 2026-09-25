@@ -110,70 +110,84 @@ input, select, textarea, button { font-family: inherit; }
 }
 
 /* ════════════════════════════════════
-   CARDS — مطابق لسند الأستاذ
+   CARDS — مطابق لسند الأستاذ (نظيف، واسع، بدون تكدس)
    ════════════════════════════════════ */
 .card {
   background: var(--color-card);
   border-radius: 1rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
-  ring: 1px solid var(--color-border);
-  border: 1px solid var(--color-border);
+  border: 1px solid #eef2f6;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
   overflow: hidden;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+[data-theme="dark"] .card {
+  border-color: #242938;
+  box-shadow: none;
 }
 .card-head {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.75rem;
-  padding: 0.75rem 1.25rem;
-  border-bottom: 1px solid var(--color-border);
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+[data-theme="dark"] .card-head {
+  border-bottom-color: #242938;
 }
 .card-title {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #334155;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1e293b;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  flex: 1;
 }
-[data-theme="dark"] .card-title { color: #cbd5e1; }
-.card-body { padding: 1rem 1.25rem; }
-.card-tools { margin-right: auto; display: flex; gap: 0.375rem; }
-
-/* shadow-pop for hover cards */
-.shadow-pop {
-  box-shadow: 0 4px 16px rgba(0,0,0,.12);
-}
+[data-theme="dark"] .card-title { color: #f1f5f9; }
+.card-body { padding: 1.25rem; }
+.card-tools { display: flex; gap: 0.5rem; align-items: center; }
 
 /* ════════════════════════════════════
-   NAVIGATION LINKS — مطابق لسند
+   NAVIGATION LINKS — مطابق لسند الأستاذ بالضبط (Image 1)
    ════════════════════════════════════ */
 .nav-link {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.625rem 0.75rem;
+  padding: 0.65rem 0.85rem;
   border-radius: 0.75rem;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #475569;
-  transition: background 0.15s, color 0.15s;
+  color: #64748b;
+  transition: all 0.15s ease;
   white-space: nowrap;
   overflow: hidden;
   text-decoration: none;
+  cursor: pointer;
+  border: none;
+  background: transparent;
 }
 .nav-link:hover {
   background: #f8fafc;
-  color: #1e293b;
+  color: #0f172a;
 }
+/* Solid deep green pill for active item matching Image 1 */
 .nav-link-active {
-  background: var(--color-brand-50) !important;
-  color: var(--color-brand-700) !important;
-  font-weight: 600;
+  background: #076653 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 8px rgba(7, 102, 83, 0.2);
+}
+.nav-link-active svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
 }
 [data-theme="dark"] .nav-link { color: #94a3b8; }
-[data-theme="dark"] .nav-link:hover { background: #1e2130; color: #e2e8f0; }
-[data-theme="dark"] .nav-link-active { background: rgba(21,168,112,0.15) !important; color: #15a870 !important; }
+[data-theme="dark"] .nav-link:hover { background: #1e2130; color: #f8fafc; }
+[data-theme="dark"] .nav-link-active {
+  background: #076653 !important;
+  color: #ffffff !important;
+}
 
 /* ════════════════════════════════════
    BUTTONS — مطابق لسند الأستاذ
@@ -528,36 +542,48 @@ textarea.input { resize: vertical; min-height: 80px; }
 }
 
 /* ════════════════════════════════════
-   STAT CARDS (dashboard)
+   STAT CARDS (dashboard) — مطابق لسند الأستاذ (Image 1)
    ════════════════════════════════════ */
 .stat-card {
   background: var(--color-card);
-  border: 1px solid var(--color-border);
+  border: 1px solid #eef2f6;
   border-radius: 1rem;
-  padding: 1rem;
+  padding: 1.25rem 1.5rem;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  justify-content: space-between;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+[data-theme="dark"] .stat-card {
+  border-color: #242938;
+}
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 .stat-icon {
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 0.75rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.875rem;
   display: grid;
   place-items: center;
   flex-shrink: 0;
 }
 .stat-value {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: var(--color-foreground);
-  line-height: 1;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #1e293b;
+  line-height: 1.1;
 }
+[data-theme="dark"] .stat-value { color: #f8fafc; }
 .stat-label {
-  font-size: 0.75rem;
-  color: var(--color-muted-fg);
-  margin-top: 0.25rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #64748b;
+  margin-top: 0.35rem;
 }
+[data-theme="dark"] .stat-label { color: #94a3b8; }
 
 /* ════════════════════════════════════
    SETUP PROGRESS WIDGET
@@ -567,29 +593,39 @@ textarea.input { resize: vertical; min-height: 80px; }
   align-items: center;
   gap: 0.625rem;
   border-radius: 0.75rem;
-  background: var(--color-brand-50);
-  border: 1px solid var(--color-brand-200);
+  background: #f0faf6;
+  border: 1px solid #c2ebd9;
   padding: 0.625rem;
   cursor: pointer;
   transition: background 0.15s;
   margin-bottom: 0.5rem;
 }
-.setup-widget:hover { background: var(--color-brand-100); }
+.setup-widget:hover { background: #dcfce7; }
+[data-theme="dark"] .setup-widget {
+  background: rgba(7, 102, 83, 0.15);
+  border-color: rgba(7, 102, 83, 0.3);
+}
 
 /* ════════════════════════════════════
-   TRIAL BANNER
+   TRIAL BANNER — مطابق لسند الأستاذ (Image 1)
    ════════════════════════════════════ */
 .trial-banner {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.75rem;
-  padding: 0.75rem 1rem;
-  border-radius: 0.75rem;
-  background: var(--color-brand-50);
-  border: 1px solid var(--color-brand-200);
-  color: var(--color-brand-900);
+  padding: 0.875rem 1.25rem;
+  border-radius: 0.875rem;
+  background: #f0faf6;
+  border: 1px solid #c2ebd9;
+  color: #065f46;
   font-size: 0.875rem;
-  margin-bottom: 1rem;
+  font-weight: 500;
+}
+[data-theme="dark"] .trial-banner {
+  background: rgba(7, 102, 83, 0.15);
+  border-color: rgba(7, 102, 83, 0.3);
+  color: #a7f3d0;
 }
 
 /* ════════════════════════════════════

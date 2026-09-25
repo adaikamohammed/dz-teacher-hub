@@ -148,30 +148,19 @@ function AttendanceContent() {
   }
 
   return (
-    <main className="flex-1 p-4 sm:p-6 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
-      {/* Header and Controls */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-        <div>
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-[#076653]/10 text-[#076653] flex items-center justify-center font-bold">
-              <ClipboardList size={22} />
-            </div>
-            <div>
-              <h1 className="text-xl font-extrabold text-slate-900 dark:text-white">الحضور والغياب</h1>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                انقر على الخلية لتغيير الحالة: حاضر (✓) ← غائب (غ) ← متأخر (ت) ← بعذر (ع)
-              </p>
-            </div>
-          </div>
-        </div>
+    <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
+      {/* Streamlined Action Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+          انقر على الخلية لتغيير الحالة: حاضر (✓) ← غائب (غ) ← متأخر (ت) ← بعذر (ع)
+        </p>
 
-        {/* Action Controls */}
         <div className="flex flex-wrap items-center gap-2">
           {/* Group Selector */}
           <select
             value={selectedGroupId}
             onChange={e => setSelectedGroupId(e.target.value)}
-            className="select w-auto text-sm font-semibold"
+            className="select w-auto text-xs font-bold py-1.5"
           >
             {groups.map(g => (
               <option key={g.id} value={g.id}>الفوج: {g.name}</option>
@@ -179,11 +168,11 @@ function AttendanceContent() {
           </select>
 
           {/* View Mode Toggle */}
-          <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl text-xs font-semibold">
+          <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl text-xs font-semibold">
             <button
               onClick={() => setViewMode('week')}
               className={`px-3 py-1.5 rounded-lg transition-colors ${
-                viewMode === 'week' ? 'bg-white dark:bg-slate-700 text-[#076653] shadow-sm' : 'text-slate-500'
+                viewMode === 'week' ? 'bg-white dark:bg-slate-700 text-[#076653] shadow-sm font-bold' : 'text-slate-500'
               }`}
             >
               أسبوعي
@@ -191,7 +180,7 @@ function AttendanceContent() {
             <button
               onClick={() => setViewMode('month')}
               className={`px-3 py-1.5 rounded-lg transition-colors ${
-                viewMode === 'month' ? 'bg-white dark:bg-slate-700 text-[#076653] shadow-sm' : 'text-slate-500'
+                viewMode === 'month' ? 'bg-white dark:bg-slate-700 text-[#076653] shadow-sm font-bold' : 'text-slate-500'
               }`}
             >
               شهري
@@ -199,7 +188,7 @@ function AttendanceContent() {
             <button
               onClick={() => setViewMode('all')}
               className={`px-3 py-1.5 rounded-lg transition-colors ${
-                viewMode === 'all' ? 'bg-white dark:bg-slate-700 text-[#076653] shadow-sm' : 'text-slate-500'
+                viewMode === 'all' ? 'bg-white dark:bg-slate-700 text-[#076653] shadow-sm font-bold' : 'text-slate-500'
               }`}
             >
               كل الفصل
@@ -208,10 +197,9 @@ function AttendanceContent() {
 
           <button
             onClick={() => window.print()}
-            className="btn-ghost btn-sm no-print"
-            title="طباعة كشف الغياب"
+            className="btn-ghost btn-sm no-print text-xs"
           >
-            <Printer size={16} />
+            <Printer size={15} />
             <span>طباعة</span>
           </button>
         </div>

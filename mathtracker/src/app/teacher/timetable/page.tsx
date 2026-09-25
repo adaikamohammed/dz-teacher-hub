@@ -116,35 +116,25 @@ export default function TimetablePage() {
   }
 
   return (
-    <main className="flex-1 p-4 sm:p-6 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
-      {/* Top Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-        <div>
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-[#076653]/10 text-[#076653] flex items-center justify-center font-bold">
-              <Calendar size={22} />
-            </div>
-            <div>
-              <h1 className="text-xl font-extrabold text-slate-900 dark:text-white">جدول التوقيت الأسبوعي</h1>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                توزيع حصص التدريس على أيام الأسبوع (الأحد إلى الخميس) وتوليد حصص الفصل آليًا
-              </p>
-            </div>
-          </div>
-        </div>
+    <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
+      {/* Streamlined Action Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+          توزيع حصص التدريس على أيام الأسبوع (الأحد إلى الخميس) وتوليد حصص الفصل آليًا
+        </p>
 
         <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={handleGenerateTermSessions}
             disabled={isGenerating}
-            className="btn-primary"
+            className="btn-primary text-xs py-1.5 px-3 flex items-center gap-1.5"
           >
-            <Sparkles size={16} />
+            <Sparkles size={15} />
             <span>{isGenerating ? 'جاري التوليد...' : 'ولّد حصص الفصل آليًا'}</span>
           </button>
 
-          <button onClick={() => window.print()} className="btn-ghost btn-sm no-print">
-            <Printer size={16} />
+          <button onClick={() => window.print()} className="btn-ghost btn-sm no-print text-xs">
+            <Printer size={15} />
             <span>طباعة الجدول</span>
           </button>
         </div>

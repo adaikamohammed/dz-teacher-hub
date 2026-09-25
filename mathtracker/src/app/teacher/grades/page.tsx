@@ -183,29 +183,18 @@ function GradesContent() {
   }, [students])
 
   return (
-    <main className="flex-1 p-4 sm:p-6 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
-      {/* Header and Controls */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-        <div>
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-[#076653]/10 text-[#076653] flex items-center justify-center font-bold">
-              <Award size={22} />
-            </div>
-            <div>
-              <h1 className="text-xl font-extrabold text-slate-900 dark:text-white">التقويم والعلامات</h1>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                حساب آلي وفق المنشور الوزاري 272: [معدل التقويم المستمر + (الاختبار × 2)] ÷ 3
-              </p>
-            </div>
-          </div>
-        </div>
+    <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
+      {/* Streamlined Action Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+          حساب آلي وفق المنشور الوزاري 272: [معدل التقويم المستمر + (الاختبار × 2)] ÷ 3
+        </p>
 
-        {/* Actions & Filters */}
         <div className="flex flex-wrap items-center gap-2">
           <select
             value={selectedGroupId}
             onChange={e => setSelectedGroupId(e.target.value)}
-            className="select w-auto text-sm font-semibold"
+            className="select w-auto text-xs font-bold py-1.5"
           >
             {groups.map(g => (
               <option key={g.id} value={g.id}>الفوج: {g.name}</option>
@@ -214,9 +203,9 @@ function GradesContent() {
 
           <button
             onClick={() => window.print()}
-            className="btn-ghost btn-sm no-print"
+            className="btn-ghost btn-sm no-print text-xs"
           >
-            <Printer size={16} />
+            <Printer size={15} />
             <span>طباعة الكشف</span>
           </button>
         </div>

@@ -80,22 +80,12 @@ export default function CurriculumPage() {
   )
 
   return (
-    <main className="flex-1 p-4 sm:p-6 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        <div>
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-[#076653]/10 text-[#076653] flex items-center justify-center font-bold">
-              <Library size={22} />
-            </div>
-            <div>
-              <h1 className="text-xl font-extrabold text-slate-900 dark:text-white">البرامج والتدرجات التعليمية الرسمية</h1>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                132 تدرجًا رسميًّا معتمدًا من المفتشية العامة للبيداغوجيا مع تفصيل الكفاءات والمحتويات
-              </p>
-            </div>
-          </div>
-        </div>
+    <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
+      {/* Streamlined Action Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+          132 تدرجًا رسميًّا معتمدًا من المفتشية العامة للبيداغوجيا مع تفصيل الكفاءات والمحتويات
+        </p>
 
         {/* Filters */}
         <div className="flex flex-wrap items-center gap-2">

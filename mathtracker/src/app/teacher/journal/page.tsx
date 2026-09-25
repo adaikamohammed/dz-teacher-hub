@@ -187,38 +187,27 @@ function JournalContent() {
   }
 
   return (
-    <main className="flex-1 p-4 sm:p-6 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
-      {/* Top Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-        <div>
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-[#076653]/10 text-[#076653] flex items-center justify-center font-bold">
-              <BookOpen size={22} />
-            </div>
-            <div>
-              <h1 className="text-xl font-extrabold text-slate-900 dark:text-white">الدفتر اليومي</h1>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                سجل وتوثيق الحصص المنجزة، الوحدات التعلمية، والواجبات المنزلية
-              </p>
-            </div>
-          </div>
-        </div>
+    <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
+      {/* Streamlined Action Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+          سجل وتوثيق الحصص المنجزة، الوحدات التعلمية، والواجبات المنزلية
+        </p>
 
-        {/* Action Buttons */}
         <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={() => setIsExtraModalOpen(true)}
-            className="btn-primary"
+            className="btn-primary text-xs py-1.5 px-3 flex items-center gap-1.5"
           >
-            <Plus size={16} />
+            <Plus size={15} />
             <span>حصة استثنائية</span>
           </button>
 
           <button
             onClick={() => window.print()}
-            className="btn-ghost btn-sm no-print"
+            className="btn-ghost btn-sm no-print text-xs"
           >
-            <Printer size={16} />
+            <Printer size={15} />
             <span>طباعة الدفتر</span>
           </button>
         </div>

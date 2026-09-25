@@ -36,25 +36,15 @@ export default function PlannerPage() {
   const filteredWeeks = weeks.filter(w => w.term === selectedTerm)
 
   return (
-    <main className="flex-1 p-4 sm:p-6 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        <div>
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-[#076653]/10 text-[#076653] flex items-center justify-center font-bold">
-              <Table2 size={22} />
-            </div>
-            <div>
-              <h1 className="text-xl font-extrabold text-slate-900 dark:text-white">التوزيع والمنهاج السنوي</h1>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                توزيع الموارد المعرفية والكفاءات على أسابيع وأشهر السنة الدراسية 2026/2027
-              </p>
-            </div>
-          </div>
-        </div>
+    <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
+      {/* Streamlined Action Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+          توزيع الموارد المعرفية والكفاءات على أسابيع وأشهر السنة الدراسية 2026/2027
+        </p>
 
         <div className="flex items-center gap-2">
-          <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl text-xs font-bold">
+          <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl text-xs font-bold">
             <button
               onClick={() => setSelectedTerm(1)}
               className={`px-3 py-1.5 rounded-lg transition-colors ${

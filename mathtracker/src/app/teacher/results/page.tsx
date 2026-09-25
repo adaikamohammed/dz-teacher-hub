@@ -24,36 +24,26 @@ export default function ResultsPage() {
   ]
 
   return (
-    <main className="flex-1 p-4 sm:p-6 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        <div>
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-[#076653]/10 text-[#076653] flex items-center justify-center font-bold">
-              <BarChart3 size={22} />
-            </div>
-            <div>
-              <h1 className="text-xl font-extrabold text-slate-900 dark:text-white">النتائج والتحليل البيداغوجي</h1>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                إحصائيات الفصول، نسب النجاح، توزيع المعدلات، ومقارنة أداء الأفواج
-              </p>
-            </div>
-          </div>
-        </div>
+    <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
+      {/* Streamlined Action Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+          إحصائيات الفصول، نسب النجاح، توزيع المعدلات، ومقارنة أداء الأفواج
+        </p>
 
         <div className="flex items-center gap-2">
           <select
             value={selectedTerm}
             onChange={e => setSelectedTerm(e.target.value)}
-            className="select w-auto text-xs font-bold"
+            className="select w-auto text-xs font-bold py-1.5"
           >
             <option value="10846">الفصل الأول 2026/2027</option>
             <option value="10847">الفصل الثاني 2026/2027</option>
             <option value="10848">الفصل الثالث 2026/2027</option>
           </select>
 
-          <button onClick={() => window.print()} className="btn-ghost btn-sm no-print">
-            <Printer size={16} />
+          <button onClick={() => window.print()} className="btn-ghost btn-sm no-print text-xs">
+            <Printer size={15} />
             <span>طباعة التقرير</span>
           </button>
         </div>

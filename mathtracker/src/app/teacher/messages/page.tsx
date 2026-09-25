@@ -54,28 +54,18 @@ export default function MessagesPage() {
   }
 
   return (
-    <main className="flex-1 p-4 sm:p-6 max-w-[1200px] w-full mx-auto animate-fade-in" dir="rtl">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        <div>
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-[#076653]/10 text-[#076653] flex items-center justify-center font-bold">
-              <MessageCircle size={22} />
-            </div>
-            <div>
-              <h1 className="text-xl font-extrabold text-slate-900 dark:text-white">الرسائل والإشعارات</h1>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                تنبيهات الإدارة، التحديثات البيداغوجية، ورسائل النظام
-              </p>
-            </div>
-          </div>
-        </div>
+    <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1200px] w-full mx-auto animate-fade-in" dir="rtl">
+      {/* Streamlined Action Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+          تنبيهات الإدارة، التحديثات البيداغوجية، ورسائل النظام
+        </p>
 
         <button
           onClick={handleMarkAllRead}
           className="btn-ghost btn-sm text-xs font-semibold"
         >
-          <CheckCheck size={16} />
+          <CheckCheck size={15} />
           <span>تحديد الكل كمقروء</span>
         </button>
       </div>

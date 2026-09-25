@@ -83,22 +83,12 @@ export default function ProfilePage() {
   }
 
   return (
-    <main className="flex-1 p-4 sm:p-6 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        <div>
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-[#076653]/10 text-[#076653] flex items-center justify-center font-bold">
-              <IdCard size={22} />
-            </div>
-            <div>
-              <h1 className="text-xl font-extrabold text-slate-900 dark:text-white">الملف المهني</h1>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                البيانات الإدارية، الحالة المدنية، نقطة التفتيش والنقطة الإدارية
-              </p>
-            </div>
-          </div>
-        </div>
+    <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
+      {/* Streamlined Action Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+          البيانات الإدارية، الحالة المدنية، نقطة التفتيش والنقطة الإدارية
+        </p>
 
         <div className="flex items-center gap-2">
           {saveSuccess && (
@@ -106,8 +96,8 @@ export default function ProfilePage() {
               <Check size={16} /> تم الحفظ بنجاح
             </span>
           )}
-          <button onClick={() => window.print()} className="btn-ghost btn-sm no-print">
-            <Printer size={16} />
+          <button onClick={() => window.print()} className="btn-ghost btn-sm no-print text-xs">
+            <Printer size={15} />
             <span>طباعة الملف</span>
           </button>
         </div>
