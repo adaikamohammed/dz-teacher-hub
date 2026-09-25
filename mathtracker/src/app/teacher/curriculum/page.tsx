@@ -81,18 +81,28 @@ export default function CurriculumPage() {
 
   return (
     <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
-      {/* Streamlined Action Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-          132 تدرجًا رسميًّا معتمدًا من المفتشية العامة للبيداغوجيا مع تفصيل الكفاءات والمحتويات
-        </p>
+      {/* Sub-header matching Sanad Screenshot */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-11 h-11 rounded-full bg-[#e6f4f1] dark:bg-[#076653]/20 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0">
+            <Library size={22} />
+          </div>
+          <div>
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+              البرامج التعليمية
+            </h2>
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+              132 تدرجًا رسميًّا معتمدًا من المفتشية العامة للبيداغوجيا مع تفصيل الكفاءات والمحتويات
+            </p>
+          </div>
+        </div>
 
         {/* Filters */}
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2.5 self-start sm:self-auto">
           <select
             value={selectedGrade}
             onChange={e => setSelectedGrade(e.target.value)}
-            className="select w-auto text-xs font-bold"
+            className="select w-auto text-xs font-bold py-1.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800"
           >
             <option value="1am">السنة الأولى متوسط (1AM)</option>
             <option value="2am">السنة الثانية متوسط (2AM)</option>
@@ -106,7 +116,7 @@ export default function CurriculumPage() {
           <select
             value={selectedSubject}
             onChange={e => setSelectedSubject(e.target.value)}
-            className="select w-auto text-xs font-bold"
+            className="select w-auto text-xs font-bold py-1.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800"
           >
             <option value="math">الرياضيات</option>
             <option value="arabic">اللغة العربية</option>

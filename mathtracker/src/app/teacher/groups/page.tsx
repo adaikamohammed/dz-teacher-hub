@@ -27,8 +27,8 @@ const COLOR_CLASSES: Record<string, { bar: string; badge: string; border: string
   brand:   { bar: 'bg-[#076653]', badge: 'bg-[#076653]/10 text-[#076653]', border: 'border-[#076653]' },
   emerald: { bar: 'bg-emerald-500', badge: 'bg-emerald-50 text-emerald-700', border: 'border-emerald-500' },
   rose:    { bar: 'bg-rose-500', badge: 'bg-rose-50 text-rose-700', border: 'border-rose-500' },
-  amber:   { bar: 'bg-amber-500', badge: 'bg-amber-50 text-amber-700', border: 'border-amber-500' },
-  sky:     { bar: 'bg-sky-500', badge: 'bg-sky-50 text-sky-700', border: 'border-sky-500' },
+  amber:   { bar: 'bg-[#ea580c]', badge: 'bg-orange-50 text-orange-700', border: 'border-orange-500' },
+  sky:     { bar: 'bg-[#0090e7]', badge: 'bg-sky-50 text-sky-700', border: 'border-sky-500' },
   violet:  { bar: 'bg-violet-500', badge: 'bg-violet-50 text-violet-700', border: 'border-violet-500' },
   teal:    { bar: 'bg-teal-500', badge: 'bg-teal-50 text-teal-700', border: 'border-teal-500' },
 }
@@ -197,21 +197,29 @@ export default function GroupsPage() {
 
   return (
     <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
-      {/* Streamlined Action Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-          إدارة الأقسام، الحجم الساعي، وتوزيع الحصص للفصل الدراسي الحالي
-        </p>
-
-        <div className="flex items-center gap-2">
-          <button
-            onClick={handleOpenAdd}
-            className="btn-primary text-xs py-1.5 px-3 flex items-center gap-1.5"
-          >
-            <Plus size={15} />
-            <span>فوج جديد</span>
-          </button>
+      {/* Sub-header matching Sanad Screenshot */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-11 h-11 rounded-full bg-[#e6f4f1] dark:bg-[#076653]/20 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0">
+            <Users size={22} />
+          </div>
+          <div>
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+              الأفواج التربوية
+            </h2>
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+              إدارة الأقسام، الحجم الساعي، وتوزيع الحصص للفصل الدراسي الحالي
+            </p>
+          </div>
         </div>
+
+        <button
+          onClick={handleOpenAdd}
+          className="bg-[#076653] hover:bg-[#065444] text-white font-semibold px-4 py-2 rounded-xl flex items-center justify-center gap-2 shadow-sm text-sm transition-colors self-start sm:self-auto"
+        >
+          <Plus size={18} />
+          <span>فوج جديد</span>
+        </button>
       </div>
 
       {/* Groups Grid */}
@@ -230,7 +238,7 @@ export default function GroupsPage() {
           </button>
         </div>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
           {groups.map(group => {
             const colorCfg = COLOR_CLASSES[group.color] || COLOR_CLASSES.brand
             const progressPct = group.totalSessions > 0
@@ -240,53 +248,52 @@ export default function GroupsPage() {
             return (
               <div
                 key={group.id}
-                className="card hover:shadow-md transition-shadow relative flex flex-col justify-between"
+                className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow p-5 flex flex-col justify-between"
               >
-                {/* Top colored accent bar */}
-                <div className={`h-1.5 w-full ${colorCfg.bar}`} />
+                {/* Top Accent Rounded Pill Bar */}
+                <div className={`h-1.5 w-full rounded-full mb-3.5 ${colorCfg.bar}`} />
 
-                <div className="p-4 sm:p-5 flex-1 flex flex-col">
+                <div>
                   {/* Card Title & Room */}
-                  <div className="flex items-start justify-between gap-3 mb-3">
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <h2 className="text-lg font-black text-slate-900 dark:text-white">
-                          {group.name}
-                        </h2>
-                        <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${colorCfg.badge}`}>
-                          {group.level}
-                        </span>
-                      </div>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 font-medium">
-                        {group.stream}
-                      </p>
+                  <div className="flex items-center justify-between gap-3 mb-1">
+                    <div className="flex items-center gap-2">
+                      <span className={`text-[11px] font-bold px-2 py-0.5 rounded-md ${colorCfg.badge}`}>
+                        {group.level}
+                      </span>
+                      <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                        {group.name}
+                      </h3>
                     </div>
 
                     {group.room && (
-                      <span className="text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2.5 py-1 rounded-lg flex items-center gap-1 shrink-0 font-medium">
-                        <Building size={12} />
+                      <span className="text-xs text-slate-400 dark:text-slate-500 flex items-center gap-1 font-medium">
+                        <Building size={13} />
                         <span>{group.room}</span>
                       </span>
                     )}
                   </div>
 
-                  {/* Badges / Metrics */}
+                  <p className="text-xs text-slate-400 dark:text-slate-500 mb-4 font-medium">
+                    {group.stream}
+                  </p>
+
+                  {/* 3 Metric Columns */}
                   <div className="grid grid-cols-3 gap-2 my-3 text-center border-y border-slate-100 dark:border-slate-800 py-3">
                     <div>
-                      <div className="text-[11px] text-slate-400">التلاميذ</div>
-                      <div className="text-sm font-extrabold text-slate-800 dark:text-slate-100 nums mt-0.5">
+                      <div className="text-[11px] text-slate-400 font-medium">التلاميذ</div>
+                      <div className="text-base font-bold text-slate-800 dark:text-slate-100 nums mt-0.5">
                         {group.studentsCount}
                       </div>
                     </div>
                     <div>
-                      <div className="text-[11px] text-slate-400">ساعة/أسبوع</div>
-                      <div className="text-sm font-extrabold text-slate-800 dark:text-slate-100 nums mt-0.5">
-                        {group.weeklyHours} سا
+                      <div className="text-[11px] text-slate-400 font-medium">ساعة/أسبوع</div>
+                      <div className="text-base font-bold text-slate-800 dark:text-slate-100 nums mt-0.5">
+                        سا {group.weeklyHours}
                       </div>
                     </div>
                     <div>
-                      <div className="text-[11px] text-slate-400">المعامل</div>
-                      <div className="text-sm font-extrabold text-slate-800 dark:text-slate-100 nums mt-0.5">
+                      <div className="text-[11px] text-slate-400 font-medium">المعامل</div>
+                      <div className="text-base font-bold text-slate-800 dark:text-slate-100 nums mt-0.5">
                         {group.coefficient}
                       </div>
                     </div>
@@ -309,24 +316,24 @@ export default function GroupsPage() {
                   </div>
 
                   {/* Quick Action Navigation Buttons */}
-                  <div className="grid grid-cols-3 gap-1.5 mt-auto pt-2">
+                  <div className="grid grid-cols-3 gap-2 mt-4">
                     <button
                       onClick={() => router.push(`/teacher/attendance?group=${group.id}`)}
-                      className="btn-soft text-xs py-1.5 px-2 flex items-center justify-center gap-1 font-semibold"
+                      className="bg-slate-50 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700/60 border border-slate-100 dark:border-slate-700/80 text-slate-700 dark:text-slate-200 text-xs font-semibold py-2 px-2.5 rounded-xl flex items-center justify-center gap-1.5 transition-colors"
                     >
-                      <ClipboardList size={14} className="text-[#076653]" />
+                      <ClipboardList size={14} className="text-[#076653] dark:text-emerald-400" />
                       <span>الغياب</span>
                     </button>
                     <button
                       onClick={() => router.push(`/teacher/grades?group=${group.id}`)}
-                      className="btn-soft text-xs py-1.5 px-2 flex items-center justify-center gap-1 font-semibold"
+                      className="bg-slate-50 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700/60 border border-slate-100 dark:border-slate-700/80 text-slate-700 dark:text-slate-200 text-xs font-semibold py-2 px-2.5 rounded-xl flex items-center justify-center gap-1.5 transition-colors"
                     >
                       <Award size={14} className="text-amber-500" />
                       <span>النقاط</span>
                     </button>
                     <button
                       onClick={() => router.push(`/teacher/journal?group=${group.id}`)}
-                      className="btn-soft text-xs py-1.5 px-2 flex items-center justify-center gap-1 font-semibold"
+                      className="bg-slate-50 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700/60 border border-slate-100 dark:border-slate-700/80 text-slate-700 dark:text-slate-200 text-xs font-semibold py-2 px-2.5 rounded-xl flex items-center justify-center gap-1.5 transition-colors"
                     >
                       <BookOpen size={14} className="text-sky-500" />
                       <span>الدفتر</span>
@@ -335,22 +342,22 @@ export default function GroupsPage() {
                 </div>
 
                 {/* Card Footer Actions */}
-                <div className="px-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
-                  <span className="text-slate-400 truncate max-w-[160px]">
+                <div className="pt-3 mt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+                  <span className="text-slate-400 dark:text-slate-500 truncate max-w-[170px]">
                     {group.notes || 'لا توجد ملاحظات'}
                   </span>
                   <div className="flex items-center gap-1">
                     <button
                       onClick={() => handleOpenEdit(group)}
                       title="تعديل الفوج"
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-200/50 transition-colors"
+                      className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                     >
                       <Edit2 size={14} />
                     </button>
                     <button
                       onClick={() => setDeleteConfirmId(group.id)}
                       title="حذف الفوج"
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                      className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors"
                     >
                       <Trash2 size={14} />
                     </button>

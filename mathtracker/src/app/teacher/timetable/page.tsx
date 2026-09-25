@@ -29,12 +29,12 @@ const PERIODS = [
 ]
 
 const DEFAULT_SLOTS: TimetableSlot[] = [
-  { id: 'ts_1', dayIndex: 0, periodIndex: 0, groupId: 'grp_1552', groupName: '1م1', room: 'قاعة 04', color: 'bg-[#076653] text-white' },
-  { id: 'ts_2', dayIndex: 0, periodIndex: 1, groupId: 'grp_1553', groupName: '2م3', room: 'قاعة 08', color: 'bg-sky-600 text-white' },
-  { id: 'ts_3', dayIndex: 1, periodIndex: 2, groupId: 'grp_1552', groupName: '1م1', room: 'قاعة 04', color: 'bg-[#076653] text-white' },
-  { id: 'ts_4', dayIndex: 2, periodIndex: 0, groupId: 'grp_1554', groupName: '3ع ت 1', room: 'مدرج B', color: 'bg-amber-600 text-white' },
-  { id: 'ts_5', dayIndex: 3, periodIndex: 4, groupId: 'grp_1553', groupName: '2م3', room: 'قاعة 08', color: 'bg-sky-600 text-white' },
-  { id: 'ts_6', dayIndex: 4, periodIndex: 1, groupId: 'grp_1554', groupName: '3ع ت 1', room: 'مدرج B', color: 'bg-amber-600 text-white' },
+  { id: 'ts_1', dayIndex: 0, periodIndex: 0, groupId: 'grp_1552', groupName: '1م1', room: 'قاعة 04', color: 'bg-[#076653]' },
+  { id: 'ts_2', dayIndex: 0, periodIndex: 1, groupId: 'grp_1553', groupName: '3م2', room: 'قاعة 08', color: 'bg-[#0090e7]' },
+  { id: 'ts_3', dayIndex: 1, periodIndex: 2, groupId: 'grp_1552', groupName: '1م1', room: 'قاعة 04', color: 'bg-[#076653]' },
+  { id: 'ts_4', dayIndex: 2, periodIndex: 0, groupId: 'grp_1554', groupName: '3ع ت 1', room: 'مدرج B', color: 'bg-[#ea580c]' },
+  { id: 'ts_5', dayIndex: 3, periodIndex: 4, groupId: 'grp_1553', groupName: '3م2', room: 'قاعة 08', color: 'bg-[#0090e7]' },
+  { id: 'ts_6', dayIndex: 4, periodIndex: 1, groupId: 'grp_1554', groupName: '3ع ت 1', room: 'مدرج B', color: 'bg-[#ea580c]' },
 ]
 
 export default function TimetablePage() {
@@ -46,9 +46,9 @@ export default function TimetablePage() {
   const [generationMsg, setGenerationMsg] = useState('')
 
   const availableGroups = [
-    { id: 'grp_1552', name: '1م1', room: 'قاعة 04', color: 'bg-[#076653] text-white' },
-    { id: 'grp_1553', name: '2م3', room: 'قاعة 08', color: 'bg-sky-600 text-white' },
-    { id: 'grp_1554', name: '3ع ت 1', room: 'مدرج B', color: 'bg-amber-600 text-white' },
+    { id: 'grp_1552', name: '1م1', room: 'قاعة 04', color: 'bg-[#076653]' },
+    { id: 'grp_1553', name: '3م2', room: 'قاعة 08', color: 'bg-[#0090e7]' },
+    { id: 'grp_1554', name: '3ع ت 1', room: 'مدرج B', color: 'bg-[#ea580c]' },
   ]
 
   useEffect(() => {
@@ -117,25 +117,28 @@ export default function TimetablePage() {
 
   return (
     <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
-      {/* Streamlined Action Bar */}
+      {/* Streamlined Action Bar matching Sanad */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
           توزيع حصص التدريس على أيام الأسبوع (الأحد إلى الخميس) وتوليد حصص الفصل آليًا
         </p>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <button
+            onClick={() => window.print()}
+            className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-medium px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 shadow-sm text-xs hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors no-print"
+          >
+            <Printer size={15} />
+            <span>طباعة الجدول</span>
+          </button>
+
           <button
             onClick={handleGenerateTermSessions}
             disabled={isGenerating}
-            className="btn-primary text-xs py-1.5 px-3 flex items-center gap-1.5"
+            className="bg-[#076653] hover:bg-[#065444] text-white font-medium px-4 py-1.5 rounded-xl flex items-center gap-2 shadow-sm text-xs transition-colors"
           >
             <Sparkles size={15} />
             <span>{isGenerating ? 'جاري التوليد...' : 'ولّد حصص الفصل آليًا'}</span>
-          </button>
-
-          <button onClick={() => window.print()} className="btn-ghost btn-sm no-print text-xs">
-            <Printer size={15} />
-            <span>طباعة الجدول</span>
           </button>
         </div>
       </div>
@@ -148,17 +151,17 @@ export default function TimetablePage() {
       )}
 
       {/* Timetable Grid */}
-      <div className="card p-4 overflow-x-auto">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm p-4 overflow-x-auto">
         <table className="w-full text-center border-collapse min-w-[700px]">
           <thead>
             <tr>
-              <th className="p-2.5 border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-xs font-extrabold text-slate-700 dark:text-slate-200 w-24">
+              <th className="p-3 border border-slate-200/60 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/50 text-xs font-bold text-slate-700 dark:text-slate-200 w-28">
                 الحصة / اليوم
               </th>
               {DAYS.map((d, dIdx) => (
                 <th
                   key={dIdx}
-                  className="p-2.5 border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-xs font-extrabold text-slate-800 dark:text-slate-100"
+                  className="p-3 border border-slate-200/60 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/50 text-xs font-bold text-slate-700 dark:text-slate-200"
                 >
                   {d}
                 </th>
@@ -167,10 +170,10 @@ export default function TimetablePage() {
           </thead>
 
           <tbody>
-            {PERIODS.map((period, pIdx) => (
+            {PERIODS.slice(0, 5).map((period, pIdx) => (
               <tr key={pIdx}>
                 {/* Time Period Column */}
-                <td className="p-2 border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-[11px] font-bold text-slate-600 dark:text-slate-300 nums whitespace-nowrap">
+                <td className="p-3 border border-slate-200/60 dark:border-slate-800 bg-slate-50/40 dark:bg-slate-800/30 text-xs font-bold text-slate-600 dark:text-slate-300 nums whitespace-nowrap">
                   {period.label}
                 </td>
 
@@ -182,19 +185,21 @@ export default function TimetablePage() {
                     <td
                       key={dIdx}
                       onClick={() => handleCellClick(dIdx, pIdx)}
-                      className="p-1.5 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/40 cursor-pointer h-16 align-top transition-colors"
+                      className="p-2 border border-slate-200/60 dark:border-slate-800 h-20 align-middle transition-colors cursor-pointer"
                     >
                       {slot ? (
-                        <div className={`w-full h-full rounded-xl p-2 flex flex-col justify-between shadow-sm ${slot.color}`}>
-                          <div className="font-black text-xs">{slot.groupName}</div>
-                          <div className="text-[10px] opacity-90 truncate flex items-center justify-center gap-1">
-                            <Building size={10} />
+                        <div className={`w-full h-16 rounded-2xl p-2.5 flex flex-col items-center justify-center shadow-sm cursor-pointer hover:opacity-95 transition-all text-white ${slot.color}`}>
+                          <div className="font-bold text-sm text-white text-center leading-tight">
+                            {slot.groupName}
+                          </div>
+                          <div className="text-xs text-white/90 font-normal flex items-center justify-center gap-1 mt-1">
+                            <Building size={12} />
                             <span>{slot.room}</span>
                           </div>
                         </div>
                       ) : (
-                        <div className="w-full h-full rounded-lg border border-dashed border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-300 dark:text-slate-600 hover:border-slate-400">
-                          <Plus size={14} />
+                        <div className="w-full h-16 rounded-2xl border border-dashed border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-300 dark:text-slate-600 hover:border-[#076653] hover:text-[#076653] hover:bg-[#076653]/5 transition-all">
+                          <Plus size={16} />
                         </div>
                       )}
                     </td>

@@ -25,24 +25,37 @@ export default function ResultsPage() {
 
   return (
     <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
-      {/* Streamlined Action Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-          إحصائيات الفصول، نسب النجاح، توزيع المعدلات، ومقارنة أداء الأفواج
-        </p>
+      {/* Sub-header matching Sanad Screenshot */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-11 h-11 rounded-full bg-[#e6f4f1] dark:bg-[#076653]/20 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0">
+            <BarChart3 size={22} />
+          </div>
+          <div>
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+              النتائج والتحليل
+            </h2>
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+              إحصائيات الفصول، نسب النجاح، توزيع المعدلات، ومقارنة أداء الأفواج
+            </p>
+          </div>
+        </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2.5 self-start sm:self-auto">
           <select
             value={selectedTerm}
             onChange={e => setSelectedTerm(e.target.value)}
-            className="select w-auto text-xs font-bold py-1.5"
+            className="select w-auto text-xs font-bold py-1.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800"
           >
             <option value="10846">الفصل الأول 2026/2027</option>
             <option value="10847">الفصل الثاني 2026/2027</option>
             <option value="10848">الفصل الثالث 2026/2027</option>
           </select>
 
-          <button onClick={() => window.print()} className="btn-ghost btn-sm no-print text-xs">
+          <button
+            onClick={() => window.print()}
+            className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-medium px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 shadow-sm text-xs hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors no-print"
+          >
             <Printer size={15} />
             <span>طباعة التقرير</span>
           </button>

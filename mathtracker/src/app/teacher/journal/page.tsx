@@ -188,24 +188,34 @@ function JournalContent() {
 
   return (
     <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
-      {/* Streamlined Action Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
-        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-          سجل وتوثيق الحصص المنجزة، الوحدات التعلمية، والواجبات المنزلية
-        </p>
+      {/* Sub-header matching Sanad Screenshot */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-11 h-11 rounded-full bg-[#e6f4f1] dark:bg-[#076653]/20 text-[#076653] dark:text-emerald-400 flex items-center justify-center shrink-0">
+            <BookOpen size={22} />
+          </div>
+          <div>
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+              الدفتر اليومي
+            </h2>
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+              سجل وتوثيق الحصص المنجزة، الوحدات التعلمية، والواجبات المنزلية
+            </p>
+          </div>
+        </div>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2.5 self-start sm:self-auto">
           <button
             onClick={() => setIsExtraModalOpen(true)}
-            className="btn-primary text-xs py-1.5 px-3 flex items-center gap-1.5"
+            className="bg-[#076653] hover:bg-[#065444] text-white font-medium px-4 py-2 rounded-xl flex items-center gap-2 shadow-sm text-xs transition-colors"
           >
-            <Plus size={15} />
+            <Plus size={16} />
             <span>حصة استثنائية</span>
           </button>
 
           <button
             onClick={() => window.print()}
-            className="btn-ghost btn-sm no-print text-xs"
+            className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-medium px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 shadow-sm text-xs hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors no-print"
           >
             <Printer size={15} />
             <span>طباعة الدفتر</span>
