@@ -148,217 +148,183 @@ function AttendanceContent() {
   }
 
   return (
-    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in" dir="rtl">
-      {/* ── Page Action Bar ── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex flex-wrap items-center gap-3">
-          {/* Group Selector */}
-          <select
-            value={selectedGroupId}
-            onChange={e => setSelectedGroupId(e.target.value)}
-            className="select w-auto text-xs sm:text-sm font-bold py-2 px-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-2xs cursor-pointer"
-          >
-            {groups.map(g => (
-              <option key={g.id} value={g.id}>الفوج: {g.name}</option>
-            ))}
-          </select>
+    <main className="flex-1 p-4 sm:p-6 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
+      {/* ── Page Header Bar (matching Image 4) ── */}
+      <div className="flex flex-wrap items-end justify-between gap-3 mb-5">
+        <div className="min-w-0">
+          <h2 className="text-xl font-extrabold text-slate-900 dark:text-white">
+            الحضور والغياب — {groups.find(g => g.id === selectedGroupId)?.name || '1م1'}
+          </h2>
+          <p className="text-sm text-slate-500 mt-1">
+            الفصل الأول (من 01 سبتمبر 2026 إلى 15 ديسمبر 2026) · 15 حصة
+          </p>
+        </div>
+      </div>
 
-          {/* View Mode Toggle */}
-          <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl text-xs sm:text-sm font-bold">
+      {/* ── Group Pill Card (matching Image 4) ── */}
+      <div className="card mb-4 overflow-hidden">
+        <div className="flex flex-wrap items-center gap-3 px-4 py-3 bg-[#ecfaf5] dark:bg-[#076653]/15 border-b border-[#a8e5d2] dark:border-[#076653]/30 ring-1 ring-inset ring-[#a8e5d2] dark:ring-[#076653]/40">
+          <span className="w-10 h-10 rounded-xl bg-[#076653] text-white grid place-items-center shrink-0">
+            <Users size={20} />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-[11px] font-bold text-[#076653] dark:text-emerald-400 opacity-80">
+              الفوج المعروض
+            </span>
+            <span className="block text-lg font-extrabold text-slate-900 dark:text-white truncate">
+              {groups.find(g => g.id === selectedGroupId)?.name || '1م1'}
+            </span>
+          </span>
+          <span className="flex flex-wrap items-center gap-1.5 shrink-0">
+            <span className="badge-slate text-[10px] px-2 py-0.5">السنة الأولى متوسط</span>
+            <span className="badge-slate text-[10px] px-2 py-0.5">{DEMO_STUDENTS.length} تلاميذ</span>
+          </span>
+        </div>
+      </div>
+
+      {/* ── Tools & Legend Card (matching Image 4) ── */}
+      <div className="card p-3 mb-4 flex flex-wrap items-center gap-2 no-print">
+        <div className="flex flex-wrap items-center gap-1.5 text-xs w-full lg:w-auto">
+          <span className="text-slate-500">الدلالة:</span>
+          <span className="badge-slate">✓ حاضر</span>
+          <span className="badge-rose">غ غائب</span>
+          <span className="badge-amber">ت متأخر</span>
+          <span className="badge bg-sky-50 dark:bg-sky-950/50 text-sky-700 dark:text-sky-300 ring-1 ring-inset ring-sky-200 dark:ring-sky-800">
+            ع بعذر
+          </span>
+          <span className="hidden sm:inline text-slate-400">— انقر على الخانة لتغيير الحالة</span>
+        </div>
+
+        <div className="lg:ms-auto flex flex-wrap items-center gap-2 w-full lg:w-auto">
+          {/* View toggle */}
+          <div className="inline-flex rounded-xl bg-slate-100 dark:bg-slate-800 p-0.5 max-w-full overflow-x-auto">
             <button
               onClick={() => setViewMode('week')}
-              className={`px-3.5 py-1.5 rounded-lg transition-colors cursor-pointer ${
-                viewMode === 'week' ? 'bg-white dark:bg-slate-700 text-[#076653] dark:text-emerald-400 shadow-2xs font-bold' : 'text-slate-500'
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer ${
+                viewMode === 'week' ? 'bg-white dark:bg-slate-700 text-[#076653] dark:text-emerald-400 shadow-xs' : 'text-slate-500'
               }`}
             >
               أسبوعي
             </button>
             <button
               onClick={() => setViewMode('month')}
-              className={`px-3.5 py-1.5 rounded-lg transition-colors cursor-pointer ${
-                viewMode === 'month' ? 'bg-white dark:bg-slate-700 text-[#076653] dark:text-emerald-400 shadow-2xs font-bold' : 'text-slate-500'
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer ${
+                viewMode === 'month' ? 'bg-white dark:bg-slate-700 text-[#076653] dark:text-emerald-400 shadow-xs' : 'text-slate-500'
               }`}
             >
               شهري
             </button>
             <button
               onClick={() => setViewMode('all')}
-              className={`px-3.5 py-1.5 rounded-lg transition-colors cursor-pointer ${
-                viewMode === 'all' ? 'bg-white dark:bg-slate-700 text-[#076653] dark:text-emerald-400 shadow-2xs font-bold' : 'text-slate-500'
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer ${
+                viewMode === 'all' ? 'bg-white dark:bg-slate-700 text-[#076653] dark:text-emerald-400 shadow-xs' : 'text-slate-500'
               }`}
             >
               كل الفصل
             </button>
           </div>
-        </div>
 
-        <div className="flex items-center gap-3 self-start sm:self-auto no-print">
+          <button
+            onClick={() => {
+              const updated = { ...attendanceMap }
+              DEMO_STUDENTS.forEach(st => {
+                visibleSessions.forEach(s => {
+                  if (!updated[`${st.id}_${s.id}`]) updated[`${st.id}_${s.id}`] = 'P'
+                })
+              })
+              saveAttendance(updated)
+            }}
+            className="btn-ghost btn-xs"
+            title="تحديث الحصص"
+          >
+            <RefreshCw size={14} />
+            <span>تحديث الحصص</span>
+          </button>
+
           <button
             onClick={() => window.print()}
-            className="bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold px-4 py-2 rounded-xl flex items-center gap-2 shadow-2xs text-xs sm:text-sm hover:border-[#076653] transition-colors cursor-pointer"
+            className="btn-ghost btn-xs"
           >
-            <Printer size={15} />
-            <span>طباعة السجل</span>
+            <Printer size={14} />
+            <span>طباعة</span>
           </button>
         </div>
       </div>
 
-      {/* KPI Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6">
-        <div className="kpi-card">
-          <div>
-            <div className="kpi-value text-rose-600">0</div>
-            <div className="kpi-label">إجمالي الغيابات هذا الفصل</div>
-          </div>
-          <div className="kpi-icon bg-rose-50 dark:bg-rose-950/40 text-rose-500 border border-rose-100 dark:border-rose-900/40">
-            <span className="text-xl font-black">غ</span>
-          </div>
-        </div>
-        <div className="kpi-card">
-          <div>
-            <div className="kpi-value text-amber-600">0</div>
-            <div className="kpi-label">حالات تأخر هذا الفصل</div>
-          </div>
-          <div className="kpi-icon bg-amber-50 dark:bg-amber-950/40 text-amber-500 border border-amber-100 dark:border-amber-900/40">
-            <span className="text-xl font-black">ت</span>
-          </div>
-        </div>
-        <div className="kpi-card">
-          <div>
-            <div className="kpi-value text-sky-600">0</div>
-            <div className="kpi-label">تلاميذ بعذر مقبول</div>
-          </div>
-          <div className="kpi-icon bg-sky-50 dark:bg-sky-950/40 text-sky-500 border border-sky-100 dark:border-sky-900/40">
-            <span className="text-xl font-black">ع</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Legend & Ministry Circular Note */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-50 dark:bg-slate-800/40 p-4 sm:p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-xs sm:text-sm">
-        {/* State Legend */}
-        <div className="flex flex-wrap items-center gap-4">
-          <span className="font-extrabold text-slate-700 dark:text-slate-300">الدلالات:</span>
-          {Object.entries(STATUS_CONFIG).map(([k, cfg]) => (
-            <div key={k} className="flex items-center gap-2">
-              <span className={`w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs ${cfg.bg} ${cfg.text} border ${cfg.border} shadow-2xs`}>
-                {cfg.short}
-              </span>
-              <span className="text-slate-600 dark:text-slate-400 font-semibold">{cfg.label}</span>
-            </div>
-          ))}
-        </div>
-
-        {/* Penalty reminder */}
-        <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 font-medium">
-          <AlertCircle size={16} className="text-amber-500 shrink-0" />
-          <span>تخصم الغيابات آلياً من نقطة التقويم المستمر (0.5 للغياب، 0.25 للتأخر).</span>
-        </div>
-      </div>
-
-      {/* Main Attendance Table */}
-      <div className="section-card overflow-hidden">
-
-        <div className="overflow-x-auto">
-
-          <table className="w-full text-right border-collapse text-sm">
-            <thead>
-              <tr className="bg-slate-100/80 dark:bg-slate-800/80 border-b border-slate-200/80 dark:border-slate-700">
-                <th className="sticky right-0 z-20 bg-slate-100 dark:bg-slate-800 py-3.5 px-3 w-12 text-center text-xs font-bold text-slate-500 shadow-[1px_0_4px_rgba(0,0,0,0.05)]">
-                  ر
+      {/* ── Attendance Table (matching Image 4) ── */}
+      <div className="card overflow-hidden">
+        <div className="overflow-auto max-h-[75vh]">
+          <table className="text-sm border-collapse w-full">
+            <thead className="sticky top-0 z-10">
+              <tr>
+                <th className="sticky start-0 z-20 bg-slate-50 dark:bg-slate-800 border-b border-e border-slate-200 dark:border-slate-700 px-3 py-2 text-xs font-bold text-slate-600 dark:text-slate-300 text-right min-w-[13rem] shadow-[-6px_0_10px_-8px_rgba(15,23,42,.25)]">
+                  التلميذ
                 </th>
-                <th className="sticky right-12 z-20 bg-slate-100 dark:bg-slate-800 py-3.5 px-4 min-w-[200px] font-bold text-slate-800 dark:text-slate-100 text-xs shadow-[2px_0_4px_rgba(0,0,0,0.05)]">
-                  اسم ولقب التلميذ
-                </th>
-                
-                {/* Session Columns */}
                 {visibleSessions.map(session => (
-                  <th key={session.id} className="py-3 px-2 text-center min-w-[62px]">
-                    <div className="text-xs font-bold text-slate-700 dark:text-slate-200 nums">
+                  <th key={session.id} className="bg-slate-50 dark:bg-slate-800 border-b border-s border-slate-200 dark:border-slate-700 px-1 py-2 min-w-[3.2rem] text-center">
+                    <div className="text-[10px] text-slate-500 dark:text-slate-400 leading-none whitespace-nowrap">
+                      {session.dayName}
+                    </div>
+                    <div className="text-[11px] font-bold text-slate-700 dark:text-slate-200 nums leading-tight mt-0.5">
                       {session.date}
                     </div>
-                    <div className="text-[10px] text-slate-400 font-medium">{session.dayName}</div>
-                    <button
-                      onClick={() => handleMarkAllPresent(session.id)}
-                      title="تعليم الكل حاضر في هذه الحصة"
-                      className="mt-1 text-[9px] px-2 py-0.5 rounded-md bg-white dark:bg-slate-700 text-[#076653] dark:text-emerald-400 font-bold border border-slate-200 dark:border-slate-600 hover:bg-[#076653] hover:text-white transition-colors cursor-pointer"
-                    >
-                      الكل ✓
-                    </button>
+                    <div className="text-[9px] text-slate-400 nums">09:00</div>
                   </th>
                 ))}
-
-                {/* Summary Columns */}
-                <th className="py-3.5 px-2 text-center text-xs font-bold text-rose-600 min-w-[55px]">غياب</th>
-                <th className="py-3.5 px-2 text-center text-xs font-bold text-amber-600 min-w-[55px]">تأخر</th>
-                <th className="py-3.5 px-2 text-center text-xs font-bold text-sky-600 min-w-[55px]">عذر</th>
+                <th className="bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-2 py-2 text-[11px] font-bold text-slate-600 dark:text-slate-300 min-w-[5rem] text-center">
+                  غ/ت/ع
+                </th>
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+            <tbody>
               {DEMO_STUDENTS.map((student, idx) => {
                 const stats = getStudentStats(student.id)
-
                 return (
-                  <tr
-                    key={student.id}
-                    className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors"
-                  >
-                    <td className="sticky right-0 z-10 bg-white dark:bg-slate-900 py-3.5 px-3 text-center text-xs text-slate-400 nums shadow-[1px_0_4px_rgba(0,0,0,0.05)]">
-                      {student.orderNumber}
-                    </td>
-
-                    {/* Student Name */}
-                    <td className="sticky right-12 z-10 bg-white dark:bg-slate-900 py-3.5 px-4 font-bold text-slate-800 dark:text-slate-100 text-sm shadow-[2px_0_4px_rgba(0,0,0,0.05)]">
+                  <tr key={student.id} className="hover:bg-[#ecfaf5]/30 dark:hover:bg-slate-800/40 transition-colors">
+                    {/* Sticky Student Column */}
+                    <td className="sticky start-0 z-10 bg-white dark:bg-slate-900 border-b border-e border-slate-100 dark:border-slate-800 px-3 py-1.5 shadow-[-6px_0_10px_-8px_rgba(15,23,42,.25)]">
                       <div className="flex items-center gap-2">
-                        <span>{student.name}</span>
+                        <span className="text-[11px] text-slate-400 nums w-5">{student.orderNumber}</span>
+                        <span className="font-medium text-slate-800 dark:text-slate-200 truncate">{student.name}</span>
                         {student.isRepeating && (
-                          <span className="badge badge-amber text-[9px] px-1.5 py-0">معيد</span>
+                          <span className="badge-amber text-[9px] px-1 py-0">معيد</span>
                         )}
                       </div>
                     </td>
 
-                    {/* Interactive Click-to-cycle Cells */}
+                    {/* Attendance Status Cells */}
                     {visibleSessions.map(session => {
                       const key = `${student.id}_${session.id}`
                       const status = attendanceMap[key] || 'P'
-                      const cfg = STATUS_CONFIG[status]
+                      let cellStyle = 'bg-white dark:bg-slate-800 text-slate-300 dark:text-slate-600'
+                      let symbol = '✓'
+                      if (status === 'A') {
+                        cellStyle = 'bg-rose-500 text-white'
+                        symbol = 'غ'
+                      } else if (status === 'L') {
+                        cellStyle = 'bg-amber-500 text-white'
+                        symbol = 'ت'
+                      } else if (status === 'E') {
+                        cellStyle = 'bg-sky-500 text-white'
+                        symbol = 'ع'
+                      }
 
                       return (
-                        <td key={session.id} className="py-2 px-1.5 text-center">
-                          <button
-                            type="button"
+                        <td key={session.id} className="border-b border-slate-100 dark:border-slate-800 p-0.5 text-center">
+                          <div
                             onClick={() => handleCellClick(student.id, session.id)}
-                            className={`att-cell ${cfg.bg} ${cfg.text} border ${cfg.border}`}
-                            title={`الحالة: ${cfg.label} (انقر للتغيير)`}
+                            className={`att-cell w-8 h-8 rounded-lg grid place-items-center text-xs font-bold cursor-pointer select-none ring-1 ring-slate-200 dark:ring-slate-700 transition mx-auto ${cellStyle}`}
                           >
-                            {cfg.short}
-                          </button>
+                            {symbol}
+                          </div>
                         </td>
                       )
                     })}
 
-                    {/* Stats totals */}
-                    <td className="py-2.5 px-2 text-center">
-                      <span className={`text-xs font-bold nums px-1.5 py-0.5 rounded-full ${
-                        stats.absent > 0 ? 'bg-rose-100 text-rose-700' : 'text-slate-300'
-                      }`}>
-                        {stats.absent}
-                      </span>
-                    </td>
-                    <td className="py-2.5 px-2 text-center">
-                      <span className={`text-xs font-bold nums px-1.5 py-0.5 rounded-full ${
-                        stats.late > 0 ? 'bg-amber-100 text-amber-700' : 'text-slate-300'
-                      }`}>
-                        {stats.late}
-                      </span>
-                    </td>
-                    <td className="py-2.5 px-2 text-center">
-                      <span className={`text-xs font-bold nums px-1.5 py-0.5 rounded-full ${
-                        stats.excused > 0 ? 'bg-sky-100 text-sky-700' : 'text-slate-300'
-                      }`}>
-                        {stats.excused}
-                      </span>
+                    {/* Absence Counts (غ/ت/ع) */}
+                    <td className="border-b border-slate-100 dark:border-slate-800 px-2 text-center text-xs nums font-semibold text-slate-600 dark:text-slate-400">
+                      {stats.absent}/{stats.late}/{stats.excused}
                     </td>
                   </tr>
                 )

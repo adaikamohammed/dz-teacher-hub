@@ -1,12 +1,13 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Home, Users, ClipboardList, Star, BarChart3,
   BookOpen, Table2, Library, Calendar, IdCard,
   Settings, Sparkles, MessageCircle, LogOut, X,
-  Moon, Sun, Bookmark
+  Moon, Sun, Bookmark, ChevronLeft, Download
 } from 'lucide-react'
+import SetupModal from './SetupModal'
 
 export interface SidebarProps {
   activeTab: string
@@ -50,6 +51,7 @@ export default function Sidebar({
   setupProgress = 88,
   setupNextStep = 'اعتمد الرزنامة الرسمية'
 }: SidebarProps) {
+  const [showSetupModal, setShowSetupModal] = useState(false)
   const initial = userName ? userName.charAt(0) : 'م'
   const isVisible = isOpen !== undefined ? isOpen : (isMobileOpen ?? true)
   const handleClose = onClose || onCloseMobile
@@ -72,6 +74,16 @@ export default function Sidebar({
         />
       )}
 
+      {/* Setup Steps Modal matching Image 2 */}
+      <SetupModal
+        isOpen={showSetupModal}
+        onClose={() => setShowSetupModal(false)}
+        onNavigateTab={(t) => {
+          setActiveTab(t)
+          handleClose?.()
+        }}
+      />
+
       <aside className={sidebarClass} dir="rtl">
         {/* ── Brand Header matching Sanad ── */}
         <div className="flex items-center justify-between px-4 h-16 border-b border-slate-100 dark:border-slate-800 flex-shrink-0">
@@ -80,10 +92,8 @@ export default function Sidebar({
             onClick={(e) => { e.preventDefault(); setActiveTab('dashboard') }}
             className="flex items-center gap-3 min-w-0"
           >
-            {/* Custom stylized notebook logo icon matching Sanad */}
-            <div className="w-10 h-10 rounded-xl border-2 border-[#076653] flex items-center justify-center text-[#076653] shrink-0 bg-[#076653]/5 shadow-2xs">
-              <Bookmark size={20} className="fill-[#076653]" />
-            </div>
+            {/* Official Sanad Brand Logo */}
+            <img src="/brand/mark-small.svg" alt="سند الأستاذ" className="w-9 h-9 rounded-xl shadow-xs shrink-0" />
             <div>
               <span className="block font-black text-slate-900 dark:text-white text-base leading-tight">
                 سند الأستاذ
@@ -146,41 +156,61 @@ export default function Sidebar({
           </button>
         </nav>
 
-        {/* ── Bottom Section matching Sanad ── */}
+        {/* ── Bottom Section matching Sanad (Image 3) ── */}
         <div className="p-3 border-t border-slate-100 dark:border-slate-800 space-y-2.5 flex-shrink-0 bg-white dark:bg-slate-900">
-          {/* Setup Progress Widget - Compact & sleek */}
+          {/* Setup Progress Widget - Circular SVG ring matching Sanad */}
           <div
-            onClick={() => { setActiveTab('settings'); onCloseMobile?.() }}
-            className="rounded-xl bg-[#f0faf6] dark:bg-[#076653]/10 border border-[#c2ebd9]/70 dark:border-[#076653]/25 p-2.5 cursor-pointer hover:bg-[#e6f4ee] dark:hover:bg-[#076653]/20 transition-colors"
+            onClick={() => setShowSetupModal(true)}
+            className="flex items-center gap-2.5 rounded-xl bg-[#f0faf6] dark:bg-[#076653]/15 border border-[#c2ebd9] dark:border-[#076653]/30 p-2.5 cursor-pointer hover:bg-[#e6f4ee] transition-colors"
+            title="خطوات تجهيز حسابك"
           >
-            <div className="flex items-center justify-between text-xs font-bold mb-1.5 text-[#065f46] dark:text-emerald-300">
-              <span className="flex items-center gap-1.5">
-                <Sparkles size={13} className="text-[#076653] dark:text-emerald-400" />
-                <span>إعداد الحساب</span>
+            <div className="relative w-8 h-8 shrink-0 flex items-center justify-center">
+              <svg viewBox="0 0 36 36" className="w-8 h-8 -rotate-90">
+                <circle cx="18" cy="18" r="15" fill="none" stroke="#d1fae5" strokeWidth="4.5" />
+                <circle
+                  cx="18" cy="18" r="15" fill="none"
+                  stroke="#076653" strokeWidth="4.5"
+                  strokeLinecap="round"
+                  strokeDasharray="82.9 999"
+                />
+              </svg>
+              <span className="absolute inset-0 grid place-items-center text-[9px] font-black text-[#076653] dark:text-emerald-300 nums">
+                88
               </span>
-              <span className="nums text-[11px] font-extrabold text-[#076653] dark:text-emerald-400">{setupProgress}%</span>
             </div>
-            <div className="h-1.5 w-full bg-[#d1fae5] dark:bg-emerald-950/60 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-[#076653] dark:bg-emerald-400 rounded-full transition-all duration-500"
-                style={{ width: `${setupProgress}%` }}
-              />
+            <div className="flex-1 min-w-0 text-right leading-tight">
+              <div className="text-xs font-bold text-[#065f46] dark:text-emerald-300">
+                تجهيز حسابك — 7 من 8
+              </div>
+              <div className="text-[10px] text-[#076653]/80 dark:text-emerald-400/80 truncate font-semibold mt-0.5">
+                اعتمد الرزنامة الرسمية
+              </div>
             </div>
+            <ChevronLeft size={16} className="text-[#076653] dark:text-emerald-400 shrink-0" />
           </div>
 
-          {/* User Profile Row matching Sanad (Profile on Right, Tools on Left) */}
+          {/* Install App Button matching Image 3 */}
+          <button
+            type="button"
+            onClick={() => alert('تم تفعيل تطبيق الويب التقدمي (PWA). يمكنك الآن تثبيته من إعدادات المتصفح.')}
+            className="w-full py-2 px-3 rounded-xl bg-slate-50 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-800 text-[#076653] dark:text-emerald-400 border border-slate-200/80 dark:border-slate-700 font-bold text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-2xs"
+          >
+            <Download size={14} />
+            <span>تثبيت التطبيق على الجهاز</span>
+          </button>
+
+          {/* User Profile Row matching Image 3 */}
           <div className="flex items-center justify-between pt-0.5">
-            {/* User Info & Avatar on Right */}
             <div
               onClick={() => { setActiveTab('profile'); onCloseMobile?.() }}
               className="flex items-center gap-2.5 cursor-pointer text-right min-w-0 flex-1 hover:opacity-85 transition-opacity"
             >
-              <div className="w-9 h-9 rounded-full bg-[#076653]/10 dark:bg-emerald-950 text-[#076653] dark:text-emerald-300 font-black text-xs flex items-center justify-center shrink-0 border border-[#076653]/20">
+              <div className="w-9 h-9 rounded-full bg-emerald-100 dark:bg-emerald-950 text-[#076653] dark:text-emerald-300 font-black text-sm flex items-center justify-center shrink-0">
                 {initial}
               </div>
 
               <div className="min-w-0">
-                <div className="text-xs font-bold text-slate-900 dark:text-white truncate">
+                <div className="text-xs font-bold text-slate-800 dark:text-white truncate">
                   {userName}
                 </div>
                 <div className="text-[10px] text-slate-400 truncate">
@@ -189,14 +219,13 @@ export default function Sidebar({
               </div>
             </div>
 
-            {/* Actions on Left */}
             <div className="flex items-center gap-1 shrink-0">
               <button
                 onClick={toggleTheme}
                 title={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
                 className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               >
-                {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+                {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
               </button>
 
               <button
@@ -204,7 +233,7 @@ export default function Sidebar({
                 title="تسجيل الخروج"
                 className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors"
               >
-                <LogOut size={16} />
+                <LogOut size={15} />
               </button>
             </div>
           </div>

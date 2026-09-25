@@ -50,13 +50,13 @@ const DEFAULT_GROUPS: GroupItem[] = [
     name: '1م1',
     level: '1AM',
     stream: 'التعليم المتوسط العام',
-    coefficient: 4,
-    room: 'القاعة 04',
+    coefficient: 2,
+    room: 'القاعة 10',
     color: 'brand',
-    weeklyHours: 4,
-    notes: 'فوج نشيط وممتاز',
-    studentsCount: 32,
-    completedSessions: 4,
+    weeklyHours: 1,
+    notes: 'فوج نشيط',
+    studentsCount: 2,
+    completedSessions: 0,
     totalSessions: 15,
   },
   {
@@ -197,30 +197,28 @@ export default function GroupsPage() {
   }
 
   return (
-    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in" dir="rtl">
-      {/* ── Page Action Bar ── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight">
-            الأفواج التربوية المسجلة ({groups.length})
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-400 font-semibold mt-1">
-            إدارة الأقسام، الحجم الساعي، وتوزيع الحصص للفصل الدراسي الحالي
-          </p>
+    <main className="flex-1 p-4 sm:p-6 max-w-[1600px] w-full mx-auto animate-fade-in" dir="rtl">
+      {/* ── Page Header Bar (matching Image 3) ── */}
+      <div className="flex flex-wrap items-end justify-between gap-3 mb-5">
+        <div className="min-w-0">
+          <h2 className="text-xl font-extrabold text-slate-900 dark:text-white">الأفواج التربوية</h2>
+          <p className="text-sm text-slate-500 mt-1">السنة الدراسية 2026/2027 — الفصل الأول</p>
         </div>
 
-        <button
-          onClick={handleOpenAdd}
-          className="bg-[#076653] hover:bg-[#065444] text-white font-bold px-5 py-2.5 rounded-xl flex items-center justify-center gap-2 shadow-xs text-sm transition-all cursor-pointer self-start sm:self-auto"
-        >
-          <Plus size={18} />
-          <span>فوج جديد</span>
-        </button>
+        <div className="flex flex-wrap items-center gap-2 no-print w-full sm:w-auto [&>*]:flex-1 sm:[&>*]:flex-none">
+          <button
+            onClick={handleOpenAdd}
+            className="btn-primary"
+          >
+            <Plus size={16} />
+            <span>فوج جديد</span>
+          </button>
+        </div>
       </div>
 
-      {/* Groups Grid */}
+      {/* Groups Grid (matching Image 3) */}
       {groups.length === 0 ? (
-        <div className="section-card text-center py-20 px-6">
+        <div className="card text-center py-16 px-6">
           <div className="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-400 mx-auto flex items-center justify-center mb-4">
             <Users size={32} />
           </div>
@@ -229,81 +227,107 @@ export default function GroupsPage() {
             ابدأ بإضافة أول فوج تربوي لتدريس مادّتك وتوليد الحصص وكشوف النقاط تلقائيًا
           </p>
           <button onClick={handleOpenAdd} className="btn-primary mx-auto">
-            <Plus size={18} />
+            <Plus size={16} />
             <span>إنشاء أول فوج</span>
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {groups.map(g => {
+            const pct = Math.round((g.completedSessions / (g.totalSessions || 1)) * 100)
             return (
-              <div key={g.id} className="group-card">
-                {/* Colored top bar */}
-                <div className={`group-card-top-bar ${COLOR_CLASSES[g.color].bar}`} />
-                <div className="group-card-body">
-                  {/* Avatar + info + edit/delete */}
-                  <div className="flex items-center justify-between gap-3 mb-4">
-                    <div className="flex items-center gap-3.5 min-w-0">
-                      <div className={`w-13 h-13 rounded-2xl flex items-center justify-center font-black text-sm text-white shrink-0 shadow-sm ${COLOR_CLASSES[g.color].bar}`}>
+              <div key={g.id} className="card overflow-hidden hover:shadow-pop transition">
+                {/* Top colored stripe */}
+                <div className="bg-[#076653] h-1.5" />
+
+                <div className="p-5">
+                  {/* Card Header: Group name + Room + Edit/Delete */}
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <button
+                        onClick={() => router.push(`/teacher/attendance?group=${g.id}`)}
+                        className="text-lg font-extrabold text-slate-900 dark:text-white hover:text-[#076653] dark:hover:text-emerald-400 transition block truncate text-right cursor-pointer"
+                      >
                         {g.name}
-                      </div>
-                      <div className="min-w-0">
-                        <h3 className="font-black text-slate-900 dark:text-white text-base truncate">{g.name}</h3>
-                        <p className="text-xs text-slate-400 font-semibold mt-0.5 truncate">{g.level} · {g.stream}</p>
+                      </button>
+                      <div className="text-xs text-slate-500 mt-0.5 truncate">
+                        — · {g.room || 'القاعة 10'}
                       </div>
                     </div>
-                    {/* Edit / Delete buttons */}
-                    <div className="flex items-center gap-1 shrink-0">
+
+                    <div className="flex items-center gap-1 shrink-0 no-print">
                       <button
                         onClick={() => handleOpenEdit(g)}
-                        title="تعديل الفوج"
-                        className="p-2 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                        className="text-slate-300 hover:text-[#076653] dark:hover:text-emerald-400 transition cursor-pointer p-1"
+                        title="تعديل"
                       >
-                        <Edit2 size={15} />
+                        <Edit2 size={16} />
                       </button>
                       <button
                         onClick={() => setDeleteConfirmId(g.id)}
-                        title="حذف الفوج"
-                        className="p-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors"
+                        className="text-slate-300 hover:text-rose-600 transition cursor-pointer p-1"
+                        title="حذف"
                       >
-                        <Trash2 size={15} />
+                        <Trash2 size={16} />
                       </button>
                     </div>
                   </div>
 
-                  {/* Stats row */}
-                  <div className="flex items-center justify-between flex-wrap gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400 mb-4 bg-slate-50 dark:bg-slate-800/40 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
-                    <span className="flex items-center gap-1.5"><Users size={13} className="text-[#076653] dark:text-emerald-400" /> {g.studentsCount} تلميذ</span>
-                    <span className="flex items-center gap-1.5"><Clock size={13} className="text-sky-600 dark:text-sky-400" /> {g.weeklyHours}س/أسبوع</span>
-                    <span className="flex items-center gap-1.5"><Building size={13} className="text-amber-600 dark:text-amber-400" /> {g.room}</span>
-                  </div>
-
-                  {/* Progress bar */}
-                  <div className="mb-2">
-                    <div className="mb-1.5 flex items-center justify-between text-xs font-semibold text-slate-500 dark:text-slate-400">
-                      <span>الحصص المنجزة</span>
-                      <span className="nums font-bold text-slate-700 dark:text-slate-300">{g.completedSessions} من {g.totalSessions}</span>
+                  {/* 3-Column Stats Grid matching Image 3 */}
+                  <div className="grid grid-cols-3 gap-2 my-4 text-center">
+                    <div className="panel py-2">
+                      <div className="text-lg font-extrabold text-slate-900 dark:text-white nums">{g.studentsCount}</div>
+                      <div className="text-[11px] text-slate-500">تلميذ</div>
                     </div>
-                    <div className="progress-slim">
-                      <div className={`progress-slim-bar ${COLOR_CLASSES[g.color].bar}`} style={{ width: `${Math.round((g.completedSessions / g.totalSessions) * 100)}%` }} />
+                    <div className="panel py-2">
+                      <div className="text-lg font-extrabold text-slate-900 dark:text-white nums">{g.weeklyHours}</div>
+                      <div className="text-[11px] text-slate-500">ساعة/أسبوع</div>
+                    </div>
+                    <div className="panel py-2">
+                      <div className="text-lg font-extrabold text-slate-900 dark:text-white nums">{g.completedSessions}/{g.totalSessions}</div>
+                      <div className="text-[11px] text-slate-500">حصص الفصل</div>
                     </div>
                   </div>
-                </div>
 
-                {/* Footer actions */}
-                <div className="group-card-footer">
-                  <button onClick={() => router.push('/teacher/attendance?group=' + g.id)} className="group-card-action-btn">
-                    <ClipboardList size={15} />
-                    <span>حضور</span>
-                  </button>
-                  <button onClick={() => router.push('/teacher/grades?group=' + g.id)} className="group-card-action-btn">
-                    <Star size={15} />
-                    <span>علامات</span>
-                  </button>
-                  <button onClick={() => router.push('/teacher/journal?group=' + g.id)} className="group-card-action-btn">
-                    <BookOpen size={15} />
-                    <span>دفتر</span>
-                  </button>
+                  {/* Progress Bar matching Image 3 */}
+                  <div className="h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden mb-4">
+                    <div
+                      className="h-full bg-[#076653] rounded-full transition-all"
+                      style={{ width: `${pct}%` }}
+                    />
+                  </div>
+
+                  {/* 4 Bottom Action Buttons matching Image 3 */}
+                  <div className="flex flex-wrap gap-1.5 no-print">
+                    <button
+                      onClick={() => router.push(`/teacher/attendance?group=${g.id}`)}
+                      className="btn-soft btn-xs cursor-pointer"
+                    >
+                      <Users size={14} />
+                      <span>التلاميذ</span>
+                    </button>
+                    <button
+                      onClick={() => router.push(`/teacher/attendance?group=${g.id}`)}
+                      className="btn-ghost btn-xs cursor-pointer"
+                    >
+                      <ClipboardList size={14} />
+                      <span>الحضور</span>
+                    </button>
+                    <button
+                      onClick={() => router.push(`/teacher/grades?group=${g.id}`)}
+                      className="btn-ghost btn-xs cursor-pointer"
+                    >
+                      <Star size={14} />
+                      <span>العلامات</span>
+                    </button>
+                    <button
+                      onClick={() => router.push(`/teacher/journal?group=${g.id}`)}
+                      className="btn-ghost btn-xs cursor-pointer"
+                    >
+                      <BookOpen size={14} />
+                      <span>الدفتر</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             )
