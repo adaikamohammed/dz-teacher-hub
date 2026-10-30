@@ -335,6 +335,11 @@ export default function EditablePDFPreviewModal({
               </div>
             </div>
           </div>
+
+          {/* Platform Watermark / Attribution */}
+          <div style={{ textAlign: 'center', fontSize: '9.5px', color: '#94a3b8', borderTop: '1px solid #f1f5f9', paddingTop: '8px', marginTop: '4px' }}>
+            مستخرج عبر <strong>منصة جسور التعليمية</strong> — حيث يلتقي الأستاذ، الولي، والتلميذ
+          </div>
         </div>
 
         {/* Toast */}

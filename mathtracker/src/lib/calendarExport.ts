@@ -50,10 +50,10 @@ export function buildICSContent(
   let ics = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//TadrisPlus//Algerian Teacher Hub//AR',
+    'PRODID:-//JusoorPlatform//Algerian Education Platform//AR',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
-    `X-WR-CALNAME:${escapeICSText(`جدول حصص تدريس بلس - ${teacherName}`)}`,
+    `X-WR-CALNAME:${escapeICSText(`جدول حصص منصة جسور - ${teacherName}`)}`,
     'X-WR-TIMEZONE:Africa/Algiers',
   ]
 

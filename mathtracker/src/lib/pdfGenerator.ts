@@ -113,7 +113,7 @@ export function generateParentSummonsPDF(data: ParentSummonsData) {
   doc.setFontSize(12)
   doc.text('وزارة التربية الوطنية', 105, 22, { align: 'center' })
   doc.setFontSize(15)
-  doc.text('دفتر أستاذ مادة الرياضيات — إشعار واستدعاء ولي تلميذ', 105, 30, { align: 'center' })
+  doc.text('منصة جسور التعليمية — إشعار واستدعاء ولي تلميذ', 105, 30, { align: 'center' })
 
   doc.setLineWidth(0.8)
   doc.setDrawColor(16, 122, 87)
@@ -126,10 +126,10 @@ export function generateParentSummonsPDF(data: ParentSummonsData) {
   doc.text(`التاريخ: ${data.date}`, 180, 52, { align: 'right' })
   doc.text(`إلى السيد(ة) المحترم(ة): ${data.parentName}`, 180, 60, { align: 'right' })
   doc.text(`ولي التلميذ(ة): ${data.studentName} — القسم: ${data.className}`, 180, 68, { align: 'right' })
-  doc.text(`المادة: ${data.subjectName || 'الرياضيات'} | الأستاذ: ${data.teacherName || 'أستاذ المادة'}`, 180, 76, { align: 'right' })
+  doc.text(`المادة: ${data.subjectName || 'المادة التعليمية'} | الأستاذ: ${data.teacherName || 'أستاذ المادة'}`, 180, 76, { align: 'right' })
 
   doc.setFontSize(11)
-  const paragraph = `يشرفني بصفتي أستاذ مادة الرياضيات أن أطلب منكم الحضور إلى المؤسسة لمقابلتي في أقرب وقت، وذلك لمناقشة المستوى الدراسي والانضباطي لابنكم(ابنتكم)، بناءً على السجل التالي:`
+  const paragraph = `يشرفني بصفتي أستاذ مادة ${data.subjectName || 'المادة التعليمية'} أن أطلب منكم الحضور إلى المؤسسة لمقابلتي في أقرب وقت، وذلك لمناقشة المستوى الدراسي والانضباطي لابنكم(ابنتكم)، بناءً على السجل المسجل في منصة جسور:`
   doc.text(paragraph, 180, 88, { align: 'right', maxWidth: 160 })
 
   autoTable(doc, {
@@ -142,7 +142,7 @@ export function generateParentSummonsPDF(data: ParentSummonsData) {
 
   let currentY = (doc as unknown as { lastAutoTable: { finalY: number } }).lastAutoTable.finalY + 14
   doc.setFontSize(12)
-  doc.text('تفاصيل الملاحظات المسجلة في مادة الرياضيات:', 180, currentY, { align: 'right' })
+  doc.text('تفاصيل الملاحظات المسجلة عبر منصة جسور:', 180, currentY, { align: 'right' })
 
   data.reasons.forEach((reason) => {
     currentY += 8
@@ -153,10 +153,10 @@ export function generateParentSummonsPDF(data: ParentSummonsData) {
   currentY += 28
   doc.setFontSize(11)
   doc.text('توقيع ولي الأمر بالعلم والاطلاع', 55, currentY, { align: 'center' })
-  doc.text('توقيع أستاذ مادة الرياضيات', 150, currentY, { align: 'center' })
+  doc.text('توقيع وختم أستاذ المادة', 150, currentY, { align: 'center' })
 
   doc.setFontSize(9)
-  doc.text('ملاحظة: هذا الإشعار صادر عن دفتر المتابعة الرقمي لأستاذ مادة الرياضيات.', 105, 280, { align: 'center' })
+  doc.text('منصة جسور التعليمية — حيث يلتقي الأستاذ، الولي، والتلميذ', 105, 280, { align: 'center' })
 
   doc.save(`استدعاء_ولي_${data.studentName.replace(/\s+/g, '_')}.pdf`)
 }
@@ -174,7 +174,7 @@ export function generateClassReportPDF(data: ClassReportData) {
   doc.setFontSize(14)
   doc.text('الجمهورية الجزائرية الديمقراطية الشعبية — وزارة التربية الوطنية', 105, 15, { align: 'center' })
   doc.setFontSize(13)
-  doc.text(`دفتر الأستاذ الرقمي | كشف متابعة مادة: ${data.subjectName} — قسم: ${data.className}`, 105, 23, { align: 'center' })
+  doc.text(`منصة جسور التعليمية | كشف متابعة مادة: ${data.subjectName} — قسم: ${data.className}`, 105, 23, { align: 'center' })
   doc.setFontSize(10)
   doc.text(`الأستاذ: ${data.teacherName} | التاريخ: ${data.date}`, 105, 30, { align: 'center' })
   doc.line(20, 34, 190, 34)
@@ -197,7 +197,7 @@ export function generateClassReportPDF(data: ClassReportData) {
 
   const finalY = (doc as unknown as { lastAutoTable: { finalY: number } }).lastAutoTable.finalY + 16
   doc.setFontSize(11)
-  doc.text('توقيع أستاذ مادة الرياضيات:', 160, finalY, { align: 'right' })
+  doc.text('توقيع وختم أستاذ المادة:', 160, finalY, { align: 'right' })
 
   doc.save(`كشف_متابعة_${data.className.replace(/\s+/g, '_')}_${data.date}.pdf`)
 }
@@ -215,7 +215,7 @@ export function generateSessionJournalPDF(data: SessionJournalPDFData) {
   doc.setFontSize(14)
   doc.text('الجمهورية الجزائرية الديمقراطية الشعبية — وزارة التربية الوطنية', 148, 15, { align: 'center' })
   doc.setFontSize(13)
-  doc.text(`دفتر النصوص ومفكرة الحصص البيداغوجية | مادة: ${data.subjectName} — قسم: ${data.className}`, 148, 23, { align: 'center' })
+  doc.text(`منصة جسور التعليمية | دفتر النصوص ومفكرة الحصص | مادة: ${data.subjectName} — قسم: ${data.className}`, 148, 23, { align: 'center' })
   doc.setFontSize(10)
   doc.text(`الأستاذ: ${data.teacherName} | الفترة: ${data.dateRange}`, 148, 30, { align: 'center' })
   doc.line(20, 34, 277, 34)
@@ -241,12 +241,12 @@ export function generateSessionJournalPDF(data: SessionJournalPDFData) {
     },
   })
 
-  const finalY = (doc as unknown as { lastAutoTable: { finalY: number } }).lastAutoTable.finalY + 14
+  const finalJournalY = (doc as unknown as { lastAutoTable: { finalY: number } }).lastAutoTable.finalY + 14
   doc.setFontSize(10)
-  doc.text('تأشيرة وتوقيع أستاذ مادة الرياضيات:', 240, finalY, { align: 'right' })
-  doc.text('تأشيرة السيد المفتش / الإدارة:', 60, finalY, { align: 'center' })
+  doc.text('تأشيرة وتوقيع أستاذ المادة:', 240, finalJournalY, { align: 'right' })
+  doc.text('تأشيرة السيد المفتش / الإدارة:', 60, finalJournalY, { align: 'center' })
 
-  doc.save(`دفتر_نصوص_رياضيات_${data.className.replace(/\s+/g, '_')}.pdf`)
+  doc.save(`دفتر_نصوص_${data.className.replace(/\s+/g, '_')}.pdf`)
 }
 
 /**
@@ -262,7 +262,7 @@ export function generateOfficialTermGradesPDF(data: OfficialTermGradesPDFData) {
   doc.setFontSize(14)
   doc.text('الجمهورية الجزائرية الديمقراطية الشعبية — وزارة التربية الوطنية', 148, 14, { align: 'center' })
   doc.setFontSize(13)
-  doc.text(`كشف التقويم والمعدلات الرسمية لمادة: ${data.subjectName} — قسم: ${data.className} (${data.gradeLevel})`, 148, 22, { align: 'center' })
+  doc.text(`منصة جسور التعليمية | كشف التقويم والمعدلات لمادة: ${data.subjectName} — قسم: ${data.className} (${data.gradeLevel})`, 148, 22, { align: 'center' })
   doc.setFontSize(10)
   doc.text(
     `الأستاذ: ${data.teacherName} | ${data.termName} (${data.testsCount === 2 ? 'نظام الفرضين' : 'نظام الفرض الواحد'}) — السنة الدراسية: ${data.academicYear} | معدل القسم: ${data.classAverage.toFixed(2)}/20 | نسبة النجاح: ${data.passRate.toFixed(1)}%`,
@@ -342,7 +342,7 @@ export function generateOfficialTermGradesPDF(data: OfficialTermGradesPDFData) {
 
   const finalY = (doc as unknown as { lastAutoTable: { finalY: number } }).lastAutoTable.finalY + 12
   doc.setFontSize(10)
-  doc.text('توقيع وختم أستاذ مادة الرياضيات:', 250, finalY, { align: 'right' })
+  doc.text('توقيع وختم أستاذ المادة:', 250, finalY, { align: 'right' })
   doc.text('تأشيرة مصلحة الرقابة / المديرية:', 50, finalY, { align: 'center' })
 
   doc.save(`كشف_نقاط_فصلي_${data.className.replace(/\s+/g, '_')}_${data.termName}.pdf`)
@@ -361,7 +361,7 @@ export function generateStudentIndividualReportPDF(data: StudentIndividualReport
   doc.setFontSize(13)
   doc.text('الجمهورية الجزائرية الديمقراطية الشعبية — وزارة التربية الوطنية', 105, 15, { align: 'center' })
   doc.setFontSize(14)
-  doc.text('بطاقة التقييم والنتائج الفردية في مادة الرياضيات', 105, 24, { align: 'center' })
+  doc.text('منصة جسور التعليمية — بطاقة التقييم والنتائج الفردية', 105, 24, { align: 'center' })
   doc.setFontSize(10)
   doc.text(`${data.termName} — السنة الدراسية: ${data.academicYear}`, 105, 31, { align: 'center' })
   doc.setDrawColor(16, 122, 87)
@@ -421,7 +421,11 @@ export function generateStudentIndividualReportPDF(data: StudentIndividualReport
   finalY += 45
   doc.setFontSize(10)
   doc.text('توقيع ولي الأمر بالعلم والاطلاع', 60, finalY, { align: 'center' })
-  doc.text('توقيع وختم أستاذ مادة الرياضيات', 150, finalY, { align: 'center' })
+  doc.text('توقيع وختم أستاذ المادة', 150, finalY, { align: 'center' })
+
+  doc.setFontSize(8.5)
+  doc.setTextColor(100, 116, 139)
+  doc.text('منصة جسور التعليمية — حيث يلتقي الأستاذ، الولي، والتلميذ', 105, 282, { align: 'center' })
 
   doc.save(`كشف_فردي_${data.studentName.replace(/\s+/g, '_')}.pdf`)
 }
@@ -477,10 +481,12 @@ export function generateParentAccessCardsPDF(data: ParentAccessCardData) {
     doc.rect(startX, startY + 12, cardW, 8, 'F') // straighten bottom corners
 
     doc.setTextColor(255, 255, 255)
-    doc.setFontSize(10)
-    doc.text('فضاء الولي الرقمي — مادة الرياضيات', startX + cardW / 2, startY + 8, { align: 'center' })
-    doc.setFontSize(8)
-    doc.text(`قسم: ${data.className} | السنة: 2025/2026`, startX + cardW / 2, startY + 15, { align: 'center' })
+    doc.setFontSize(9.5)
+    doc.text('منصة جسور التعليمية — فضاء الولي الرقمي', startX + cardW / 2, startY + 7.5, { align: 'center' })
+    doc.setFontSize(7)
+    doc.text('حيث يلتقي الأستاذ، الولي، والتلميذ', startX + cardW / 2, startY + 13.5, { align: 'center' })
+    doc.setFontSize(6.5)
+    doc.text(`قسم: ${data.className} | مادة: ${data.subjectName || 'المادة المقررة'} | 2026/2027`, startX + cardW / 2, startY + 18.5, { align: 'center' })
 
     // Student & Parent details
     doc.setTextColor(30, 41, 59)
@@ -518,7 +524,7 @@ export function generateParentAccessCardsPDF(data: ParentAccessCardData) {
     doc.setFont('helvetica', 'normal')
     doc.setTextColor(71, 85, 105)
     doc.setFontSize(7)
-    doc.text('• متابعة ملخصات دروس وسبورة الحصة يومياً.', startX + cardW - 6, startY + 95, { align: 'right' })
+    doc.text('• متابعة ملخصات دروس وسبورة الحصة يومياً عبر منصة جسور.', startX + cardW - 6, startY + 95, { align: 'right' })
     doc.text('• واجبات الحصة وموعد إحضارها في كراس المحاولات.', startX + cardW - 6, startY + 101, { align: 'right' })
     doc.text('• كشف النقاط الفصلي، علامات الفروض، وتفقد الحضور.', startX + cardW - 6, startY + 107, { align: 'right' })
 
@@ -527,10 +533,10 @@ export function generateParentAccessCardsPDF(data: ParentAccessCardData) {
     doc.line(startX + 6, startY + 112, startX + cardW - 6, startY + 112)
     doc.setFontSize(6.5)
     doc.setTextColor(100, 116, 139)
-    doc.text('رابط المنصة: http://localhost:3002', startX + cardW / 2, startY + 117, { align: 'center' })
-    doc.text('توقيع وختم أستاذ مادة الرياضيات', startX + cardW / 2, startY + 123, { align: 'center' })
+    doc.text('منصة جسور التعليمية • بوابة الولي: http://localhost:3000', startX + cardW / 2, startY + 117, { align: 'center' })
+    doc.text(`توقيع وختم ${data.teacherName || 'أستاذ المادة'}`, startX + cardW / 2, startY + 123, { align: 'center' })
   })
 
-  doc.save(`بطاقات_دخول_الأولياء_${data.className.replace(/\s+/g, '_')}.pdf`)
+  doc.save(`بطاقات_دخول_الأولياء_منصة_جسور_${data.className.replace(/\s+/g, '_')}.pdf`)
 }
 

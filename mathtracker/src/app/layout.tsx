@@ -2,13 +2,13 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'تدريس بلس | المنصة الوطنية الشاملة للأستاذ وفضاء الأولياء',
-  description: 'المنصة الوطنية لأساتذة كافة المواد والأطوار (ابتدائي، متوسط، ثانوي) لمتابعة الأقسام، الحصص اليومية، صور السبورة والواجبات، والربط المباشر مع الأولياء',
+  title: 'منصة جسور | حيث يلتقي الأستاذ، الولي، والتلميذ',
+  description: 'منصة جسور التعليمية — حيث يلتقي الأستاذ، الولي، والتلميذ لمتابعة الأقسام، الحصص اليومية، صور السبورة والواجبات، والربط المباشر بين أطراف العملية التربوية',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'تدريس بلس',
+    title: 'منصة جسور',
   },
 }
 

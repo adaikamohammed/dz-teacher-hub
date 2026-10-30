@@ -355,10 +355,10 @@ export default function ParentPage() {
               ☰
             </button>
             <div className="app-brand">
-              <div className="app-logo">🎓</div>
+              <img src="/brand/mark-small.svg" alt="منصة جسور" style={{ width: '34px', height: '34px', borderRadius: '10px', objectFit: 'contain' }} />
               <div>
-                <h1 className="app-title">تدريس بلس • فضاء الولي</h1>
-                <p className="app-subtitle">متابعة الأبناء • {schoolName} — {subjectName}</p>
+                <h1 className="app-title">منصة جسور • فضاء الولي</h1>
+                <p className="app-subtitle">حيث يلتقي الأستاذ، الولي، والتلميذ • {schoolName}</p>
               </div>
             </div>
           </div>
@@ -386,27 +386,29 @@ export default function ParentPage() {
             >
               <div
                 style={{
-                  width: '64px',
-                  height: '64px',
+                  width: '72px',
+                  height: '72px',
                   borderRadius: '20px',
-                  background: 'linear-gradient(135deg, #076653, #065a48)',
-                  color: '#ffffff',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '30px',
+                  overflow: 'hidden',
                   margin: '0 auto 16px',
-                  boxShadow: '0 6px 20px rgba(7, 102, 83, 0.3)',
+                  boxShadow: '0 6px 20px rgba(7, 102, 83, 0.25)',
                 }}
               >
-                👨‍👩‍👧
+                <img
+                  src="/brand/mark-small.svg"
+                  alt="منصة جسور"
+                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                />
               </div>
 
-              <h2 style={{ fontSize: '22px', fontWeight: 950, color: 'var(--color-foreground)', marginBottom: '8px' }}>
-                فضاء ولي الأمر الرقمي 🇩🇿
+              <h2 style={{ fontSize: '22px', fontWeight: 950, color: 'var(--color-foreground)', marginBottom: '4px' }}>
+                منصة جسور • فضاء الولي
               </h2>
+              <p style={{ fontSize: '12px', fontWeight: 800, color: '#076653', marginBottom: '16px' }}>
+                حيث يلتقي الأستاذ، الولي، والتلميذ
+              </p>
               <p style={{ fontSize: '13px', color: 'var(--color-muted-fg)', lineHeight: 1.7, marginBottom: '24px' }}>
-                مرحباً بكم أولياءنا الكرام. لمتابعة كراس ودروس وواجبات ونقاط ابنكم، يرجى إدخال <strong>رمز التلميذ العائلي</strong> المسلم لكم من طرف الأستاذ:
+                مرحباً بكم أولياءنا الكرام في منصة جسور. لمتابعة كراس ودروس وواجبات ونقاط ابنكم، يرجى إدخال <strong>رمز التلميذ العائلي</strong> المسلم لكم من طرف الأستاذ:
               </p>
 
               <form

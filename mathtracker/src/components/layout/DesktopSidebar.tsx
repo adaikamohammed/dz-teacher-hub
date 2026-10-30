@@ -179,13 +179,17 @@ export default function DesktopSidebar({
         {/* ── 1. Top Brand Header ── */}
         <div className="sidebar-header">
           <div className="sidebar-brand-group">
-            <div className="sidebar-logo-icon">
-              🎓
+            <div className="sidebar-logo-icon overflow-hidden p-0 bg-transparent">
+              <img
+                src="/brand/mark-small.svg"
+                alt="منصة جسور"
+                className="w-8 h-8 rounded-lg shrink-0 object-contain shadow-xs"
+              />
             </div>
 
             {!isCollapsed && (
               <div className="sidebar-brand-text">
-                <h2 className="sidebar-brand-title">تدريس بلس</h2>
+                <h2 className="sidebar-brand-title">منصة جسور</h2>
                 <span className="sidebar-role-badge">
                   {isTeacher
                     ? `${userName || 'الأستاذ'} • ${subjectName || 'المادة'}`

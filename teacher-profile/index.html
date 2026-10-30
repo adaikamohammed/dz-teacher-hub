@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>الأستاذ محمد عدايقية – أستاذ الرياضيات</title>
+  <meta name="description" content="الأستاذ محمد عدايقية – أستاذ رياضيات، طالب دكتوراه، مطور منصات تعليمية رقمية" />
+
+  <!-- Google Fonts: Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary:   #107a57;
+      --primary-d: #0a5c40;
+      --primary-l: #e6f4ee;
+      --gold:      #d97706;
+      --gold-l:    #fef3c7;
+      --bg:        #f7faf8;
+      --card:      #ffffff;
+      --text:      #1a2e24;
+      --muted:     #6b7280;
+      --border:    #d1fae5;
+      --radius:    1rem;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ─── HEADER HERO ─── */
+    .hero {
+      background: linear-gradient(135deg, var(--primary-d) 0%, var(--primary) 60%, #1aa372 100%);
+      color: #fff;
+      padding: 3rem 1.5rem 5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .avatar {
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      border: 3px solid rgba(255,255,255,0.5);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.6rem;
+      margin: 0 auto 1.2rem;
+    }
+    .hero h1 { font-size: 1.8rem; font-weight: 900; margin-bottom: .3rem; }
+    .hero .role {
+      font-size: .95rem; font-weight: 600;
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.3);
+      display: inline-block; padding: .3rem 1rem; border-radius: 2rem;
+      margin-bottom: .9rem;
+    }
+    .hero .tagline { font-size: .88rem; opacity: .85; max-width: 420px; margin: 0 auto; }
+
+    /* ─── WAVE ─── */
+    .wave { display:block; margin-top:-1px; width:100%; }
+
+    /* ─── MAIN ─── */
+    main {
+      max-width: 680px;
+      margin: -3rem auto 0;
+      padding: 0 1rem 3rem;
+      position: relative; z-index: 2;
+    }
+
+    /* ─── BADGE STRIP ─── */
+    .badges {
+      display: flex; flex-wrap: wrap; gap: .5rem;
+      justify-content: center; margin-bottom: 2rem;
+    }
+    .badge {
+      padding: .35rem .85rem; border-radius: 2rem; font-size: .78rem; font-weight: 700;
+      display: inline-flex; align-items: center; gap: .35rem;
+    }
+    .badge-green { background: var(--primary-l); color: var(--primary-d); border: 1px solid var(--border); }
+    .badge-gold  { background: var(--gold-l);    color: #92400e;          border: 1px solid #fde68a; }
+    .badge-blue  { background: #eff6ff;           color: #1d4ed8;          border: 1px solid #bfdbfe; }
+
+    /* ─── SECTION TITLE ─── */
+    .section-title {
+      font-size: 1rem; font-weight: 700; color: var(--primary-d);
+      border-right: 4px solid var(--primary);
+      padding-right: .65rem; margin-bottom: 1rem;
+    }
+
+    /* ─── CARD ─── */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 1.3rem 1.5rem;
+      margin-bottom: 1.2rem;
+      box-shadow: 0 2px 12px rgba(16,122,87,.07);
+    }
+
+    /* ─── BIO ─── */
+    .bio-text { font-size: .92rem; line-height: 1.85; color: #374151; }
+
+    /* ─── TIMELINE ─── */
+    .timeline { list-style: none; }
+    .timeline li {
+      display: flex; gap: 1rem; align-items: flex-start;
+      padding-bottom: 1rem;
+      border-bottom: 1px dashed #d1fae5;
+    }
+    .timeline li:last-child { border-bottom: none; padding-bottom: 0; }
+    .tl-icon {
+      width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+      background: var(--primary-l); border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+    }
+    .tl-body { flex: 1; }
+    .tl-title { font-size: .9rem; font-weight: 700; color: var(--text); }
+    .tl-sub   { font-size: .78rem; color: var(--muted); margin-top: .15rem; }
+    .tl-year  {
+      font-size: .72rem; font-weight: 700; color: var(--primary);
+      background: var(--primary-l); padding: .1rem .5rem;
+      border-radius: .4rem; white-space: nowrap;
+    }
+
+    /* ─── PLATFORMS ─── */
+    .platforms { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+    @media(max-width:480px) { .platforms { grid-template-columns: 1fr; } }
+
+    .platform-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: .8rem;
+      padding: 1rem;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .platform-card:hover {
+      box-shadow: 0 4px 20px rgba(16,122,87,.15);
+      transform: translateY(-2px);
+    }
+    .platform-icon { font-size: 1.6rem; margin-bottom: .4rem; }
+    .platform-name { font-size: .88rem; font-weight: 700; color: var(--primary-d); }
+    .platform-desc { font-size: .75rem; color: var(--muted); margin-top: .2rem; line-height: 1.5; }
+    .platform-tag {
+      display: inline-block; margin-top: .4rem;
+      font-size: .68rem; font-weight: 700;
+      background: var(--primary-l); color: var(--primary);
+      padding: .1rem .5rem; border-radius: .4rem;
+    }
+
+    /* ─── CONTACT BUTTONS ─── */
+    .contact-btns { display: flex; flex-wrap: wrap; gap: .7rem; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .45rem;
+      padding: .55rem 1.1rem; border-radius: .7rem;
+      font-size: .83rem; font-weight: 700; text-decoration: none;
+      transition: opacity .2s, transform .15s;
+    }
+    .btn:hover { opacity: .85; transform: scale(1.03); }
+    .btn-whatsapp { background: #25D366; color: #fff; }
+    .btn-email    { background: var(--primary); color: #fff; }
+    .btn-scholar  { background: #4285F4; color: #fff; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      text-align: center; font-size: .75rem; color: var(--muted);
+      padding: 1.5rem 1rem 2.5rem;
+    }
+    footer a { color: var(--primary); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="avatar">👨‍🏫</div>
+  <h1>الأستاذ محمد عدايقية</h1>
+  <div class="role">📐 أستاذ رياضيات | متوسطة طير حسين</div>
+  <p class="tagline">طالب دكتوراه · مطور تقني · ناجح في مسابقة توظيف الأساتذة 2025</p>
+</header>
+
+<svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60">
+  <path fill="#f7faf8" d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z"/>
+</svg>
+
+<main>
+
+  <!-- BADGES -->
+  <div class="badges">
+    <span class="badge badge-gold">🥇 الأول في دفعة الماستر</span>
+    <span class="badge badge-green">🎓 طالب دكتوراه - BBA</span>
+    <span class="badge badge-blue">✅ ناجح في مسابقة 2025</span>
+    <span class="badge badge-green">🖥️ مطور منصات تعليمية</span>
+  </div>
+
+  <!-- BIO -->
+  <div class="card">
+    <p class="section-title">نبذة تعريفية</p>
+    <p class="bio-text">
+      أنا <strong>محمد عدايقية</strong>، أستاذ رياضيات في المرحلة المتوسطة، وطالب دكتوراه في الهندسة الكهروميكانيكية بجامعة الشهيد بشير الإبراهيمي — برج بوعريريج، بحثي في تطبيقات الذكاء الاصطناعي لتشخيص أنظمة الجهد العالي.
+      <br/><br/>
+      تخرّجت <strong>الأول على دفعتي</strong> في ماستر التحكم الكهربائي من جامعة الشهيد حمه لخضر — الوادي، ونجحت في <strong>مسابقة توظيف الأساتذة 2025</strong>. أجمع بين الحماس التعليمي والخبرة التقنية لتوفير تجربة تعليمية رقمية متطورة لتلاميذي وأوليائهم.
+    </p>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="card">
+    <p class="section-title">المسار الأكاديمي</p>
+    <ul class="timeline">
+      <li>
+        <div class="tl-icon">🏫</div>
+        <div class="tl-body">
+          <div class="tl-title">أستاذ رياضيات – متوسطة طير حسين</div>
+          <div class="tl-sub">ناجح في مسابقة التوظيف الوطنية للأساتذة 2025</div>
+        </div>
+        <div class="tl-year">2025 – الآن</div>
+      </li>
+      <li>
+        <div class="tl-icon">🔬</div>
+        <div class="tl-body">
+          <div class="tl-title">دكتوراه – هندسة كهروميكانيكية</div>
+          <div class="tl-sub">جامعة الشهيد بشير الإبراهيمي، برج بوعريريج — ذكاء اصطناعي لتشخيص الجهد العالي</div>
+        </div>
+        <div class="tl-year">2023 – 2027</div>
+      </li>
+      <li>
+        <div class="tl-icon">🥇</div>
+        <div class="tl-body">
+          <div class="tl-title">ماستر – هندسة التحكم الكهربائي</div>
+          <div class="tl-sub">جامعة الشهيد حمه لخضر، الوادي — <strong>الأول على الدفعة</strong></div>
+        </div>
+        <div class="tl-year">2020 – 2022</div>
+      </li>
+      <li>
+        <div class="tl-icon">⚡</div>
+        <div class="tl-body">
+          <div class="tl-title">ليسانس – هندسة كهربائية</div>
+          <div class="tl-sub">جامعة الشهيد حمه لخضر، الوادي</div>
+        </div>
+        <div class="tl-year">2017 – 2020</div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- PLATFORMS -->
+  <div class="card">
+    <p class="section-title">⚙️ أبرز المنصات الرقمية التي طوّرتها</p>
+    <div class="platforms">
+
+      <a class="platform-card" href="#" title="TadrisHub – منصة التدريس الرقمي">
+        <div class="platform-icon">📊</div>
+        <div class="platform-name">TadrisHub / أستاذي+</div>
+        <div class="platform-desc">منصة PWA شاملة لرصد الحصص، الغيابات، الواجبات، وتواصل الأولياء — جميع المواد والأطوار</div>
+        <span class="platform-tag">تعليمي</span>
+      </a>
+
+      <a class="platform-card" href="#" title="MathTracker – متوسطة طير حسين">
+        <div class="platform-icon">📐</div>
+        <div class="platform-name">MathTracker</div>
+        <div class="platform-desc">منصة رقمية خاصة بمتوسطة طير حسين لتسيير الحصص وإشراك الأولياء في متابعة أبنائهم</div>
+        <span class="platform-tag">تعليمي</span>
+      </a>
+
+      <a class="platform-card" href="https://tajer-smart.vercel.app" target="_blank" title="Tajer Smart">
+        <div class="platform-icon">🛒</div>
+        <div class="platform-name">Tajer Smart</div>
+        <div class="platform-desc">نظام تسيير تجاري متكامل — مخزون، فواتير، تحليل مبيعات</div>
+        <span class="platform-tag">تجاري</span>
+      </a>
+
+      <a class="platform-card" href="#" title="شريان الجزائر">
+        <div class="platform-icon">❤️</div>
+        <div class="platform-name">شريان الجزائر</div>
+        <div class="platform-desc">منصة تطوعية للتبرع بالدم وربط المحتاجين بالمتبرعين عبر الجزائر</div>
+        <span class="platform-tag">تطوعي</span>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- RESEARCH -->
+  <div class="card">
+    <p class="section-title">📚 الإنتاج العلمي</p>
+    <ul class="timeline">
+      <li>
+        <div class="tl-icon">📄</div>
+        <div class="tl-body">
+          <div class="tl-title">نماذج تعلم عميق لتصنيف أعطال الألواح الشمسية</div>
+          <div class="tl-sub">International Journal of Electrical and Electronics Research – 2025</div>
+        </div>
+      </li>
+      <li>
+        <div class="tl-icon">📄</div>
+        <div class="tl-body">
+          <div class="tl-title">ذكاء اصطناعي لتحليل سلوك الانزلاق في العوازل السائلة</div>
+          <div class="tl-sub">IEEE Transactions on Dielectrics and Electrical Insulation – 2025</div>
+        </div>
+      </li>
+      <li>
+        <div class="tl-icon">📄</div>
+        <div class="tl-body">
+          <div class="tl-title">كشف أعطال اللفائف في المحركات التزامنية</div>
+          <div class="tl-sub">Diagnostyka Journal – 2026</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="card">
+    <p class="section-title">📬 تواصل معي</p>
+    <div class="contact-btns">
+      <a class="btn btn-whatsapp" href="https://wa.me/213673282819?text=السلام%20عليكم%20أستاذ%20محمد" target="_blank">
+        <span>💬</span> واتساب
+      </a>
+      <a class="btn btn-email" href="mailto:mohammed.adaika@univ-bba.dz">
+        <span>✉️</span> البريد الجامعي
+      </a>
+      <a class="btn btn-scholar" href="https://scholar.google.com/citations?user=-lzxhdEAAAAJ" target="_blank">
+        <span>🔍</span> Google Scholar
+      </a>
+    </div>
+    <p style="margin-top:.9rem;font-size:.78rem;color:var(--muted);">
+      📱 +213 673 282 819 &nbsp;|&nbsp; 📍 الوادي، الجزائر
+    </p>
+  </div>
+
+</main>
+
+<footer>
+  <p>الأستاذ محمد عدايقية &nbsp;·&nbsp; 2025 – 2026</p>
+  <p style="margin-top:.3rem;">
+    <a href="https://linkedin.com/in/mohammed-adaika-5022683a8" target="_blank">LinkedIn</a>
+    &nbsp;·&nbsp;
+    <a href="https://researchgate.net/profile/Mohammed-Adaika" target="_blank">ResearchGate</a>
+  </p>
+</footer>
+
+</body>
+</html>

@@ -43,17 +43,20 @@ export default function LoginPage() {
       dir="rtl"
     >
       <div className="w-full max-w-sm">
-        {/* Brand Header matching Image 1 */}
+        {/* Brand Header */}
         <div className="text-center mb-6">
-          <a href="/" className="inline-block">
+          <a href="/" className="inline-block group">
             <img
               src="/brand/logo.png"
-              alt="سند الأستاذ"
-              className="mx-auto w-64 max-w-full mb-1"
+              alt="منصة جسور التعليمية"
+              className="mx-auto w-28 h-28 rounded-2xl shadow-md mb-2.5 object-contain transition-transform group-hover:scale-105"
             />
           </a>
-          <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
-            فضاء العمل الرقمي لأستاذ التعليم الثانوي والمتوسط
+          <h1 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+            منصة جسور التعليمية
+          </h1>
+          <p className="text-xs sm:text-sm text-[#076653] dark:text-emerald-400 font-bold mt-1">
+            حيث يلتقي الأستاذ، الولي، والتلميذ
           </p>
         </div>
 

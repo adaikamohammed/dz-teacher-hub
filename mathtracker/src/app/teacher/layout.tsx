@@ -173,12 +173,12 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
           {children}
         </div>
 
-        {/* ── Bottom Footer matching Sanad ── */}
+        {/* ── Bottom Footer matching Jusoor ── */}
         <footer className="no-print mt-auto px-6 py-4 text-center text-xs text-slate-400 dark:text-slate-500">
-          سند الأستاذ — أداة رقمنة العمل التربوي
+          منصة جسور | حيث يلتقي الأستاذ، الولي، والتلميذ
           <span className="mx-1 text-slate-300 dark:text-slate-700">·</span>
           <span className="nums" title="رقم بناء الشيفرة ونسخة قاعدة البيانات">
-            M9.65 · مخطط v36
+            منظومة متكاملة v36
           </span>
         </footer>
       </div>

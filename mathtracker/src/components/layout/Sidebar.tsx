@@ -92,14 +92,14 @@ export default function Sidebar({
             onClick={(e) => { e.preventDefault(); setActiveTab('dashboard') }}
             className="flex items-center gap-3 min-w-0"
           >
-            {/* Official Sanad Brand Logo */}
-            <img src="/brand/mark-small.svg" alt="سند الأستاذ" className="w-9 h-9 rounded-xl shadow-xs shrink-0" />
+            {/* Official Jusoor Brand Logo */}
+            <img src="/brand/mark-small.svg" alt="منصة جسور" className="w-9 h-9 rounded-xl shadow-xs shrink-0 object-contain" />
             <div>
               <span className="block font-black text-slate-900 dark:text-white text-base leading-tight">
-                سند الأستاذ
+                منصة جسور
               </span>
-              <span className="block text-[11px] text-slate-400 font-bold nums mt-0.5">
-                {schoolYear}
+              <span className="block text-[10px] text-[#076653] dark:text-emerald-400 font-bold mt-0.5 truncate max-w-[155px]" title="حيث يلتقي الأستاذ، الولي، والتلميذ">
+                حيث يلتقي الأستاذ، الولي، والتلميذ
               </span>
             </div>
           </a>

@@ -104,9 +104,9 @@ export default function TeacherOnboardingWizardModal({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="مرحباً بك في منصة تدريس بلس (فضاء الأستاذ) 🇩🇿"
-      subtitle="معالج إعداد حسابك وأقسامك لأول مرة في 4 خطوات بسيطة لكافة المواد والأطوار"
-      icon="🎓"
+      title="مرحباً بك في منصة جسور التعليمية (فضاء الأستاذ) 🇩🇿"
+      subtitle="حيث يلتقي الأستاذ، الولي، والتلميذ — إعداد حسابك وأقسامك في 4 خطوات بسيطة لكافة المواد والأطوار"
+      icon="🌉"
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         {/* Step Progress Indicators */}
