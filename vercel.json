@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd mathtracker && npm run build",
+  "outputDirectory": "mathtracker/.next",
+  "installCommand": "cd mathtracker && npm install",
+  "framework": "nextjs"
+}
