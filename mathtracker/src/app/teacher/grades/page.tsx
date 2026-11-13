@@ -1,13 +1,14 @@
 'use client'
 
 import React, { useState, useEffect, useMemo, Suspense } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
 import {
   Award, Star, Printer, Download, Users,
   Check, X, AlertCircle, Edit3, MessageSquarePlus,
-  HelpCircle, Sparkles, TrendingUp, ChevronDown
+  HelpCircle, Sparkles, TrendingUp, ChevronDown, BarChart3
 } from 'lucide-react'
 import Modal from '@/components/ui/Modal'
+import { getStudentsForGroup, saveStudentsForGroup } from '@/lib/gradesData'
 
 export interface StudentGrade {
   id: string
@@ -77,6 +78,7 @@ const DEFAULT_STUDENTS_GRADES: StudentGrade[] = [
 ]
 
 function GradesContent() {
+  const router = useRouter()
   const searchParams = useSearchParams()
   const [selectedGroupId, setSelectedGroupId] = useState('grp_1552')
   const [students, setStudents] = useState<StudentGrade[]>([])
@@ -85,32 +87,37 @@ function GradesContent() {
   const [eventText, setEventText] = useState('')
   const [eventKind, setEventKind] = useState<'discipline' | 'homework' | 'notebook' | 'participation' | 'other'>('discipline')
 
-  const groups = [
+  const [groups, setGroups] = useState<{ id: string; name: string }[]>([
     { id: 'grp_1552', name: '1م1' },
     { id: 'grp_1553', name: '2م3' },
     { id: 'grp_1554', name: '3ع ت 1' },
-  ]
+  ])
+
+  useEffect(() => {
+    const savedGroups = localStorage.getItem('mt_teacher_groups')
+    if (savedGroups) {
+      try {
+        const parsed = JSON.parse(savedGroups)
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setGroups(parsed.map((g: any) => ({ id: g.id, name: g.name })))
+        }
+      } catch {}
+    }
+  }, [])
 
   useEffect(() => {
     const qGroup = searchParams.get('group')
     if (qGroup) setSelectedGroupId(qGroup)
-
-    const saved = localStorage.getItem('mt_grades_data')
-    if (saved) {
-      try {
-        setStudents(JSON.parse(saved))
-      } catch {
-        setStudents(DEFAULT_STUDENTS_GRADES)
-      }
-    } else {
-      setStudents(DEFAULT_STUDENTS_GRADES)
-      localStorage.setItem('mt_grades_data', JSON.stringify(DEFAULT_STUDENTS_GRADES))
-    }
   }, [searchParams])
+
+  useEffect(() => {
+    const groupStudents = getStudentsForGroup(selectedGroupId)
+    setStudents(groupStudents)
+  }, [selectedGroupId])
 
   const saveStudents = (updated: StudentGrade[]) => {
     setStudents(updated)
-    localStorage.setItem('mt_grades_data', JSON.stringify(updated))
+    saveStudentsForGroup(selectedGroupId, updated)
   }
 
   // Calculate Activities mark (من 20) with Ministerial Circular 272
@@ -203,6 +210,15 @@ function GradesContent() {
         </div>
 
         <div className="flex items-center gap-3 self-start sm:self-auto no-print">
+          <button
+            onClick={() => router.push(`/teacher/results?group=${selectedGroupId}`)}
+            className="btn-primary px-4 py-2 rounded-xl flex items-center gap-2 shadow-xs text-xs sm:text-sm font-bold cursor-pointer"
+            title="عرض الإحصائيات، الرسوم البيانية، ونسب النجاح والذكور والإناث"
+          >
+            <BarChart3 size={15} />
+            <span>عرض الإحصائيات البيانية 📊</span>
+          </button>
+
           <button
             onClick={() => window.print()}
             className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-200 font-bold px-4 py-2 rounded-xl flex items-center gap-2 shadow-2xs text-xs sm:text-sm hover:border-[#076653] transition-colors cursor-pointer"
